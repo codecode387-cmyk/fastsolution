@@ -10,14 +10,13 @@
   <style>
     :root{--purple:#462986;--purple-d:#2d1a5e;--purple-dd:#1d1040;--gold:#c9a24b;--gold-l:#e6c97c;--cream:#faf7f1;--ink:#1e1535;--muted:#5d5675;--line:#e8e2f2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,-apple-system,Segoe UI,sans-serif;}
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
     body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
     img{max-width:100%;display:block}
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1280px;margin:0 auto;padding:0 1.25rem;width:100%}
     header.nav{background:rgba(45,26,94,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(230,201,124,.18);padding:.6rem 0;position:sticky;top:0;z-index:50}
     .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
-    .nav img.logo{height:56px;width:auto}
+    .nav img.logo{height:56px}
     .nav nav{display:flex;gap:1.6rem;align-items:center}
     .nav nav a{color:#e9e3f7;font-size:.88rem;letter-spacing:.06em;transition:color .2s}
     .nav nav a:hover{color:var(--gold-l)}
@@ -31,38 +30,31 @@
     .hero p{color:#dcd4f0;max-width:36rem;margin:0 auto;font-size:1.05rem}
 
     .main{padding:3rem 0 4rem;flex:1}
-
-    /* 4 per row on desktop, 2 on mobile */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:1.4rem;
-    }
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
     @media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr);gap:1rem}}
     @media(max-width:380px){.grid{grid-template-columns:1fr}}
 
-    .pcard{background:#fff;border-radius:22px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+    .pcard{background:#fff;border-radius:22px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;cursor:pointer}
     .pcard:hover{transform:translateY(-5px);box-shadow:0 22px 44px -24px rgba(45,26,94,.5)}
     .pcard .img{position:relative;aspect-ratio:1/1;overflow:hidden;background:#f2eefa}
     .pcard .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
     .pcard:hover .img img{transform:scale(1.05)}
     .pcard .badge{position:absolute;top:12px;left:12px;background:var(--purple);color:#fff;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:.35rem .7rem;border-radius:999px}
     .pcard .badge.out{background:#b33}
+    .pcard .count{position:absolute;bottom:8px;right:8px;background:rgba(29,16,64,.85);color:#fff;font-size:.68rem;padding:.25rem .6rem;border-radius:999px}
     .pcard .body{padding:1.2rem 1.2rem 1.4rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
     .pcard h3{font-family:var(--serif);font-size:1.25rem;color:var(--purple-d);font-weight:600;line-height:1.2}
     .pcard p{color:var(--muted);font-size:.88rem;flex:1}
     .pcard .price{font-family:var(--serif);font-size:1.3rem;color:var(--purple);font-weight:600;margin-top:.4rem}
-    .pcard .btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.75rem 1rem;border-radius:999px;background:linear-gradient(135deg,var(--purple),var(--purple-d));color:#fff;font:500 .72rem var(--sans);letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:.6rem}
-    .pcard .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(70,41,134,.7)}
+    .pcard .view{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.75rem 1rem;border-radius:999px;background:linear-gradient(135deg,var(--purple),var(--purple-d));color:#fff;font:500 .72rem var(--sans);letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;margin-top:.6rem}
+    .pcard .view:hover{transform:translateY(-2px);box-shadow:0 10px 24px -10px rgba(70,41,134,.7)}
 
     .empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:1.05rem}
     .empty b{display:block;font-family:var(--serif);font-size:1.8rem;color:var(--purple-d);margin-bottom:.5rem}
-
     .loading{text-align:center;padding:4rem 1rem;color:var(--muted)}
     .spinner{display:inline-block;width:32px;height:32px;border:3px solid rgba(70,41,134,.2);border-radius:50%;border-top-color:var(--purple);animation:spin .8s linear infinite;margin-bottom:1rem}
     @keyframes spin{to{transform:rotate(360deg)}}
-
     .micro-footer{text-align:center;padding:1.8rem .5rem 1.2rem;font-size:.75rem;color:#9d92bf;letter-spacing:.04em}
     @media(max-width:640px){.nav nav a:not(.btn){display:none}.nav .wrap{height:58px}.nav img.logo{height:44px}}
   </style>
@@ -92,7 +84,7 @@
   <main class="main">
     <div class="wrap">
       <div id="loadingState" class="loading"><div class="spinner"></div><div>Loading products…</div></div>
-      <div id="emptyState" class="empty hidden" style="display:none"><b>No products yet</b><p>Check back soon — new formulas coming.</p></div>
+      <div id="emptyState" class="empty" style="display:none"><b>No products yet</b><p>Check back soon — new formulas coming.</p></div>
       <div id="productGrid" class="grid"></div>
     </div>
   </main>
@@ -103,87 +95,65 @@
   <script>
     (function(){
       'use strict';
-
       const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
       const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
-
       const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 
-      // ---------- VISITOR TRACKING ----------
-      (function trackVisit(){
-        let vid=null;
-        try{
-          vid=localStorage.getItem('gl_visitor_id');
-          if(!vid){
-            vid='v_'+Math.random().toString(36).slice(2)+Date.now().toString(36);
-            localStorage.setItem('gl_visitor_id',vid);
-          }
-        }catch(e){vid='v_anon';}
-        sb.from('page_visits').insert([{
-          page:'store.html',
-          visitor_id:vid,
-          user_agent:navigator.userAgent.slice(0,200),
-          referrer:document.referrer.slice(0,200)||null
-        }]).then(function(){}).catch(function(){});
+      (function track(){
+        let vid=localStorage.getItem('gl_visitor_id');
+        if(!vid){vid='v_'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gl_visitor_id',vid);}
+        sb.from('page_visits').insert([{page:'store.html',visitor_id:vid,user_agent:navigator.userAgent.slice(0,200)}]).then(()=>{}).catch(()=>{});
       })();
 
-      // ---------- RENDER PRODUCTS ----------
-      function escapeHtml(s){
-        if(s==null)return'';
-        return String(s).replace(/[&<>"']/g,function(c){
-          return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-        });
-      }
-      function formatPrice(p){
-        if(p==null||p==='')return'';
-        const n=Number(p);
-        if(isNaN(n))return escapeHtml(p);
-        return '₦'+n.toLocaleString();
-      }
+      const esc=s=>s==null?'':String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const money=p=>p==null||p===''?'':'₦'+Number(p).toLocaleString();
 
       const grid=document.getElementById('productGrid');
       const loadingEl=document.getElementById('loadingState');
       const emptyEl=document.getElementById('emptyState');
 
-      function renderProducts(list){
+      function render(list){
         loadingEl.style.display='none';
-        if(!list||!list.length){
-          emptyEl.style.display='block';
-          grid.innerHTML='';
-          return;
-        }
+        if(!list||!list.length){emptyEl.style.display='block';grid.innerHTML='';return;}
         emptyEl.style.display='none';
         grid.innerHTML=list.map(function(p){
-          const img=p.image_url||'images/p-strawberry.jpg';
+          const imgs=(p.images&&Array.isArray(p.images)&&p.images.length)?p.images:(p.image_url?[p.image_url]:[]);
+          const main=imgs[0]||'images/p-strawberry.jpg';
           const out=!p.in_stock;
+          const short=(p.description||'').split(/\n\n/)[0]||'';
           return `
-            <article class="pcard">
+            <article class="pcard" data-id="${esc(p.id)}">
               <div class="img">
-                <img src="${escapeHtml(img)}" alt="${escapeHtml(p.name)}" loading="lazy" onerror="this.src='images/p-strawberry.jpg'"/>
+                <img src="${esc(main)}" alt="${esc(p.name)}" loading="lazy" onerror="this.src='images/p-strawberry.jpg'"/>
                 <span class="badge ${out?'out':''}">${out?'Sold out':'In stock'}</span>
+                ${imgs.length>1?'<span class="count">'+imgs.length+' photos</span>':''}
               </div>
               <div class="body">
-                <h3>${escapeHtml(p.name)}</h3>
-                <p>${escapeHtml(p.description||'')}</p>
-                ${p.price!=null?'<div class="price">'+formatPrice(p.price)+'</div>':''}
-                <a class="btn" href="https://wa.me/2347085308550?text=${encodeURIComponent('Hello Global Lush, I want to order: '+p.name)}" target="_blank" rel="noopener">Order now</a>
+                <h3>${esc(p.name)}</h3>
+                <p>${esc(short)}</p>
+                ${p.price!=null?'<div class="price">'+money(p.price)+'</div>':''}
+                <a class="view" href="product.html?id=${encodeURIComponent(p.id)}">View details</a>
               </div>
             </article>
           `;
         }).join('');
+        grid.querySelectorAll('.pcard').forEach(card=>{
+          card.addEventListener('click',function(e){
+            if(e.target.closest('a'))return;
+            window.location.href='product.html?id='+encodeURIComponent(card.dataset.id);
+          });
+        });
       }
 
-      sb.from('products').select('*').order('created_at',{ascending:false})
-        .then(function(res){
-          if(res.error){console.error('Products error:',res.error);loadingEl.innerHTML='<div style="color:#b33">Could not load products. Run the SQL setup.</div>';return;}
-          renderProducts(res.data||[]);
-        });
-
-      // realtime updates
-      sb.channel('products-live').on('postgres_changes',{event:'*',schema:'public',table:'products'},function(){
-        sb.from('products').select('*').order('created_at',{ascending:false}).then(function(res){if(!res.error)renderProducts(res.data||[]);});
-      }).subscribe();
-
+      function load(){
+        sb.from('products').select('*').order('created_at',{ascending:false})
+          .then(res=>{
+            if(res.error){console.error(res.error);loadingEl.innerHTML='<div style="color:#b33">Could not load products.</div>';return;}
+            render(res.data||[]);
+          });
+      }
+      load();
+      sb.channel('products-live').on('postgres_changes',{event:'*',schema:'public',table:'products'},load).subscribe();
     })();
   </script>
 </body>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Lush · Product</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#462986;--purple-d:#2d1a5e;--purple-dd:#1d1040;--gold:#c9a24b;--gold-l:#e6c97c;--cream:#faf7f1;--ink:#1e1535;--muted:#5d5675;--line:#e8e2f2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,-apple-system,Segoe UI,sans-serif;--green:#25d366;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem;width:100%}
+    header.nav{background:rgba(45,26,94,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(230,201,124,.18);padding:.6rem 0;position:sticky;top:0;z-index:50}
+    .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav img.logo{height:56px}
+    .nav nav{display:flex;gap:1.6rem;align-items:center}
+    .nav nav a{color:#e9e3f7;font-size:.88rem;letter-spacing:.06em;transition:color .2s}
+    .nav nav a:hover{color:var(--gold-l)}
+    .nav .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.2rem;border-radius:999px;font:500 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid rgba(230,201,124,.7);cursor:pointer;background:transparent;color:#fff;transition:background .2s}
+    .nav .btn:hover{background:rgba(255,255,255,.08)}
+
+    .main{padding:2.5rem 0 4rem;flex:1}
+
+    .loading,.empty{text-align:center;padding:5rem 1rem;color:var(--muted)}
+    .spinner{display:inline-block;width:34px;height:34px;border:3px solid rgba(70,41,134,.2);border-radius:50%;border-top-color:var(--purple);animation:spin .8s linear infinite;margin-bottom:1rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .breadcrumb{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem}
+    .breadcrumb a:hover{color:var(--purple)}
+
+    .product{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:flex-start;margin-bottom:3rem}
+    @media(max-width:900px){.product{grid-template-columns:1fr;gap:2rem}}
+
+    /* gallery */
+    .gallery .main-img{aspect-ratio:1/1;border-radius:24px;overflow:hidden;background:#fff;border:1px solid var(--line);margin-bottom:.8rem}
+    .gallery .main-img img{width:100%;height:100%;object-fit:cover}
+    .thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem}
+    .thumb{aspect-ratio:1/1;border-radius:14px;overflow:hidden;border:2.5px solid var(--line);cursor:pointer;background:#fff;transition:border-color .2s,transform .2s}
+    .thumb:hover{transform:translateY(-2px)}
+    .thumb.active{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.25)}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+
+    /* info */
+    .info .category{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.6rem}
+    .info h1{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:600;color:var(--purple-d);line-height:1.1;margin-bottom:1rem}
+    .info .price{font-family:var(--serif);font-size:2.4rem;font-weight:600;color:var(--purple);margin-bottom:1.2rem}
+    .info .status{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:999px;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:1.4rem}
+    .info .status.in{background:#e8f5e9;color:#1e5e2e}
+    .info .status.out{background:#fdecea;color:#8b1a1a}
+    .info .desc{color:var(--muted);font-size:1rem;line-height:1.75;margin-bottom:1.8rem;white-space:pre-wrap}
+
+    .btn-wa{display:inline-flex;align-items:center;justify-content:center;gap:.7rem;width:100%;padding:1.15rem 1.7rem;border-radius:999px;background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;font:600 .95rem var(--sans);letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 14px 30px -10px rgba(37,211,102,.6);margin-bottom:.8rem}
+    .btn-wa:hover{transform:translateY(-2px);box-shadow:0 18px 36px -10px rgba(37,211,102,.8)}
+    .btn-wa svg{width:24px;height:24px;fill:#fff}
+
+    .btn-back{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;width:100%;padding:1rem 1.7rem;border-radius:999px;background:transparent;border:1.5px solid var(--line);color:var(--purple-d);font:500 .85rem var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s}
+    .btn-back:hover{border-color:var(--gold)}
+
+    .features{background:#fff;border-radius:22px;border:1px solid var(--line);padding:1.8rem;margin-top:2rem}
+    .features h3{font-family:var(--serif);font-size:1.5rem;color:var(--purple-d);font-weight:600;margin-bottom:1rem}
+    .features ul{list-style:none;display:grid;gap:.6rem}
+    .features li{padding-left:1.6rem;position:relative;font-size:.95rem;color:var(--muted)}
+    .features li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:600;font-size:1.1rem}
+
+    .micro-footer{text-align:center;padding:1.8rem .5rem 1.2rem;font-size:.75rem;color:#9d92bf;letter-spacing:.04em}
+    @media(max-width:640px){.nav nav a:not(.btn){display:none}.nav .wrap{height:58px}.nav img.logo{height:44px}.info .price{font-size:2rem}}
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap">
+      <a href="GlobalLush.html"><img class="logo" src="images/logo-gold.png" alt="Global Lush logo" /></a>
+      <nav>
+        <a href="GlobalLush.html">Home</a>
+        <a href="store.html">Store</a>
+        <a href="blog.html">Blog</a>
+        <a class="btn" href="log.html">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="GlobalLush.html">Home</a> / <a href="store.html">Store</a> / <span id="crumbName">Product</span></div>
+      <div id="loadingState" class="loading"><div class="spinner"></div><div>Loading product…</div></div>
+      <div id="emptyState" class="empty" style="display:none"><b>Product not found</b><p>It may have been removed. <a href="store.html" style="color:var(--purple);text-decoration:underline">Back to store</a></p></div>
+      <div id="productWrap" style="display:none"></div>
+    </div>
+  </main>
+
+  <div class="micro-footer">© 2026 Global Lush · For external use only · Keep out of reach of children</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function(){
+      'use strict';
+      const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
+      const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
+      const WHATSAPP_NUMBER='2347085308550'; // <-- change if needed
+      const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+
+      // track visit
+      (function(){
+        let vid=localStorage.getItem('gl_visitor_id');
+        if(!vid){vid='v_'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gl_visitor_id',vid);}
+        sb.from('page_visits').insert([{page:'product.html',visitor_id:vid,user_agent:navigator.userAgent.slice(0,200)}]).then(()=>{}).catch(()=>{});
+      })();
+
+      const esc=s=>s==null?'':String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const money=p=>p==null||p===''?'':'₦'+Number(p).toLocaleString();
+
+      const params=new URLSearchParams(location.search);
+      const id=params.get('id');
+
+      if(!id){
+        document.getElementById('loadingState').style.display='none';
+        document.getElementById('emptyState').style.display='block';
+        return;
+      }
+
+      sb.from('products').select('*').eq('id',id).maybeSingle().then(function(res){
+        document.getElementById('loadingState').style.display='none';
+        if(res.error||!res.data){
+          document.getElementById('emptyState').style.display='block';
+          return;
+        }
+        const p=res.data;
+        render(p);
+      });
+
+      function render(p){
+        const imgs=(p.images&&Array.isArray(p.images)&&p.images.length)?p.images:(p.image_url?[p.image_url]:['images/p-strawberry.jpg']);
+        const out=!p.in_stock;
+        const waMsg='Hello Global Lush, I want to buy: '+p.name+(p.price?' (₦'+Number(p.price).toLocaleString()+')':'');
+        const waLink='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(waMsg);
+
+        document.getElementById('crumbName').textContent=p.name||'Product';
+        document.title='Global Lush · '+p.name;
+
+        const wrap=document.getElementById('productWrap');
+        wrap.style.display='block';
+        wrap.innerHTML=`
+          <div class="product">
+            <div class="gallery">
+              <div class="main-img"><img id="mainImg" src="${esc(imgs[0])}" alt="${esc(p.name)}" onerror="this.src='images/p-strawberry.jpg'"/></div>
+              <div class="thumbs" id="thumbs">
+                ${imgs.map(function(u,i){return '<div class="thumb '+(i===0?'active':'')+'" data-i="'+i+'"><img src="'+esc(u)+'" alt="" onerror="this.src=\'images/p-strawberry.jpg\'"/></div>';}).join('')}
+              </div>
+            </div>
+            <div class="info">
+              <div class="category">${esc((p.category||'body-wash').replace('-',' '))}</div>
+              <h1>${esc(p.name)}</h1>
+              ${p.price!=null?'<div class="price">'+money(p.price)+'</div>':''}
+              <div class="status ${out?'out':'in'}">${out?'Sold out':'In stock'}</div>
+              <div class="desc">${esc(p.description||'')}</div>
+              <a class="btn-wa" href="${waLink}" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.087-.179.182-.077.357.101.174.45.742.965 1.201.664.593 1.224.777 1.397.864.173.087.274.072.375-.043.101-.116.433-.506.549-.679.116-.173.231-.144.39-.087s1.011.477 1.184.564c.173.087.289.13.332.202.043.072.043.419-.101.824z"/></svg>
+                Buy on WhatsApp
+              </a>
+              <a class="btn-back" href="store.html">← Back to store</a>
+
+              <div class="features">
+                <h3>Why you'll love it</h3>
+                <ul>
+                  <li>Generous 1000ml (33.8 fl oz) value-size bottle</li>
+                  <li>Suitable for all skin types</li>
+                  <li>Made with care in the U.A.E</li>
+                  <li>Fast delivery available in Lagos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // thumbs click
+        wrap.querySelectorAll('.thumb').forEach(function(t){
+          t.addEventListener('click',function(){
+            wrap.querySelectorAll('.thumb').forEach(x=>x.classList.remove('active'));
+            t.classList.add('active');
+            document.getElementById('mainImg').src=imgs[Number(t.dataset.i)];
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -451,19 +451,16 @@
 </head>
 <body>
 
-  <!-- header (same as main) -->
+  <!-- header — ONLY two links: GlobalLush.html and store.html -->
   <header class="nav">
     <div class="wrap">
-      <a href="index.html" aria-label="Global Lush home">
+      <a href="GlobalLush.html" aria-label="Global Lush home">
         <img class="logo" src="images/logo-gold.png" alt="Global Lush logo" />
       </a>
       <nav>
-        <a href="index.html#products">Products</a>
-        <a href="index.html#why">Why Global Lush</a>
-        <a href="index.html#routine">How to use</a>
-        <a href="index.html#buy">Where to buy</a>
-        <a href="index.html#faq">FAQ</a>
-        <a class="btn" href="index.html" style="background:transparent;border:1.5px solid rgba(230,201,124,.7);color:#fff;box-shadow:none;">← Back</a>
+        <a href="GlobalLush.html">Home</a>
+        <a href="store.html">Store</a>
+        <a class="btn" href="GlobalLush.html" style="background:transparent;border:1.5px solid rgba(230,201,124,.7);color:#fff;box-shadow:none;">← Back</a>
       </nav>
     </div>
   </header>
@@ -572,11 +569,9 @@
       'use strict';
 
       // ---------- CONFIG ----------
-      // Your Supabase project credentials (given)
       const SUPABASE_URL = 'https://wfqoezxisgfiiktcrajq.supabase.co';
       const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
 
-      // Initialize Supabase client
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
         auth: {
           persistSession: false,
@@ -607,7 +602,6 @@
         messageBox.classList.add('show', type);
         msgText.textContent = text;
 
-        // swap icon based on type
         if (type === 'success') {
           msgIcon.innerHTML = '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>';
         } else {
@@ -643,13 +637,11 @@
         clearFieldErrors();
         hideMessage();
 
-        // full name
         if (!fullNameInput.value.trim()) {
           fullNameInput.classList.add('error');
           valid = false;
         }
 
-        // email
         const emailVal = emailInput.value.trim();
         if (!emailVal) {
           emailInput.classList.add('error');
@@ -659,13 +651,11 @@
           valid = false;
         }
 
-        // country
         if (!countrySelect.value) {
           countrySelect.classList.add('error');
           valid = false;
         }
 
-        // terms
         if (!termsCheck.checked) {
           termsCheck.classList.add('error');
           valid = false;
@@ -687,20 +677,17 @@
         setLoading(true);
         hideMessage();
 
-        // gather data
         const fullName = fullNameInput.value.trim();
         const email = emailInput.value.trim().toLowerCase();
         const phone = phoneInput.value.trim() || null;
         const country = countrySelect.value;
         const source = sourceSelect.value || null;
 
-        // Split full name into first / last (simple)
         const nameParts = fullName.split(/\s+/);
         const firstName = nameParts[0] || '';
         const lastName = nameParts.slice(1).join(' ') || '';
 
         try {
-          // 1. Insert into 'clients' table
           const { data, error } = await supabaseClient
             .from('clients')
             .insert([
@@ -719,7 +706,6 @@
             .select();
 
           if (error) {
-            // handle duplicate email gracefully
             if (error.code === '23505') {
               showMessage('This email is already registered. Try logging in instead.', 'error');
             } else {
@@ -730,14 +716,10 @@
             return;
           }
 
-          // success
           console.log('Inserted client:', data);
           showMessage('Welcome to Global Lush! Check your inbox for a confirmation email.', 'success');
           form.reset();
           clearFieldErrors();
-
-          // optional: redirect after a few seconds
-          // setTimeout(() => { window.location.href = 'index.html'; }, 3500);
 
         } catch (err) {
           console.error('Unexpected error:', err);

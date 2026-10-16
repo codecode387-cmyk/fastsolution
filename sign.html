@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Global Lush · Sign Up</title>
-  <!-- Google Fonts (same as main page) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    /* Reuse the exact same design language from the Global Lush brand */
     :root {
       --purple: #462986;
       --purple-d: #2d1a5e;
@@ -24,16 +22,8 @@
       --sans: 'Jost', system-ui, -apple-system, Segoe UI, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
     body {
       font-family: var(--sans);
@@ -45,15 +35,8 @@
       flex-direction: column;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
 
     .wrap {
       max-width: 1180px;
@@ -62,7 +45,7 @@
       width: 100%;
     }
 
-    /* ---- header (same as main) ---- */
+    /* header */
     header.nav {
       background: rgba(45, 26, 94, 0.96);
       backdrop-filter: blur(10px);
@@ -77,16 +60,9 @@
       height: 68px;
     }
 
-    .nav img.logo {
-      height: 56px;
-      width: auto;
-    }
+    .nav img.logo { height: 56px; width: auto; }
 
-    .nav nav {
-      display: flex;
-      gap: 1.6rem;
-      align-items: center;
-    }
+    .nav nav { display: flex; gap: 1.6rem; align-items: center; }
 
     .nav nav a {
       color: #e9e3f7;
@@ -95,9 +71,7 @@
       transition: color 0.2s;
     }
 
-    .nav nav a:hover {
-      color: var(--gold-l);
-    }
+    .nav nav a:hover { color: var(--gold-l); }
 
     .nav .btn {
       display: inline-flex;
@@ -109,20 +83,16 @@
       font: 500 0.72rem/1 var(--sans);
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      border: 1.5px solid transparent;
+      border: 1.5px solid rgba(230, 201, 124, 0.7);
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-      background: linear-gradient(135deg, var(--gold-l), var(--gold));
-      color: var(--purple-dd);
-      box-shadow: 0 8px 24px -8px rgba(201, 162, 75, 0.7);
+      transition: transform 0.2s, background 0.2s;
+      background: transparent;
+      color: #fff;
     }
 
-    .nav .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px -8px rgba(201, 162, 75, 0.9);
-    }
+    .nav .btn:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
 
-    /* ---- signup card ---- */
+    /* signup */
     .signup-section {
       flex: 1;
       display: flex;
@@ -139,14 +109,12 @@
       box-shadow: 0 30px 60px -20px rgba(45, 26, 94, 0.35);
       max-width: 540px;
       width: 100%;
-      padding: 2.8rem 2.5rem 2.8rem;
+      padding: 2.8rem 2.5rem;
       border: 1px solid rgba(201, 162, 75, 0.25);
       transition: transform 0.3s;
     }
 
-    .signup-card:hover {
-      transform: translateY(-4px);
-    }
+    .signup-card:hover { transform: translateY(-4px); }
 
     .signup-card .eyebrow {
       font-size: 0.78rem;
@@ -178,15 +146,9 @@
       margin-right: auto;
     }
 
-    .signup-card .subhead em {
-      color: var(--purple);
-      font-style: italic;
-    }
+    .signup-card .subhead em { color: var(--purple); font-style: italic; }
 
-    /* form */
-    .form-group {
-      margin-bottom: 1.4rem;
-    }
+    .form-group { margin-bottom: 1.4rem; }
 
     .form-group label {
       display: block;
@@ -228,10 +190,7 @@
       box-shadow: 0 0 0 4px rgba(201, 162, 75, 0.15);
     }
 
-    .form-group input::placeholder {
-      color: #b0a8c9;
-      font-weight: 300;
-    }
+    .form-group input::placeholder { color: #b0a8c9; font-weight: 300; }
 
     .form-group input.error,
     .form-group select.error {
@@ -239,14 +198,6 @@
       box-shadow: 0 0 0 4px rgba(221, 68, 68, 0.12);
     }
 
-    .field-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-top: 0.3rem;
-      padding-left: 0.2rem;
-    }
-
-    /* checkbox */
     .check-group {
       display: flex;
       align-items: flex-start;
@@ -279,11 +230,8 @@
       text-underline-offset: 2px;
     }
 
-    .check-group label a:hover {
-      color: var(--gold);
-    }
+    .check-group label a:hover { color: var(--gold); }
 
-    /* button */
     .btn-primary {
       width: 100%;
       padding: 1rem 1.7rem;
@@ -309,13 +257,8 @@
       background: linear-gradient(135deg, var(--purple-d) 0%, var(--purple-dd) 100%);
     }
 
-    .btn-primary:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    /* messages */
     .message-box {
       border-radius: 16px;
       padding: 1rem 1.2rem;
@@ -326,9 +269,7 @@
       gap: 0.6rem;
     }
 
-    .message-box.show {
-      display: flex;
-    }
+    .message-box.show { display: flex; }
 
     .message-box.success {
       background: #e8f5e9;
@@ -342,12 +283,7 @@
       border-left: 4px solid #b33;
     }
 
-    .message-box svg {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      margin-top: 0.1rem;
-    }
+    .message-box svg { flex-shrink: 0; width: 20px; height: 20px; margin-top: 0.1rem; }
 
     .sign-in-link {
       text-align: center;
@@ -363,62 +299,30 @@
       text-underline-offset: 3px;
     }
 
-    .sign-in-link a:hover {
-      color: var(--gold);
-    }
+    .sign-in-link a:hover { color: var(--gold); }
 
-    /* footer */
     .micro-footer {
       text-align: center;
       padding: 1.8rem 0.5rem 1.2rem;
       font-size: 0.75rem;
       color: #9d92bf;
-      background: transparent;
       letter-spacing: 0.04em;
     }
 
-    /* responsive */
     @media (max-width: 600px) {
-      .signup-card {
-        padding: 2rem 1.5rem;
-        border-radius: 24px;
-      }
-
-      .signup-card h1 {
-        font-size: 2.2rem;
-      }
-
-      .nav .wrap {
-        height: 58px;
-      }
-
-      .nav img.logo {
-        height: 44px;
-      }
-
-      .nav nav a:not(.btn) {
-        display: none;
-      }
-
-      .nav .btn {
-        font-size: 0.65rem;
-        padding: 0.6rem 1rem;
-      }
+      .signup-card { padding: 2rem 1.5rem; border-radius: 24px; }
+      .signup-card h1 { font-size: 2.2rem; }
+      .nav .wrap { height: 58px; }
+      .nav img.logo { height: 44px; }
+      .nav nav a:not(.btn) { display: none; }
+      .nav .btn { font-size: 0.65rem; padding: 0.6rem 1rem; }
     }
 
     @media (max-width: 380px) {
-      .signup-card {
-        padding: 1.6rem 1.2rem;
-      }
-
-      .form-group input,
-      .form-group select {
-        padding: 0.8rem 1rem;
-        font-size: 0.92rem;
-      }
+      .signup-card { padding: 1.6rem 1.2rem; }
+      .form-group input, .form-group select { padding: 0.8rem 1rem; font-size: 0.92rem; }
     }
 
-    /* spinner */
     .spinner {
       display: inline-block;
       width: 18px;
@@ -429,21 +333,11 @@
       animation: spin 0.7s linear infinite;
     }
 
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    /* accessibility */
-    a:focus-visible,
-    button:focus-visible,
-    input:focus-visible,
-    select:focus-visible {
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
       outline: 2px solid var(--gold);
       outline-offset: 3px;
     }
@@ -451,7 +345,6 @@
 </head>
 <body>
 
-  <!-- header — ONLY two links: GlobalLush.html and store.html -->
   <header class="nav">
     <div class="wrap">
       <a href="GlobalLush.html" aria-label="Global Lush home">
@@ -460,12 +353,11 @@
       <nav>
         <a href="GlobalLush.html">Home</a>
         <a href="store.html">Store</a>
-        <a class="btn" href="GlobalLush.html" style="background:transparent;border:1.5px solid rgba(230,201,124,.7);color:#fff;box-shadow:none;">← Back</a>
+        <a class="btn" href="GlobalLush.html">← Back</a>
       </nav>
     </div>
   </header>
 
-  <!-- signup section -->
   <section class="signup-section">
     <div class="signup-card">
       <p class="eyebrow">Join the glow</p>
@@ -475,25 +367,21 @@
       </p>
 
       <form id="signupForm" novalidate>
-        <!-- full name -->
         <div class="form-group">
           <label for="fullName">Full name</label>
           <input type="text" id="fullName" name="fullName" placeholder="e.g. Amara Okafor" autocomplete="name" required />
         </div>
 
-        <!-- email -->
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
         </div>
 
-        <!-- phone (optional) -->
         <div class="form-group">
           <label for="phone">Phone number <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);">(optional)</span></label>
           <input type="tel" id="phone" name="phone" placeholder="+234 800 000 0000" autocomplete="tel" />
         </div>
 
-        <!-- country / region -->
         <div class="form-group">
           <label for="country">Country / region</label>
           <select id="country" name="country" required>
@@ -509,7 +397,6 @@
           </select>
         </div>
 
-        <!-- how did you hear (optional) -->
         <div class="form-group">
           <label for="source">How did you hear about us? <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);">(optional)</span></label>
           <select id="source" name="source">
@@ -523,7 +410,6 @@
           </select>
         </div>
 
-        <!-- terms -->
         <div class="check-group">
           <input type="checkbox" id="terms" name="terms" required />
           <label for="terms">
@@ -533,13 +419,11 @@
           </label>
         </div>
 
-        <!-- submit -->
         <button type="submit" class="btn-primary" id="submitBtn">
           <span id="btnText">Create my account</span>
           <span id="btnSpinner" class="spinner hidden"></span>
         </button>
 
-        <!-- message box -->
         <div id="messageBox" class="message-box" role="alert">
           <svg id="msgIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
@@ -556,12 +440,10 @@
     </div>
   </section>
 
-  <!-- micro footer -->
   <div class="micro-footer">
     © 2026 Global Lush · For external use only · Keep out of reach of children
   </div>
 
-  <!-- supabase client (UMD) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -580,7 +462,7 @@
         }
       });
 
-      // ---------- DOM refs ----------
+      // ---------- DOM ----------
       const form = document.getElementById('signupForm');
       const submitBtn = document.getElementById('submitBtn');
       const btnText = document.getElementById('btnText');
@@ -597,9 +479,9 @@
       const termsCheck = document.getElementById('terms');
 
       // ---------- helpers ----------
-      function showMessage(text, type = 'error') {
+      function showMessage(text, type) {
         messageBox.classList.remove('hidden', 'success', 'error');
-        messageBox.classList.add('show', type);
+        messageBox.classList.add('show', type || 'error');
         msgText.textContent = text;
 
         if (type === 'success') {
@@ -627,13 +509,13 @@
       }
 
       function clearFieldErrors() {
-        [fullNameInput, emailInput, countrySelect, termsCheck].forEach(el => {
+        [fullNameInput, emailInput, countrySelect, termsCheck].forEach(function(el) {
           el.classList.remove('error');
         });
       }
 
       function validateForm() {
-        let valid = true;
+        var valid = true;
         clearFieldErrors();
         hideMessage();
 
@@ -642,7 +524,7 @@
           valid = false;
         }
 
-        const emailVal = emailInput.value.trim();
+        var emailVal = emailInput.value.trim();
         if (!emailVal) {
           emailInput.classList.add('error');
           valid = false;
@@ -668,8 +550,8 @@
         return valid;
       }
 
-      // ---------- submit handler ----------
-      form.addEventListener('submit', async (e) => {
+      // ---------- submit ----------
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
         if (!validateForm()) return;
@@ -677,15 +559,15 @@
         setLoading(true);
         hideMessage();
 
-        const fullName = fullNameInput.value.trim();
-        const email = emailInput.value.trim().toLowerCase();
-        const phone = phoneInput.value.trim() || null;
-        const country = countrySelect.value;
-        const source = sourceSelect.value || null;
+        var fullName = fullNameInput.value.trim();
+        var email = emailInput.value.trim().toLowerCase();
+        var phone = phoneInput.value.trim() || null;
+        var country = countrySelect.value;
+        var source = sourceSelect.value || null;
 
-        const nameParts = fullName.split(/\s+/);
-        const firstName = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
+        var nameParts = fullName.split(/\s+/);
+        var firstName = nameParts[0] || '';
+        var lastName = nameParts.slice(1).join(' ') || '';
 
         try {
           const { data, error } = await supabaseClient
@@ -699,40 +581,52 @@
                 phone: phone,
                 country: country,
                 referral_source: source,
-                marketing_consent: true,
-                created_at: new Date().toISOString()
+                marketing_consent: true
               }
             ])
             .select();
 
           if (error) {
+            // Log full error to console for debugging (press F12 → Console)
+            console.error('SUPABASE ERROR:', {
+              message: error.message,
+              code: error.code,
+              details: error.details,
+              hint: error.hint
+            });
+
             if (error.code === '23505') {
               showMessage('This email is already registered. Try logging in instead.', 'error');
+            } else if (error.code === '42P01') {
+              showMessage('Database table "clients" not found. Please run the SQL setup in Supabase.', 'error');
+            } else if (error.code === '42501' || (error.message && error.message.indexOf('policy') !== -1)) {
+              showMessage('Permission denied. Please add the INSERT policy in Supabase (see SQL).', 'error');
+            } else if (error.message && error.message.indexOf('column') !== -1) {
+              showMessage('Column mismatch: ' + error.message, 'error');
             } else {
-              console.error('Supabase insert error:', error);
-              showMessage('Something went wrong. Please try again in a moment.', 'error');
+              showMessage('Error: ' + (error.message || 'Unknown error'), 'error');
             }
             setLoading(false);
             return;
           }
 
           console.log('Inserted client:', data);
-          showMessage('Welcome to Global Lush! Check your inbox for a confirmation email.', 'success');
+          showMessage('Welcome to Global Lush! Your account has been created successfully.', 'success');
           form.reset();
           clearFieldErrors();
 
         } catch (err) {
-          console.error('Unexpected error:', err);
-          showMessage('Network error. Please check your connection and try again.', 'error');
+          console.error('UNEXPECTED ERROR:', err);
+          showMessage('Network error: ' + (err.message || 'Please check your connection.'), 'error');
         } finally {
           setLoading(false);
         }
       });
 
-      // clear error styling on input
-      [fullNameInput, emailInput, countrySelect, termsCheck].forEach(el => {
-        el.addEventListener('input', () => el.classList.remove('error'));
-        el.addEventListener('change', () => el.classList.remove('error'));
+      // clear errors on input
+      [fullNameInput, emailInput, countrySelect, termsCheck].forEach(function(el) {
+        el.addEventListener('input', function() { el.classList.remove('error'); });
+        el.addEventListener('change', function() { el.classList.remove('error'); });
       });
 
     })();

@@ -1,129 +1,194 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="theme-color" content="#0A0A0A"/>
-<title>Logistics Blog | Delivery &amp; Waybill Guides for Nigeria | Fast Solution Logistics</title>
-<meta name="description" content="Practical guides from Fast Solution Logistics on doorstep delivery in Lagos, interstate waybill across Nigeria, packing tips and logistics for online sellers."/>
-<meta name="robots" content="index, follow, max-image-preview:large"/>
-<link rel="canonical" href="https://YOURDOMAIN.com/blog.html"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Lush · Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#462986;--purple-d:#2d1a5e;--purple-dd:#1d1040;--gold:#c9a24b;--gold-l:#e6c97c;--cream:#faf7f1;--ink:#1e1535;--muted:#5d5675;--line:#e8e2f2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,-apple-system,Segoe UI,sans-serif;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem;width:100%}
+    header.nav{background:rgba(45,26,94,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(230,201,124,.18);padding:.6rem 0;position:sticky;top:0;z-index:50}
+    .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav img.logo{height:56px;width:auto}
+    .nav nav{display:flex;gap:1.6rem;align-items:center}
+    .nav nav a{color:#e9e3f7;font-size:.88rem;letter-spacing:.06em;transition:color .2s}
+    .nav nav a:hover{color:var(--gold-l)}
+    .nav .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.2rem;border-radius:999px;font:500 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid rgba(230,201,124,.7);cursor:pointer;transition:transform .2s,background .2s;background:transparent;color:#fff}
+    .nav .btn:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
 
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="Fast Solution Logistics"/>
-<meta property="og:locale" content="en_NG"/>
-<meta property="og:title" content="Logistics Blog | Fast Solution Logistics"/>
-<meta property="og:description" content="Guides on Lagos doorstep delivery, waybill across Nigeria, packing and e-commerce logistics."/>
-<meta property="og:url" content="https://YOURDOMAIN.com/blog.html"/>
-<meta property="og:image" content="https://YOURDOMAIN.com/og-image.jpg"/>
-<meta property="og:image:width" content="1200"/>
-<meta property="og:image:height" content="630"/>
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Logistics Blog | Fast Solution Logistics"/>
-<meta name="twitter:description" content="Guides on Lagos doorstep delivery, waybill across Nigeria, packing and e-commerce logistics."/>
-<meta name="twitter:image" content="https://YOURDOMAIN.com/og-image.jpg"/>
+    .hero{background:radial-gradient(900px 500px at 75% 40%,#6a45c2 0%,transparent 60%),linear-gradient(160deg,var(--purple) 0%,var(--purple-dd) 100%);color:#fff;padding:3.5rem 0 3rem;text-align:center}
+    .hero .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-l);font-weight:500;margin-bottom:.9rem}
+    .hero h1{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:600;line-height:1.1;margin-bottom:.8rem}
+    .hero h1 em{color:var(--gold-l);font-style:italic}
+    .hero p{color:#dcd4f0;max-width:36rem;margin:0 auto;font-size:1.05rem}
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Blog",
-  "name": "Fast Solution Logistics Blog",
-  "url": "https://YOURDOMAIN.com/blog.html",
-  "publisher": { "@type": "Organization", "name": "Fast Solution Logistics", "logo": { "@type": "ImageObject", "url": "https://YOURDOMAIN.com/logo-icon.png" } },
-  "blogPost": [{
-    "@type": "BlogPosting",
-    "headline": "Doorstep Delivery in Lagos and Waybill Across Nigeria: How It Works",
-    "url": "https://YOURDOMAIN.com/lagos-doorstep-delivery-and-nigeria-waybill.html",
-    "datePublished": "2026-10-14"
-  }]
-}
-</script>
+    .main{padding:3rem 0 4rem;flex:1}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+    @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.grid{grid-template-columns:1fr}}
 
-<link rel="icon" href="logo-icon.png" type="image/png"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = { theme: { extend: {
-  colors: { gold:'#D4AF37','gold-dark':'#B8962E','gold-light':'#F3E5AB','brand-blue':'#2563EB',dark:'#0A0A0A',charcoal:'#141414','surface-alt':'#F8F9FA' },
-  fontFamily: { heading:['Montserrat','sans-serif'], body:['Inter','sans-serif'] },
-  boxShadow: { 'gold-glow':'0 0 20px rgba(212,175,55,.35)' }
-}}}
-</script>
-<style>
-  html,body{max-width:100%;overflow-x:hidden}
-  .gold-gradient-text{background:linear-gradient(135deg,#FFF3BF 0%,#D4AF37 50%,#B8962E 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  a:focus-visible,button:focus-visible{outline:2px solid #D4AF37;outline-offset:3px}
-</style>
+    .post{background:#fff;border-radius:22px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s;cursor:pointer}
+    .post:hover{transform:translateY(-5px);box-shadow:0 22px 44px -24px rgba(45,26,94,.5)}
+    .post .cover{aspect-ratio:16/9;background:#f2eefa;overflow:hidden}
+    .post .cover img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+    .post:hover .cover img{transform:scale(1.05)}
+    .post .body{padding:1.5rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
+    .post .meta{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500}
+    .post h2{font-family:var(--serif);font-size:1.6rem;color:var(--purple-d);font-weight:600;line-height:1.2}
+    .post p{color:var(--muted);font-size:.95rem;flex:1}
+    .post .more{color:var(--purple);font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:.5rem}
+
+    .empty{text-align:center;padding:4rem 1rem;color:var(--muted)}
+    .empty b{display:block;font-family:var(--serif);font-size:1.8rem;color:var(--purple-d);margin-bottom:.5rem}
+
+    .loading{text-align:center;padding:4rem 1rem;color:var(--muted)}
+    .spinner{display:inline-block;width:32px;height:32px;border:3px solid rgba(70,41,134,.2);border-radius:50%;border-top-color:var(--purple);animation:spin .8s linear infinite;margin-bottom:1rem}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* Modal for full post */
+    .modal{position:fixed;inset:0;background:rgba(29,16,64,.85);display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;z-index:100;overflow-y:auto}
+    .modal.show{display:flex}
+    .modal-inner{background:#fff;border-radius:22px;max-width:760px;width:100%;padding:2.5rem 2.2rem;position:relative;margin:auto}
+    .modal-inner .close{position:absolute;top:1rem;right:1rem;background:var(--cream);border:none;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.2rem;color:var(--purple-d)}
+    .modal-inner .close:hover{background:var(--line)}
+    .modal-inner img.cover{width:100%;border-radius:14px;margin-bottom:1.4rem;max-height:380px;object-fit:cover}
+    .modal-inner .meta{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.6rem}
+    .modal-inner h1{font-family:var(--serif);font-size:2.2rem;color:var(--purple-d);font-weight:600;line-height:1.15;margin-bottom:1rem}
+    .modal-inner .content{color:var(--ink);font-size:1.02rem;line-height:1.75;white-space:pre-wrap;word-wrap:break-word}
+
+    .micro-footer{text-align:center;padding:1.8rem .5rem 1.2rem;font-size:.75rem;color:#9d92bf;letter-spacing:.04em}
+    @media(max-width:640px){.nav nav a:not(.btn){display:none}.nav .wrap{height:58px}.nav img.logo{height:44px}.modal-inner{padding:1.8rem 1.4rem}.modal-inner h1{font-size:1.7rem}}
+  </style>
 </head>
-<body class="bg-white text-dark font-body antialiased selection:bg-gold selection:text-dark">
+<body>
 
-<header class="fixed top-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
-    <a href="index.html" class="flex items-center gap-2 sm:gap-3 min-w-0">
-      <img src="logo-icon.png" alt="Fast Solution Logistics logo" class="h-9 sm:h-10 w-auto shrink-0"/>
-      <span class="font-heading font-extrabold text-[13px] min-[400px]:text-base sm:text-xl tracking-tight leading-tight whitespace-nowrap"><span class="text-gold">FAST</span> <span class="text-brand-blue">SOLUTION</span> <span class="text-gold">LOGISTICS</span></span>
-    </a>
-    <nav class="flex items-center gap-4 sm:gap-6 text-sm font-medium text-gray-800">
-      <a href="index.html#delivery" class="hidden sm:inline hover:text-gold">Delivery</a>
-      <a href="index.html#services" class="hidden sm:inline hover:text-gold">Services</a>
-      <a href="index.html#contact" class="bg-gold hover:bg-gold-dark text-dark font-heading font-bold text-[11px] tracking-wider uppercase px-4 py-2.5 rounded-full shadow-gold-glow">Contact</a>
-    </nav>
+  <header class="nav">
+    <div class="wrap">
+      <a href="GlobalLush.html"><img class="logo" src="images/logo-gold.png" alt="Global Lush logo" /></a>
+      <nav>
+        <a href="GlobalLush.html">Home</a>
+        <a href="store.html">Store</a>
+        <a href="blog.html">Blog</a>
+        <a class="btn" href="log.html">Log in</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Journal</p>
+      <h1>The <em>Global Lush</em> Blog</h1>
+      <p>Skin stories, routines, and ingredient guides from our team.</p>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="wrap">
+      <div id="loadingState" class="loading"><div class="spinner"></div><div>Loading posts…</div></div>
+      <div id="emptyState" class="empty" style="display:none"><b>No posts yet</b><p>Our first article is on the way.</p></div>
+      <div id="postGrid" class="grid"></div>
+    </div>
+  </main>
+
+  <div class="modal" id="postModal">
+    <div class="modal-inner">
+      <button class="close" id="closeModal">✕</button>
+      <img class="cover" id="mCover" src="" alt=""/>
+      <div class="meta" id="mMeta"></div>
+      <h1 id="mTitle"></h1>
+      <div class="content" id="mContent"></div>
+    </div>
   </div>
-</header>
 
-<main>
-  <!-- Header -->
-  <section class="bg-dark pt-28 sm:pt-36 pb-14 sm:pb-20">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <p class="text-gold text-sm font-semibold mb-3">Fast Solution Logistics Blog</p>
-      <h1 class="font-heading font-black text-3xl sm:text-5xl text-white leading-tight tracking-tight max-w-3xl">Delivery guides for <span class="gold-gradient-text">Lagos and all of Nigeria</span></h1>
-      <p class="text-gray-300 text-base sm:text-lg leading-relaxed mt-5 max-w-2xl">Straight answers on sending parcels, using waybill, packing properly and running deliveries for your business.</p>
-    </div>
-  </section>
+  <div class="micro-footer">© 2026 Global Lush · For external use only · Keep out of reach of children</div>
 
-  <!-- Featured post -->
-  <section class="py-12 sm:py-16">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <a href="lagos-doorstep-delivery-and-nigeria-waybill.html" class="group block rounded-3xl overflow-hidden border border-gray-200 hover:border-gold hover:shadow-gold-glow transition-all">
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <div class="bg-dark p-8 sm:p-10 flex flex-col justify-center min-h-[240px] md:min-h-[360px] border-l-8 border-gold">
-            <p class="font-heading font-extrabold text-xs sm:text-sm tracking-tight"><span class="text-gold">FAST</span> <span class="text-brand-blue">SOLUTION</span> <span class="text-gold">LOGISTICS</span></p>
-            <p class="font-heading font-black text-2xl sm:text-3xl text-white leading-tight mt-5">Doorstep delivery in Lagos.</p>
-            <p class="font-heading font-black text-2xl sm:text-3xl text-gold leading-tight">Waybill across Nigeria.</p>
-          </div>
-          <div class="p-6 sm:p-10 flex flex-col justify-center bg-white">
-            <p class="text-xs text-gray-500 mb-3">Delivery guide · <time datetime="2026-10-14">14 October 2026</time> · 7 min read</p>
-            <h2 class="font-heading font-extrabold text-xl sm:text-2xl text-dark leading-snug group-hover:text-gold-dark transition-colors">Doorstep Delivery in Lagos and Waybill Across Nigeria: How It Works, Step by Step</h2>
-            <p class="text-gray-600 text-sm sm:text-base leading-relaxed mt-3">What happens after you send your request, how waybill works for other states, what affects the price, and how to pack so your parcel arrives in one piece.</p>
-            <span class="mt-6 font-heading font-bold text-xs uppercase tracking-wider text-dark group-hover:text-gold-dark">Read the guide →</span>
-          </div>
-        </div>
-      </a>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function(){
+      'use strict';
+      const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
+      const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
+      const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 
-      <p class="text-gray-500 text-sm mt-10">More guides are on the way. Have a question you want answered? <a class="text-dark font-semibold underline decoration-gold underline-offset-4" href="https://wa.me/2347085308550?text=Hello%20Fast%20Solution%20Logistics%2C%20I%20have%20a%20question.">Ask us on WhatsApp</a>.</p>
-    </div>
-  </section>
+      // visitor tracking
+      (function(){
+        let vid=localStorage.getItem('gl_visitor_id');
+        if(!vid){vid='v_'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('gl_visitor_id',vid);}
+        sb.from('page_visits').insert([{page:'blog.html',visitor_id:vid,user_agent:navigator.userAgent.slice(0,200)}]).then(function(){}).catch(function(){});
+      })();
 
-  <!-- CTA -->
-  <section class="pb-16 sm:pb-24">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-dark rounded-3xl border border-gold/40 p-8 sm:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        <div>
-          <h2 class="font-heading font-extrabold text-xl sm:text-2xl text-white">Ready to send a package?</h2>
-          <p class="text-gray-400 text-sm mt-2">Tell us what you are sending and where it is going. We reply with a price.</p>
-        </div>
-        <a href="https://wa.me/2347085308550?text=Hello%20Fast%20Solution%20Logistics%2C%20I%20want%20to%20make%20a%20request." target="_blank" rel="noopener" class="shrink-0 inline-flex justify-center px-7 py-4 bg-gold hover:bg-gold-dark text-dark font-heading font-bold text-xs uppercase tracking-wider rounded-full shadow-gold-glow">Chat on WhatsApp</a>
-      </div>
-    </div>
-  </section>
-</main>
+      function esc(s){return s==null?'':String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+      function fmtDate(d){if(!d)return'';try{return new Date(d).toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'});}catch(e){return'';}}
 
-<footer class="bg-dark text-gray-400 border-t-2 border-gold py-10 text-center text-xs">
-  <p class="mb-3"><a class="text-gold hover:underline" href="index.html">Home</a> · <a class="hover:text-gold" href="index.html#services">Services</a> · <a class="hover:text-gold" href="index.html#contact">Contact</a></p>
-  <p>© 2026 Fast Solution Logistics. All rights reserved. · 0708 530 8550 · fastsolutionlogistics1@gmail.com</p>
-</footer>
+      const grid=document.getElementById('postGrid');
+      const loadingEl=document.getElementById('loadingState');
+      const emptyEl=document.getElementById('emptyState');
+      let allPosts=[];
 
+      function render(list){
+        loadingEl.style.display='none';
+        allPosts=list;
+        if(!list.length){emptyEl.style.display='block';grid.innerHTML='';return;}
+        emptyEl.style.display='none';
+        grid.innerHTML=list.map(function(p,i){
+          const cover=p.cover_image||'images/og-global-lush.jpg';
+          return `
+            <article class="post" data-i="${i}">
+              <div class="cover"><img src="${esc(cover)}" alt="${esc(p.title)}" loading="lazy" onerror="this.src='images/p-strawberry.jpg'"/></div>
+              <div class="body">
+                <div class="meta">${fmtDate(p.created_at)} · ${esc(p.author||'Global Lush')}</div>
+                <h2>${esc(p.title)}</h2>
+                <p>${esc(p.excerpt||'')}</p>
+                <div class="more">Read more →</div>
+              </div>
+            </article>
+          `;
+        }).join('');
+        grid.querySelectorAll('.post').forEach(function(el){
+          el.addEventListener('click',function(){openPost(Number(el.dataset.i));});
+        });
+      }
+
+      // modal
+      const modal=document.getElementById('postModal');
+      const mCover=document.getElementById('mCover');
+      const mMeta=document.getElementById('mMeta');
+      const mTitle=document.getElementById('mTitle');
+      const mContent=document.getElementById('mContent');
+
+      function openPost(i){
+        const p=allPosts[i];if(!p)return;
+        const cover=p.cover_image||'images/og-global-lush.jpg';
+        mCover.src=cover;
+        mCover.style.display=p.cover_image?'block':'none';
+        mMeta.textContent=fmtDate(p.created_at)+' · '+(p.author||'Global Lush');
+        mTitle.textContent=p.title||'';
+        mContent.textContent=p.content||p.excerpt||'';
+        modal.classList.add('show');
+        document.body.style.overflow='hidden';
+      }
+      function closeModal(){modal.classList.remove('show');document.body.style.overflow='';}
+      document.getElementById('closeModal').addEventListener('click',closeModal);
+      modal.addEventListener('click',function(e){if(e.target===modal)closeModal();});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+
+      function load(){
+        sb.from('blog_posts').select('*').eq('published',true).order('created_at',{ascending:false})
+          .then(function(res){
+            if(res.error){console.error('Blog error:',res.error);loadingEl.innerHTML='<div style="color:#b33">Could not load posts.</div>';return;}
+            render(res.data||[]);
+          });
+      }
+      load();
+      sb.channel('blog-live').on('postgres_changes',{event:'*',schema:'public',table:'blog_posts'},load).subscribe();
+    })();
+  </script>
 </body>
 </html>

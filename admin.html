@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Lush · Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--purple:#462986;--purple-d:#2d1a5e;--purple-dd:#1d1040;--gold:#c9a24b;--gold-l:#e6c97c;--cream:#faf7f1;--ink:#1e1535;--muted:#5d5675;--line:#e8e2f2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,-apple-system,Segoe UI,sans-serif;--red:#b33;--green:#2e7d32;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.55;min-height:100vh}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1280px;margin:0 auto;padding:0 1.25rem;width:100%}
+    header.nav{background:rgba(45,26,94,.98);backdrop-filter:blur(10px);border-bottom:1px solid rgba(230,201,124,.18);padding:.6rem 0;position:sticky;top:0;z-index:50}
+    .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .nav img.logo{height:52px}
+    .nav nav{display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap}
+    .nav nav a,.nav nav button{color:#e9e3f7;font-size:.85rem;letter-spacing:.06em;background:none;border:none;cursor:pointer;font-family:var(--sans)}
+    .nav nav a:hover,.nav nav button:hover{color:var(--gold-l)}
+    .nav .badge{background:var(--gold);color:var(--purple-dd);padding:.35rem .8rem;border-radius:999px;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+
+    .wrap.main{padding-top:2rem;padding-bottom:3rem;max-width:1280px}
+    .tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;border-bottom:1px solid var(--line);padding-bottom:.5rem}
+    .tab{padding:.7rem 1.3rem;border-radius:999px 999px 0 0;background:transparent;border:none;color:var(--muted);font:500 .82rem var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+    .tab.active{background:var(--purple);color:#fff}
+    .tab:hover:not(.active){background:var(--cream);color:var(--purple-d)}
+
+    .panel{display:none}
+    .panel.active{display:block}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;margin-bottom:2rem}
+    @media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px){.stats{grid-template-columns:1fr}}
+    .stat{background:#fff;border-radius:20px;padding:1.5rem;border:1px solid var(--line)}
+    .stat .label{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+    .stat .value{font-family:var(--serif);font-size:2.4rem;color:var(--purple-d);font-weight:600;line-height:1}
+    .stat .sub{font-size:.82rem;color:var(--muted);margin-top:.4rem}
+
+    .card{background:#fff;border-radius:22px;padding:1.8rem;border:1px solid var(--line);margin-bottom:1.6rem}
+    .card h2{font-family:var(--serif);font-size:1.7rem;color:var(--purple-d);font-weight:600;margin-bottom:1.2rem}
+
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+    @media(max-width:700px){.form-row{grid-template-columns:1fr}}
+    .form-row.full{grid-template-columns:1fr}
+    label{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--purple-d);font-weight:500;margin-bottom:.35rem}
+    input,select,textarea{width:100%;padding:.8rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-family:var(--sans);font-size:.95rem;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none}
+    input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,162,75,.15)}
+    textarea{resize:vertical;min-height:110px;line-height:1.5}
+    input[type="checkbox"]{width:auto;margin-right:.5rem;accent-color:var(--purple);transform:scale(1.1);vertical-align:middle}
+
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.85rem 1.6rem;border-radius:999px;font:500 .78rem var(--sans);letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;font-family:var(--sans)}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-d));color:#fff;box-shadow:0 10px 24px -10px rgba(70,41,134,.6)}
+    .btn-gold{background:linear-gradient(135deg,var(--gold-l),var(--gold));color:var(--purple-dd);box-shadow:0 10px 24px -10px rgba(201,162,75,.6)}
+    .btn-danger{background:var(--red);color:#fff}
+    .btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--purple-d)}
+    .btn-ghost:hover{border-color:var(--gold)}
+    .btn-sm{padding:.5rem 1rem;font-size:.7rem}
+
+    .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem}
+    .item{background:var(--cream);border-radius:18px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column}
+    .item img{aspect-ratio:1/1;object-fit:cover;background:#f2eefa;width:100%}
+    .item .body{padding:1rem;display:flex;flex-direction:column;gap:.4rem;flex:1}
+    .item h3{font-family:var(--serif);font-size:1.2rem;color:var(--purple-d);font-weight:600;line-height:1.2}
+    .item p{font-size:.85rem;color:var(--muted);flex:1}
+    .item .price{font-family:var(--serif);font-size:1.15rem;color:var(--purple);font-weight:600}
+    .item .actions{display:flex;gap:.5rem;margin-top:.6rem}
+
+    .post-item{background:var(--cream);border-radius:18px;padding:1.2rem;border:1px solid var(--line);margin-bottom:1rem;display:flex;gap:1rem;align-items:flex-start}
+    .post-item img{width:100px;height:100px;object-fit:cover;border-radius:12px;flex-shrink:0;background:#f2eefa}
+    .post-item .meta{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500}
+    .post-item h3{font-family:var(--serif);font-size:1.3rem;color:var(--purple-d);font-weight:600;line-height:1.2;margin:.2rem 0}
+    .post-item p{font-size:.9rem;color:var(--muted)}
+    @media(max-width:500px){.post-item{flex-direction:column}.post-item img{width:100%;height:180px}}
+
+    .msg{border-radius:14px;padding:.9rem 1.1rem;font-size:.9rem;margin-top:1rem;display:none}
+    .msg.show{display:block}
+    .msg.ok{background:#e8f5e9;color:#1e5e2e;border-left:4px solid var(--green)}
+    .msg.err{background:#fdecea;color:#8b1a1a;border-left:4px solid var(--red)}
+
+    .empty{text-align:center;padding:3rem 1rem;color:var(--muted);font-size:.95rem}
+
+    .modal{position:fixed;inset:0;background:rgba(29,16,64,.85);display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;z-index:100;overflow-y:auto}
+    .modal.show{display:flex}
+    .modal-inner{background:#fff;border-radius:22px;max-width:720px;width:100%;padding:2rem;position:relative;margin:auto}
+    .modal-inner .close{position:absolute;top:1rem;right:1rem;background:var(--cream);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem;color:var(--purple-d)}
+    .modal-inner h2{font-family:var(--serif);font-size:1.9rem;color:var(--purple-d);margin-bottom:1.2rem}
+
+    .login-gate{max-width:420px;margin:6rem auto;background:#fff;border-radius:24px;padding:2.5rem;border:1px solid var(--line);text-align:center}
+    .login-gate h1{font-family:var(--serif);font-size:2rem;color:var(--purple-d);margin-bottom:.5rem}
+    .login-gate p{color:var(--muted);margin-bottom:1.5rem}
+    .hidden{display:none !important}
+
+    .chart{display:flex;align-items:flex-end;gap:.6rem;height:140px;padding:1rem 0;border-bottom:1px solid var(--line)}
+    .bar{flex:1;background:linear-gradient(180deg,var(--purple),var(--purple-d));border-radius:6px 6px 0 0;min-height:4px;position:relative;transition:opacity .2s}
+    .bar:hover{opacity:.8}
+    .bar .count{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:.75rem;color:var(--purple-d);font-weight:600}
+    .bar-labels{display:flex;gap:.6rem;padding:.4rem 0}
+    .bar-labels span{flex:1;text-align:center;font-size:.7rem;color:var(--muted)}
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap">
+      <a href="GlobalLush.html"><img class="logo" src="images/logo-gold.png" alt="Global Lush logo" /></a>
+      <nav id="adminNav" class="hidden">
+        <a href="store.html" target="_blank">View Store ↗</a>
+        <a href="blog.html" target="_blank">View Blog ↗</a>
+        <span class="badge">Admin</span>
+        <button id="signOutBtn">Sign out</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- login gate -->
+  <div id="loginGate" class="login-gate">
+    <h1>Admin login</h1>
+    <p>Sign in to manage products, blog posts and analytics.</p>
+    <div class="form-row full">
+      <input type="email" id="adminEmail" placeholder="admin@globallush.com" />
+    </div>
+    <div class="form-row full" style="margin-top:.8rem">
+      <input type="password" id="adminPassword" placeholder="Password" />
+    </div>
+    <button class="btn btn-primary" id="adminLoginBtn" style="width:100%;margin-top:1.2rem">Sign in</button>
+    <div class="msg" id="gateMsg"></div>
+  </div>
+
+  <!-- admin dashboard -->
+  <div id="adminPanel" class="wrap main hidden">
+
+    <div class="tabs">
+      <button class="tab active" data-panel="analytics">Analytics</button>
+      <button class="tab" data-panel="products">Products</button>
+      <button class="tab" data-panel="blog">Blog</button>
+    </div>
+
+    <!-- ANALYTICS -->
+    <div class="panel active" id="panel-analytics">
+      <div class="stats">
+        <div class="stat"><div class="label">Total visits</div><div class="value" id="statVisits">—</div><div class="sub">All time</div></div>
+        <div class="stat"><div class="label">Today</div><div class="value" id="statToday">—</div><div class="sub">Visits today</div></div>
+        <div class="stat"><div class="label">Unique visitors</div><div class="value" id="statUnique">—</div><div class="sub">Distinct devices</div></div>
+        <div class="stat"><div class="label">Products live</div><div class="value" id="statProducts">—</div><div class="sub">In store</div></div>
+      </div>
+
+      <div class="card">
+        <h2>Traffic last 7 days</h2>
+        <div class="chart" id="chart"></div>
+        <div class="bar-labels" id="chartLabels"></div>
+      </div>
+
+      <div class="card">
+        <h2>Recent activity</h2>
+        <div id="recentList" class="empty">No visits recorded yet.</div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="panel" id="panel-products">
+      <div class="card">
+        <h2>Add a product</h2>
+        <div class="form-row">
+          <div><label>Product name *</label><input id="pName" placeholder="e.g. Strawberry Body Wash 1000ml"/></div>
+          <div><label>Price (₦)</label><input id="pPrice" type="number" placeholder="14000"/></div>
+        </div>
+        <div class="form-row">
+          <div><label>Category</label>
+            <select id="pCategory">
+              <option value="body-wash">Body Wash with Scrub</option>
+              <option value="lotion">Body Massage Lotion</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div><label>Image URL</label><input id="pImage" placeholder="images/p-strawberry.jpg or https://..."/></div>
+        </div>
+        <div class="form-row full"><label>Description</label><textarea id="pDesc" placeholder="Short description shown on the card"></textarea></div>
+        <div style="margin-bottom:1rem"><label><input type="checkbox" id="pInStock" checked/> In stock</label></div>
+        <button class="btn btn-primary" id="addProductBtn">Add product</button>
+        <div class="msg" id="productMsg"></div>
+      </div>
+
+      <div class="card">
+        <h2>Live products (<span id="prodCount">0</span>)</h2>
+        <div id="productList" class="items"></div>
+      </div>
+    </div>
+
+    <!-- BLOG -->
+    <div class="panel" id="panel-blog">
+      <div class="card">
+        <h2>Write a blog post</h2>
+        <div class="form-row full"><label>Title *</label><input id="bTitle" placeholder="Post title"/></div>
+        <div class="form-row">
+          <div><label>Author</label><input id="bAuthor" placeholder="Global Lush" value="Global Lush"/></div>
+          <div><label>Cover image URL</label><input id="bCover" placeholder="images/og-global-lush.jpg or https://..."/></div>
+        </div>
+        <div class="form-row full"><label>Short excerpt</label><textarea id="bExcerpt" placeholder="1-2 sentence summary shown on the card" style="min-height:70px"></textarea></div>
+        <div class="form-row full"><label>Full content *</label><textarea id="bContent" placeholder="Write your post here..." style="min-height:180px"></textarea></div>
+        <div style="margin-bottom:1rem"><label><input type="checkbox" id="bPublished" checked/> Publish immediately</label></div>
+        <button class="btn btn-primary" id="addPostBtn">Publish post</button>
+        <div class="msg" id="blogMsg"></div>
+      </div>
+
+      <div class="card">
+        <h2>Posts (<span id="postCount">0</span>)</h2>
+        <div id="postList"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- edit modal -->
+  <div class="modal" id="editModal">
+    <div class="modal-inner">
+      <button class="close" id="closeEdit">✕</button>
+      <h2 id="editTitle">Edit</h2>
+      <div id="editForm"></div>
+      <div style="display:flex;gap:.6rem;margin-top:1.4rem">
+        <button class="btn btn-primary" id="saveEditBtn">Save changes</button>
+        <button class="btn btn-ghost" id="cancelEditBtn">Cancel</button>
+      </div>
+      <div class="msg" id="editMsg"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    (function(){
+      'use strict';
+
+      const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
+      const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
+
+      const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+
+      const $=id=>document.getElementById(id);
+      const esc=s=>s==null?'':String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      const money=p=>p==null||p===''?'':'₦'+Number(p).toLocaleString();
+      const fmtDate=d=>{try{return new Date(d).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});}catch(e){return'';}};
+
+      let currentUser=null;
+      let products=[],posts=[];
+
+      // ---------- AUTH ----------
+      function getSession(){
+        try{return JSON.parse(localStorage.getItem('gl_admin')||'null');}catch(e){return null;}
+      }
+      function setSession(u){
+        try{if(u)localStorage.setItem('gl_admin',JSON.stringify(u));else localStorage.removeItem('gl_admin');}catch(e){}
+      }
+
+      function showPanel(user){
+        currentUser=user;
+        $('loginGate').classList.add('hidden');
+        $('adminPanel').classList.remove('hidden');
+        $('adminNav').classList.remove('hidden');
+        loadAll();
+      }
+      function showGate(){
+        currentUser=null;
+        $('loginGate').classList.remove('hidden');
+        $('adminPanel').classList.add('hidden');
+        $('adminNav').classList.add('hidden');
+      }
+
+      $('adminLoginBtn').addEventListener('click',async function(){
+        const email=$('adminEmail').value.trim().toLowerCase();
+        const pw=$('adminPassword').value;
+        const m=$('gateMsg');
+        m.className='msg';
+        if(!email||!pw){m.className='msg err show';m.textContent='Enter email and password.';return;}
+        $('adminLoginBtn').disabled=true;$('adminLoginBtn').textContent='Signing in…';
+        try{
+          const {data,error}=await sb.from('clients').select('*').eq('email',email).eq('is_admin',true).maybeSingle();
+          if(error){m.className='msg err show';m.textContent='Error: '+error.message;return;}
+          if(!data){m.className='msg err show';m.textContent='No admin account with this email.';return;}
+          if(data.password!==pw){m.className='msg err show';m.textContent='Incorrect password.';return;}
+          setSession({id:data.id,email:data.email,full_name:data.full_name});
+          showPanel(data);
+        }catch(e){m.className='msg err show';m.textContent='Network error.';}
+        finally{$('adminLoginBtn').disabled=false;$('adminLoginBtn').textContent='Sign in';}
+      });
+
+      $('signOutBtn').addEventListener('click',function(){setSession(null);showGate();});
+
+      // auto-login
+      (function(){
+        const s=getSession();
+        if(s)showPanel(s);else showGate();
+      })();
+
+      // ---------- TABS ----------
+      document.querySelectorAll('.tab').forEach(function(t){
+        t.addEventListener('click',function(){
+          document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+          document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+          t.classList.add('active');
+          $('panel-'+t.dataset.panel).classList.add('active');
+        });
+      });
+
+      // ---------- ANALYTICS ----------
+      async function loadAnalytics(){
+        const {data:visits,error}=await sb.from('page_visits').select('*').order('created_at',{ascending:false}).limit(500);
+        if(error){console.error(error);return;}
+        const all=visits||[];
+        const today=new Date().toISOString().slice(0,10);
+        const todayCount=all.filter(v=>v.created_at&&v.created_at.slice(0,10)===today).length;
+        const uniq=new Set(all.map(v=>v.visitor_id).filter(Boolean)).size;
+        $('statVisits').textContent=all.length;
+        $('statToday').textContent=todayCount;
+        $('statUnique').textContent=uniq;
+        $('statProducts').textContent=products.length;
+
+        // chart last 7 days
+        const days=[];
+        const counts=[];
+        for(let i=6;i>=0;i--){
+          const d=new Date();d.setDate(d.getDate()-i);
+          const key=d.toISOString().slice(0,10);
+          days.push(d.toLocaleDateString(undefined,{weekday:'short'}));
+          counts.push(all.filter(v=>v.created_at&&v.created_at.slice(0,10)===key).length);
+        }
+        const max=Math.max.apply(null,counts.concat([1]));
+        $('chart').innerHTML=counts.map(function(c){
+          const h=Math.max(4,(c/max)*130);
+          return '<div class="bar" style="height:'+h+'px"><span class="count">'+c+'</span></div>';
+        }).join('');
+        $('chartLabels').innerHTML=days.map(d=>'<span>'+d+'</span>').join('');
+
+        // recent
+        const recent=all.slice(0,12);
+        $('recentList').innerHTML=recent.length?recent.map(function(v){
+          return '<div style="display:flex;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--line);font-size:.88rem"><span><b style="color:var(--purple-d)">'+esc(v.page)+'</b> · '+esc((v.visitor_id||'').slice(0,12))+'</span><span style="color:var(--muted)">'+fmtDate(v.created_at)+'</span></div>';
+        }).join(''):'<div class="empty">No visits recorded yet.</div>';
+      }
+
+      // ---------- PRODUCTS ----------
+      async function loadProducts(){
+        const {data,error}=await sb.from('products').select('*').order('created_at',{ascending:false});
+        if(error){console.error(error);return;}
+        products=data||[];
+        $('prodCount').textContent=products.length;
+        $('statProducts').textContent=products.length;
+        const list=$('productList');
+        if(!products.length){list.innerHTML='<div class="empty">No products yet. Add one above.</div>';return;}
+        list.innerHTML=products.map(function(p){
+          const img=p.image_url||'images/p-strawberry.jpg';
+          return '<div class="item"><img src="'+esc(img)+'" alt="" onerror="this.src=\'images/p-strawberry.jpg\'"/><div class="body"><h3>'+esc(p.name)+'</h3><p>'+esc(p.description||'')+'</p><div class="price">'+money(p.price)+'</div><div class="actions"><button class="btn btn-ghost btn-sm" data-edit-p="'+p.id+'">Edit</button><button class="btn btn-danger btn-sm" data-del-p="'+p.id+'">Delete</button></div></div></div>';
+        }).join('');
+        list.querySelectorAll('[data-edit-p]').forEach(b=>b.addEventListener('click',()=>openEditProduct(b.dataset.editP)));
+        list.querySelectorAll('[data-del-p]').forEach(b=>b.addEventListener('click',()=>delProduct(b.dataset.delP)));
+      }
+
+      $('addProductBtn').addEventListener('click',async function(){
+        const m=$('productMsg');m.className='msg';
+        const name=$('pName').value.trim();
+        if(!name){m.className='msg err show';m.textContent='Product name is required.';return;}
+        const row={
+          name:name,
+          description:$('pDesc').value.trim()||null,
+          price:$('pPrice').value?Number($('pPrice').value):null,
+          image_url:$('pImage').value.trim()||null,
+          category:$('pCategory').value,
+          in_stock:$('pInStock').checked
+        };
+        this.disabled=true;this.textContent='Adding…';
+        const {error}=await sb.from('products').insert([row]);
+        this.disabled=false;this.textContent='Add product';
+        if(error){m.className='msg err show';m.textContent='Error: '+error.message;return;}
+        m.className='msg ok show';m.textContent='Product added and live on the store.';
+        $('pName').value='';$('pDesc').value='';$('pPrice').value='';$('pImage').value='';$('pInStock').checked=true;
+        loadProducts();
+      });
+
+      function openEditProduct(id){
+        const p=products.find(x=>x.id===id);if(!p)return;
+        $('editTitle').textContent='Edit product';
+        $('editForm').innerHTML=`
+          <div class="form-row"><div><label>Name</label><input id="eName" value="${esc(p.name)}"/></div><div><label>Price (₦)</label><input id="ePrice" type="number" value="${p.price||''}"/></div></div>
+          <div class="form-row"><div><label>Category</label><select id="eCategory">
+            <option value="body-wash"${p.category==='body-wash'?' selected':''}>Body Wash with Scrub</option>
+            <option value="lotion"${p.category==='lotion'?' selected':''}>Body Massage Lotion</option>
+            <option value="other"${p.category==='other'?' selected':''}>Other</option>
+          </select></div><div><label>Image URL</label><input id="eImage" value="${esc(p.image_url||'')}"/></div></div>
+          <div class="form-row full"><label>Description</label><textarea id="eDesc">${esc(p.description||'')}</textarea></div>
+          <div><label><input type="checkbox" id="eStock" ${p.in_stock?'checked':''}/> In stock</label></div>
+        `;
+        $('editModal').classList.add('show');
+        $('saveEditBtn').onclick=async function(){
+          const m=$('editMsg');m.className='msg';
+          const upd={
+            name:$('eName').value.trim(),
+            price:$('ePrice').value?Number($('ePrice').value):null,
+            category:$('eCategory').value,
+            image_url:$('eImage').value.trim()||null,
+            description:$('eDesc').value.trim()||null,
+            in_stock:$('eStock').checked,
+            updated_at:new Date().toISOString()
+          };
+          const {error}=await sb.from('products').update(upd).eq('id',id);
+          if(error){m.className='msg err show';m.textContent='Error: '+error.message;return;}
+          $('editModal').classList.remove('show');
+          loadProducts();
+        };
+      }
+
+      async function delProduct(id){
+        if(!confirm('Delete this product? It will disappear from the store.'))return;
+        const {error}=await sb.from('products').delete().eq('id',id);
+        if(error){alert('Error: '+error.message);return;}
+        loadProducts();
+      }
+
+      // ---------- BLOG ----------
+      async function loadPosts(){
+        const {data,error}=await sb.from('blog_posts').select('*').order('created_at',{ascending:false});
+        if(error){console.error(error);return;}
+        posts=data||[];
+        $('postCount').textContent=posts.length;
+        const list=$('postList');
+        if(!posts.length){list.innerHTML='<div class="empty">No posts yet. Write one above.</div>';return;}
+        list.innerHTML=posts.map(function(p){
+          const img=p.cover_image||'images/p-strawberry.jpg';
+          return '<div class="post-item"><img src="'+esc(img)+'" alt="" onerror="this.src=\'images/p-strawberry.jpg\'"/><div style="flex:1"><div class="meta">'+fmtDate(p.created_at)+' · '+(p.published?'Published':'Draft')+'</div><h3>'+esc(p.title)+'</h3><p>'+esc(p.excerpt||'')+'</p><div style="display:flex;gap:.5rem;margin-top:.7rem"><button class="btn btn-ghost btn-sm" data-edit-b="'+p.id+'">Edit</button><button class="btn btn-danger btn-sm" data-del-b="'+p.id+'">Delete</button></div></div></div>';
+        }).join('');
+        list.querySelectorAll('[data-edit-b]').forEach(b=>b.addEventListener('click',()=>openEditPost(b.dataset.editB)));
+        list.querySelectorAll('[data-del-b]').forEach(b=>b.addEventListener('click',()=>delPost(b.dataset.delB)));
+      }
+
+      $('addPostBtn').addEventListener('click',async function(){
+        const m=$('blogMsg');m.className='msg';
+        const title=$('bTitle').value.trim();
+        const content=$('bContent').value.trim();
+        if(!title||!content){m.className='msg err show';m.textContent='Title and content are required.';return;}
+        const row={
+          title:title,
+          excerpt:$('bExcerpt').value.trim()||null,
+          content:content,
+          cover_image:$('bCover').value.trim()||null,
+          author:$('bAuthor').value.trim()||'Global Lush',
+          published:$('bPublished').checked
+        };
+        this.disabled=true;this.textContent='Publishing…';
+        const {error}=await sb.from('blog_posts').insert([row]);
+        this.disabled=false;this.textContent='Publish post';
+        if(error){m.className='msg err show';m.textContent='Error: '+error.message;return;}
+        m.className='msg ok show';m.textContent='Post published and live on the blog.';
+        $('bTitle').value='';$('bExcerpt').value='';$('bContent').value='';$('bCover').value='';$('bPublished').checked=true;
+        loadPosts();
+      });
+
+      function openEditPost(id){
+        const p=posts.find(x=>x.id===id);if(!p)return;
+        $('editTitle').textContent='Edit post';
+        $('editForm').innerHTML=`
+          <div class="form-row full"><label>Title</label><input id="eBTitle" value="${esc(p.title)}"/></div>
+          <div class="form-row"><div><label>Author</label><input id="eBAuthor" value="${esc(p.author||'Global Lush')}"/></div><div><label>Cover image URL</label><input id="eBCover" value="${esc(p.cover_image||'')}"/></div></div>
+          <div class="form-row full"><label>Excerpt</label><textarea id="eBExcerpt" style="min-height:70px">${esc(p.excerpt||'')}</textarea></div>
+          <div class="form-row full"><label>Content</label><textarea id="eBContent" style="min-height:200px">${esc(p.content||'')}</textarea></div>
+          <div><label><input type="checkbox" id="eBPublished" ${p.published?'checked':''}/> Published</label></div>
+        `;
+        $('editModal').classList.add('show');
+        $('saveEditBtn').onclick=async function(){
+          const m=$('editMsg');m.className='msg';
+          const upd={
+            title:$('eBTitle').value.trim(),
+            author:$('eBAuthor').value.trim()||'Global Lush',
+            cover_image:$('eBCover').value.trim()||null,
+            excerpt:$('eBExcerpt').value.trim()||null,
+            content:$('eBContent').value.trim(),
+            published:$('eBPublished').checked,
+            updated_at:new Date().toISOString()
+          };
+          const {error}=await sb.from('blog_posts').update(upd).eq('id',id);
+          if(error){m.className='msg err show';m.textContent='Error: '+error.message;return;}
+          $('editModal').classList.remove('show');
+          loadPosts();
+        };
+      }
+
+      async function delPost(id){
+        if(!confirm('Delete this post? It will disappear from the blog.'))return;
+        const {error}=await sb.from('blog_posts').delete().eq('id',id);
+        if(error){alert('Error: '+error.message);return;}
+        loadPosts();
+      }
+
+      // close modal
+      $('closeEdit').addEventListener('click',()=>$('editModal').classList.remove('show'));
+      $('cancelEditBtn').addEventListener('click',()=>$('editModal').classList.remove('show'));
+      $('editModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+
+      // ---------- LOAD ALL ----------
+      function loadAll(){
+        loadAnalytics();
+        loadProducts();
+        loadPosts();
+      }
+
+      // realtime + auto refresh analytics
+      sb.channel('admin-products').on('postgres_changes',{event:'*',schema:'public',table:'products'},loadProducts).subscribe();
+      sb.channel('admin-posts').on('postgres_changes',{event:'*',schema:'public',table:'blog_posts'},loadPosts).subscribe();
+      sb.channel('admin-visits').on('postgres_changes',{event:'INSERT',schema:'public',table:'page_visits'},loadAnalytics).subscribe();
+      setInterval(loadAnalytics,30000);
+
+    })();
+  </script>
+</body>
+</html>

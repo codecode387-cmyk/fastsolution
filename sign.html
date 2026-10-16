@@ -21,326 +21,57 @@
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans: 'Jost', system-ui, -apple-system, Segoe UI, sans-serif;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-
-    body {
-      font-family: var(--sans);
-      color: var(--ink);
-      background: var(--cream);
-      line-height: 1.65;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
+    body { font-family: var(--sans); color: var(--ink); background: var(--cream); line-height: 1.65; min-height: 100vh; display: flex; flex-direction: column; }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
-
-    .wrap {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 0 1.25rem;
-      width: 100%;
-    }
-
-    /* header */
-    header.nav {
-      background: rgba(45, 26, 94, 0.96);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(230, 201, 124, 0.18);
-      padding: 0.6rem 0;
-    }
-
-    .nav .wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 68px;
-    }
-
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; width: 100%; }
+    header.nav { background: rgba(45, 26, 94, 0.96); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(230, 201, 124, 0.18); padding: 0.6rem 0; }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .nav img.logo { height: 56px; width: auto; }
-
     .nav nav { display: flex; gap: 1.6rem; align-items: center; }
-
-    .nav nav a {
-      color: #e9e3f7;
-      font-size: 0.88rem;
-      letter-spacing: 0.06em;
-      transition: color 0.2s;
-    }
-
+    .nav nav a { color: #e9e3f7; font-size: 0.88rem; letter-spacing: 0.06em; transition: color 0.2s; }
     .nav nav a:hover { color: var(--gold-l); }
-
-    .nav .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.2rem;
-      border-radius: 999px;
-      font: 500 0.72rem/1 var(--sans);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border: 1.5px solid rgba(230, 201, 124, 0.7);
-      cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
-      background: transparent;
-      color: #fff;
-    }
-
+    .nav .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.7rem 1.2rem; border-radius: 999px; font: 500 0.72rem/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; border: 1.5px solid rgba(230, 201, 124, 0.7); cursor: pointer; transition: transform 0.2s, background 0.2s; background: transparent; color: #fff; }
     .nav .btn:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
-
-    /* signup */
-    .signup-section {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1rem 4rem;
-      background: radial-gradient(900px 500px at 20% 30%, #e8e0f5 0%, transparent 60%),
-                  linear-gradient(160deg, var(--cream) 0%, #f3effa 100%);
-    }
-
-    .signup-card {
-      background: #ffffff;
-      border-radius: 32px;
-      box-shadow: 0 30px 60px -20px rgba(45, 26, 94, 0.35);
-      max-width: 540px;
-      width: 100%;
-      padding: 2.8rem 2.5rem;
-      border: 1px solid rgba(201, 162, 75, 0.25);
-      transition: transform 0.3s;
-    }
-
+    .signup-section { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1rem 4rem; background: radial-gradient(900px 500px at 20% 30%, #e8e0f5 0%, transparent 60%), linear-gradient(160deg, var(--cream) 0%, #f3effa 100%); }
+    .signup-card { background: #ffffff; border-radius: 32px; box-shadow: 0 30px 60px -20px rgba(45, 26, 94, 0.35); max-width: 540px; width: 100%; padding: 2.8rem 2.5rem; border: 1px solid rgba(201, 162, 75, 0.25); transition: transform 0.3s; }
     .signup-card:hover { transform: translateY(-4px); }
-
-    .signup-card .eyebrow {
-      font-size: 0.78rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-
-    .signup-card h1 {
-      font-family: var(--serif);
-      font-size: 2.8rem;
-      font-weight: 600;
-      line-height: 1.1;
-      color: var(--purple-d);
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .signup-card .subhead {
-      text-align: center;
-      color: var(--muted);
-      font-size: 1.02rem;
-      margin-bottom: 2rem;
-      max-width: 36ch;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
+    .signup-card .eyebrow { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.5rem; text-align: center; }
+    .signup-card h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 600; line-height: 1.1; color: var(--purple-d); text-align: center; margin-bottom: 0.5rem; }
+    .signup-card .subhead { text-align: center; color: var(--muted); font-size: 1.02rem; margin-bottom: 2rem; max-width: 36ch; margin-left: auto; margin-right: auto; }
     .signup-card .subhead em { color: var(--purple); font-style: italic; }
-
     .form-group { margin-bottom: 1.4rem; }
-
-    .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--purple-d);
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 0.9rem 1.2rem;
-      border-radius: 16px;
-      border: 1.5px solid var(--line);
-      background: #ffffff;
-      font-family: var(--sans);
-      font-size: 0.98rem;
-      color: var(--ink);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-      appearance: none;
-    }
-
-    .form-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23462986' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1.2rem center;
-      background-size: 14px;
-      padding-right: 2.8rem;
-      cursor: pointer;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 4px rgba(201, 162, 75, 0.15);
-    }
-
+    .form-group label { display: block; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--purple-d); font-weight: 500; margin-bottom: 0.4rem; }
+    .form-group input, .form-group select { width: 100%; padding: 0.9rem 1.2rem; border-radius: 16px; border: 1.5px solid var(--line); background: #ffffff; font-family: var(--sans); font-size: 0.98rem; color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; appearance: none; }
+    .form-group select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23462986' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.2rem center; background-size: 14px; padding-right: 2.8rem; cursor: pointer; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201, 162, 75, 0.15); }
     .form-group input::placeholder { color: #b0a8c9; font-weight: 300; }
-
-    .form-group input.error,
-    .form-group select.error {
-      border-color: #d44;
-      box-shadow: 0 0 0 4px rgba(221, 68, 68, 0.12);
-    }
-
-    .check-group {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.7rem;
-      margin: 1.8rem 0 1.4rem;
-    }
-
-    .check-group input[type="checkbox"] {
-      width: 1.1rem;
-      height: 1.1rem;
-      accent-color: var(--purple);
-      flex-shrink: 0;
-      margin-top: 0.2rem;
-      cursor: pointer;
-    }
-
-    .check-group label {
-      font-size: 0.88rem;
-      color: var(--muted);
-      text-transform: none;
-      letter-spacing: 0;
-      font-weight: 400;
-      cursor: pointer;
-      line-height: 1.5;
-    }
-
-    .check-group label a {
-      color: var(--purple);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
+    .form-group input.error, .form-group select.error { border-color: #d44; box-shadow: 0 0 0 4px rgba(221, 68, 68, 0.12); }
+    .check-group { display: flex; align-items: flex-start; gap: 0.7rem; margin: 1.8rem 0 1.4rem; }
+    .check-group input[type="checkbox"] { width: 1.1rem; height: 1.1rem; accent-color: var(--purple); flex-shrink: 0; margin-top: 0.2rem; cursor: pointer; }
+    .check-group label { font-size: 0.88rem; color: var(--muted); text-transform: none; letter-spacing: 0; font-weight: 400; cursor: pointer; line-height: 1.5; }
+    .check-group label a { color: var(--purple); text-decoration: underline; text-underline-offset: 2px; }
     .check-group label a:hover { color: var(--gold); }
-
-    .btn-primary {
-      width: 100%;
-      padding: 1rem 1.7rem;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-d) 100%);
-      color: #ffffff;
-      font: 500 0.92rem/1 var(--sans);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-      box-shadow: 0 12px 28px -10px rgba(70, 41, 134, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.6rem;
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 16px 32px -10px rgba(70, 41, 134, 0.8);
-      background: linear-gradient(135deg, var(--purple-d) 0%, var(--purple-dd) 100%);
-    }
-
+    .btn-primary { width: 100%; padding: 1rem 1.7rem; border-radius: 999px; border: none; background: linear-gradient(135deg, var(--purple) 0%, var(--purple-d) 100%); color: #ffffff; font: 500 0.92rem/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; box-shadow: 0 12px 28px -10px rgba(70, 41, 134, 0.6); display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
+    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 32px -10px rgba(70, 41, 134, 0.8); background: linear-gradient(135deg, var(--purple-d) 0%, var(--purple-dd) 100%); }
     .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-    .message-box {
-      border-radius: 16px;
-      padding: 1rem 1.2rem;
-      margin: 1.2rem 0 0.2rem;
-      font-size: 0.92rem;
-      display: none;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-
+    .message-box { border-radius: 16px; padding: 1rem 1.2rem; margin: 1.2rem 0 0.2rem; font-size: 0.92rem; display: none; align-items: flex-start; gap: 0.6rem; }
     .message-box.show { display: flex; }
-
-    .message-box.success {
-      background: #e8f5e9;
-      color: #1e5e2e;
-      border-left: 4px solid #2e7d32;
-    }
-
-    .message-box.error {
-      background: #fdecea;
-      color: #8b1a1a;
-      border-left: 4px solid #b33;
-    }
-
+    .message-box.success { background: #e8f5e9; color: #1e5e2e; border-left: 4px solid #2e7d32; }
+    .message-box.error { background: #fdecea; color: #8b1a1a; border-left: 4px solid #b33; }
     .message-box svg { flex-shrink: 0; width: 20px; height: 20px; margin-top: 0.1rem; }
-
-    .sign-in-link {
-      text-align: center;
-      margin-top: 1.6rem;
-      font-size: 0.92rem;
-      color: var(--muted);
-    }
-
-    .sign-in-link a {
-      color: var(--purple);
-      font-weight: 500;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
+    .sign-in-link { text-align: center; margin-top: 1.6rem; font-size: 0.92rem; color: var(--muted); }
+    .sign-in-link a { color: var(--purple); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
     .sign-in-link a:hover { color: var(--gold); }
-
-    .micro-footer {
-      text-align: center;
-      padding: 1.8rem 0.5rem 1.2rem;
-      font-size: 0.75rem;
-      color: #9d92bf;
-      letter-spacing: 0.04em;
-    }
-
-    @media (max-width: 600px) {
-      .signup-card { padding: 2rem 1.5rem; border-radius: 24px; }
-      .signup-card h1 { font-size: 2.2rem; }
-      .nav .wrap { height: 58px; }
-      .nav img.logo { height: 44px; }
-      .nav nav a:not(.btn) { display: none; }
-      .nav .btn { font-size: 0.65rem; padding: 0.6rem 1rem; }
-    }
-
-    @media (max-width: 380px) {
-      .signup-card { padding: 1.6rem 1.2rem; }
-      .form-group input, .form-group select { padding: 0.8rem 1rem; font-size: 0.92rem; }
-    }
-
-    .spinner {
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      border: 2.5px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 0.7s linear infinite;
-    }
-
+    .micro-footer { text-align: center; padding: 1.8rem 0.5rem 1.2rem; font-size: 0.75rem; color: #9d92bf; letter-spacing: 0.04em; }
+    @media (max-width: 600px) { .signup-card { padding: 2rem 1.5rem; border-radius: 24px; } .signup-card h1 { font-size: 2.2rem; } .nav .wrap { height: 58px; } .nav img.logo { height: 44px; } .nav nav a:not(.btn) { display: none; } .nav .btn { font-size: 0.65rem; padding: 0.6rem 1rem; } }
+    @media (max-width: 380px) { .signup-card { padding: 1.6rem 1.2rem; } .form-group input, .form-group select { padding: 0.8rem 1rem; font-size: 0.92rem; } }
+    .spinner { display: inline-block; width: 18px; height: 18px; border: 2.5px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .hidden { display: none !important; }
-
-    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 3px;
-    }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -362,9 +93,7 @@
     <div class="signup-card">
       <p class="eyebrow">Join the glow</p>
       <h1>Create account</h1>
-      <p class="subhead">
-        Get <em>10% off</em> your first order, early access to new formulas, and skincare tips from Global Lush.
-      </p>
+      <p class="subhead">Get <em>10% off</em> your first order, early access to new formulas, and skincare tips from Global Lush.</p>
 
       <form id="signupForm" novalidate>
         <div class="form-group">
@@ -375,6 +104,11 @@
         <div class="form-group">
           <label for="email">Email address</label>
           <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Minimum 6 characters" autocomplete="new-password" required />
         </div>
 
         <div class="form-group">
@@ -434,35 +168,24 @@
         </div>
       </form>
 
-      <p class="sign-in-link">
-        Already have an account? <a href="log.html">Log in</a>
-      </p>
+      <p class="sign-in-link">Already have an account? <a href="log.html">Log in</a></p>
     </div>
   </section>
 
-  <div class="micro-footer">
-    © 2026 Global Lush · For external use only · Keep out of reach of children
-  </div>
+  <div class="micro-footer">© 2026 Global Lush · For external use only · Keep out of reach of children</div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
     (function() {
       'use strict';
 
-      // ---------- CONFIG ----------
       const SUPABASE_URL = 'https://wfqoezxisgfiiktcrajq.supabase.co';
       const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
 
       const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-          detectSessionInUrl: false
-        }
+        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
       });
 
-      // ---------- DOM ----------
       const form = document.getElementById('signupForm');
       const submitBtn = document.getElementById('submitBtn');
       const btnText = document.getElementById('btnText');
@@ -473,17 +196,16 @@
 
       const fullNameInput = document.getElementById('fullName');
       const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
       const phoneInput = document.getElementById('phone');
       const countrySelect = document.getElementById('country');
       const sourceSelect = document.getElementById('source');
       const termsCheck = document.getElementById('terms');
 
-      // ---------- helpers ----------
       function showMessage(text, type) {
         messageBox.classList.remove('hidden', 'success', 'error');
         messageBox.classList.add('show', type || 'error');
         msgText.textContent = text;
-
         if (type === 'success') {
           msgIcon.innerHTML = '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>';
         } else {
@@ -509,7 +231,7 @@
       }
 
       function clearFieldErrors() {
-        [fullNameInput, emailInput, countrySelect, termsCheck].forEach(function(el) {
+        [fullNameInput, emailInput, passwordInput, countrySelect, termsCheck].forEach(function(el) {
           el.classList.remove('error');
         });
       }
@@ -519,41 +241,25 @@
         clearFieldErrors();
         hideMessage();
 
-        if (!fullNameInput.value.trim()) {
-          fullNameInput.classList.add('error');
-          valid = false;
-        }
+        if (!fullNameInput.value.trim()) { fullNameInput.classList.add('error'); valid = false; }
 
         var emailVal = emailInput.value.trim();
-        if (!emailVal) {
-          emailInput.classList.add('error');
-          valid = false;
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
-          emailInput.classList.add('error');
-          valid = false;
+        if (!emailVal) { emailInput.classList.add('error'); valid = false; }
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) { emailInput.classList.add('error'); valid = false; }
+
+        if (!passwordInput.value || passwordInput.value.length < 6) {
+          passwordInput.classList.add('error'); valid = false;
         }
 
-        if (!countrySelect.value) {
-          countrySelect.classList.add('error');
-          valid = false;
-        }
+        if (!countrySelect.value) { countrySelect.classList.add('error'); valid = false; }
+        if (!termsCheck.checked) { termsCheck.classList.add('error'); valid = false; }
 
-        if (!termsCheck.checked) {
-          termsCheck.classList.add('error');
-          valid = false;
-        }
-
-        if (!valid) {
-          showMessage('Please fill in all required fields correctly.', 'error');
-        }
-
+        if (!valid) showMessage('Please fill in all required fields correctly (password must be at least 6 characters).', 'error');
         return valid;
       }
 
-      // ---------- submit ----------
       form.addEventListener('submit', async function(e) {
         e.preventDefault();
-
         if (!validateForm()) return;
 
         setLoading(true);
@@ -561,6 +267,7 @@
 
         var fullName = fullNameInput.value.trim();
         var email = emailInput.value.trim().toLowerCase();
+        var password = passwordInput.value;
         var phone = phoneInput.value.trim() || null;
         var country = countrySelect.value;
         var source = sourceSelect.value || null;
@@ -570,39 +277,47 @@
         var lastName = nameParts.slice(1).join(' ') || '';
 
         try {
+          // Check if email already exists
+          const { data: existing, error: checkErr } = await supabaseClient
+            .from('clients')
+            .select('id')
+            .eq('email', email)
+            .maybeSingle();
+
+          if (checkErr && checkErr.code !== 'PGRST116') {
+            console.error('Check error:', checkErr);
+          }
+
+          if (existing) {
+            showMessage('This email is already registered. Try logging in instead.', 'error');
+            setLoading(false);
+            return;
+          }
+
+          // Insert new client with password
           const { data, error } = await supabaseClient
             .from('clients')
-            .insert([
-              {
-                first_name: firstName,
-                last_name: lastName,
-                full_name: fullName,
-                email: email,
-                phone: phone,
-                country: country,
-                referral_source: source,
-                marketing_consent: true
-              }
-            ])
+            .insert([{
+              first_name: firstName,
+              last_name: lastName,
+              full_name: fullName,
+              email: email,
+              password: password,
+              phone: phone,
+              country: country,
+              referral_source: source,
+              marketing_consent: true
+            }])
             .select();
 
           if (error) {
-            // Log full error to console for debugging (press F12 → Console)
-            console.error('SUPABASE ERROR:', {
-              message: error.message,
-              code: error.code,
-              details: error.details,
-              hint: error.hint
-            });
-
+            console.error('SUPABASE ERROR:', error);
             if (error.code === '23505') {
               showMessage('This email is already registered. Try logging in instead.', 'error');
             } else if (error.code === '42P01') {
-              showMessage('Database table "clients" not found. Please run the SQL setup in Supabase.', 'error');
-            } else if (error.code === '42501' || (error.message && error.message.indexOf('policy') !== -1)) {
-              showMessage('Permission denied. Please add the INSERT policy in Supabase (see SQL).', 'error');
-            } else if (error.message && error.message.indexOf('column') !== -1) {
-              showMessage('Column mismatch: ' + error.message, 'error');
+              showMessage('Database table "clients" not found. Run the SQL setup.', 'error');
+            } else if (error.code === '42501') {
+              showMessage('Permission denied. Check RLS policies in Supabase.', 'error');
             } else {
               showMessage('Error: ' + (error.message || 'Unknown error'), 'error');
             }
@@ -611,20 +326,24 @@
           }
 
           console.log('Inserted client:', data);
-          showMessage('Welcome to Global Lush! Your account has been created successfully.', 'success');
-          form.reset();
-          clearFieldErrors();
+          showMessage('Account created! Redirecting to login…', 'success');
+
+          // Save email so login page can prefill
+          try { localStorage.setItem('gl_last_email', email); } catch (e) {}
+
+          // Redirect to login page after short delay
+          setTimeout(function() {
+            window.location.href = 'log.html';
+          }, 1200);
 
         } catch (err) {
           console.error('UNEXPECTED ERROR:', err);
           showMessage('Network error: ' + (err.message || 'Please check your connection.'), 'error');
-        } finally {
           setLoading(false);
         }
       });
 
-      // clear errors on input
-      [fullNameInput, emailInput, countrySelect, termsCheck].forEach(function(el) {
+      [fullNameInput, emailInput, passwordInput, countrySelect, termsCheck].forEach(function(el) {
         el.addEventListener('input', function() { el.classList.remove('error'); });
         el.addEventListener('change', function() { el.classList.remove('error'); });
       });

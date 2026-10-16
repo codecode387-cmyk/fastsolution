@@ -8,72 +8,58 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --purple: #462986;
-      --purple-d: #2d1a5e;
-      --purple-dd: #1d1040;
-      --gold: #c9a24b;
-      --gold-l: #e6c97c;
-      --cream: #faf7f1;
-      --ink: #1e1535;
-      --muted: #5d5675;
-      --line: #e8e2f2;
-      --serif: 'Cormorant Garamond', Georgia, serif;
-      --sans: 'Jost', system-ui, -apple-system, Segoe UI, sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body { font-family: var(--sans); color: var(--ink); background: var(--cream); line-height: 1.65; min-height: 100vh; display: flex; flex-direction: column; }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; text-decoration: none; }
-    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; width: 100%; }
-    header.nav { background: rgba(45, 26, 94, 0.96); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(230, 201, 124, 0.18); padding: 0.6rem 0; }
-    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-    .nav img.logo { height: 56px; width: auto; }
-    .nav nav { display: flex; gap: 1.6rem; align-items: center; }
-    .nav nav a { color: #e9e3f7; font-size: 0.88rem; letter-spacing: 0.06em; transition: color 0.2s; }
-    .nav nav a:hover { color: var(--gold-l); }
-    .nav .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.7rem 1.2rem; border-radius: 999px; font: 500 0.72rem/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; border: 1.5px solid rgba(230, 201, 124, 0.7); cursor: pointer; transition: transform 0.2s, background 0.2s; background: transparent; color: #fff; }
-    .nav .btn:hover { background: rgba(255, 255, 255, 0.08); transform: translateY(-2px); }
-    .login-section { flex: 1; display: flex; align-items: center; justify-content: center; padding: 3rem 1rem 4rem; background: radial-gradient(900px 500px at 20% 30%, #e8e0f5 0%, transparent 60%), linear-gradient(160deg, var(--cream) 0%, #f3effa 100%); }
-    .login-card { background: #ffffff; border-radius: 32px; box-shadow: 0 30px 60px -20px rgba(45, 26, 94, 0.35); max-width: 480px; width: 100%; padding: 2.8rem 2.5rem; border: 1px solid rgba(201, 162, 75, 0.25); transition: transform 0.3s; }
-    .login-card:hover { transform: translateY(-4px); }
-    .login-card .eyebrow { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.5rem; text-align: center; }
-    .login-card h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 600; line-height: 1.1; color: var(--purple-d); text-align: center; margin-bottom: 0.5rem; }
-    .login-card .subhead { text-align: center; color: var(--muted); font-size: 1.02rem; margin-bottom: 2rem; max-width: 36ch; margin-left: auto; margin-right: auto; }
-    .form-group { margin-bottom: 1.4rem; }
-    .form-group label { display: block; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--purple-d); font-weight: 500; margin-bottom: 0.4rem; }
-    .form-group input { width: 100%; padding: 0.9rem 1.2rem; border-radius: 16px; border: 1.5px solid var(--line); background: #ffffff; font-family: var(--sans); font-size: 0.98rem; color: var(--ink); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-    .form-group input:focus { border-color: var(--gold); box-shadow: 0 0 0 4px rgba(201, 162, 75, 0.15); }
-    .form-group input::placeholder { color: #b0a8c9; font-weight: 300; }
-    .form-group input.error { border-color: #d44; box-shadow: 0 0 0 4px rgba(221, 68, 68, 0.12); }
-    .btn-primary { width: 100%; padding: 1rem 1.7rem; border-radius: 999px; border: none; background: linear-gradient(135deg, var(--purple) 0%, var(--purple-d) 100%); color: #ffffff; font: 500 0.92rem/1 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, background 0.2s; box-shadow: 0 12px 28px -10px rgba(70, 41, 134, 0.6); display: flex; align-items: center; justify-content: center; gap: 0.6rem; }
-    .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 32px -10px rgba(70, 41, 134, 0.8); background: linear-gradient(135deg, var(--purple-d) 0%, var(--purple-dd) 100%); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .message-box { border-radius: 16px; padding: 1rem 1.2rem; margin: 1.2rem 0 0.2rem; font-size: 0.92rem; display: none; align-items: flex-start; gap: 0.6rem; }
-    .message-box.show { display: flex; }
-    .message-box.success { background: #e8f5e9; color: #1e5e2e; border-left: 4px solid #2e7d32; }
-    .message-box.error { background: #fdecea; color: #8b1a1a; border-left: 4px solid #b33; }
-    .message-box svg { flex-shrink: 0; width: 20px; height: 20px; margin-top: 0.1rem; }
-    .signup-link { text-align: center; margin-top: 1.6rem; font-size: 0.92rem; color: var(--muted); }
-    .signup-link a { color: var(--purple); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
-    .signup-link a:hover { color: var(--gold); }
-    .micro-footer { text-align: center; padding: 1.8rem 0.5rem 1.2rem; font-size: 0.75rem; color: #9d92bf; letter-spacing: 0.04em; }
-    @media (max-width: 600px) { .login-card { padding: 2rem 1.5rem; border-radius: 24px; } .login-card h1 { font-size: 2.2rem; } .nav .wrap { height: 58px; } .nav img.logo { height: 44px; } .nav nav a:not(.btn) { display: none; } .nav .btn { font-size: 0.65rem; padding: 0.6rem 1rem; } }
-    @media (max-width: 380px) { .login-card { padding: 1.6rem 1.2rem; } .form-group input { padding: 0.8rem 1rem; font-size: 0.92rem; } }
-    .spinner { display: inline-block; width: 18px; height: 18px; border: 2.5px solid rgba(255, 255, 255, 0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .hidden { display: none !important; }
-    a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    :root{--purple:#462986;--purple-d:#2d1a5e;--purple-dd:#1d1040;--gold:#c9a24b;--gold-l:#e6c97c;--cream:#faf7f1;--ink:#1e1535;--muted:#5d5675;--line:#e8e2f2;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',system-ui,-apple-system,Segoe UI,sans-serif;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{font-family:var(--sans);color:var(--ink);background:var(--cream);line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 1.25rem;width:100%}
+    header.nav{background:rgba(45,26,94,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(230,201,124,.18);padding:.6rem 0}
+    .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+    .nav img.logo{height:56px;width:auto}
+    .nav nav{display:flex;gap:1.6rem;align-items:center}
+    .nav nav a{color:#e9e3f7;font-size:.88rem;letter-spacing:.06em;transition:color .2s}
+    .nav nav a:hover{color:var(--gold-l)}
+    .nav .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.2rem;border-radius:999px;font:500 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid rgba(230,201,124,.7);cursor:pointer;transition:transform .2s,background .2s;background:transparent;color:#fff}
+    .nav .btn:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
+    .login-section{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 1rem 4rem;background:radial-gradient(900px 500px at 20% 30%,#e8e0f5 0%,transparent 60%),linear-gradient(160deg,var(--cream) 0%,#f3effa 100%)}
+    .login-card{background:#fff;border-radius:32px;box-shadow:0 30px 60px -20px rgba(45,26,94,.35);max-width:480px;width:100%;padding:2.8rem 2.5rem;border:1px solid rgba(201,162,75,.25);transition:transform .3s}
+    .login-card:hover{transform:translateY(-4px)}
+    .login-card .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.5rem;text-align:center}
+    .login-card h1{font-family:var(--serif);font-size:2.8rem;font-weight:600;line-height:1.1;color:var(--purple-d);text-align:center;margin-bottom:.5rem}
+    .login-card .subhead{text-align:center;color:var(--muted);font-size:1.02rem;margin-bottom:2rem;max-width:36ch;margin-left:auto;margin-right:auto}
+    .form-group{margin-bottom:1.4rem}
+    .form-group label{display:block;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--purple-d);font-weight:500;margin-bottom:.4rem}
+    .form-group input{width:100%;padding:.9rem 1.2rem;border-radius:16px;border:1.5px solid var(--line);background:#fff;font-family:var(--sans);font-size:.98rem;color:var(--ink);transition:border-color .2s,box-shadow .2s;outline:none}
+    .form-group input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,162,75,.15)}
+    .form-group input::placeholder{color:#b0a8c9;font-weight:300}
+    .form-group input.error{border-color:#d44;box-shadow:0 0 0 4px rgba(221,68,68,.12)}
+    .btn-primary{width:100%;padding:1rem 1.7rem;border-radius:999px;border:none;background:linear-gradient(135deg,var(--purple) 0%,var(--purple-d) 100%);color:#fff;font:500 .92rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;box-shadow:0 12px 28px -10px rgba(70,41,134,.6);display:flex;align-items:center;justify-content:center;gap:.6rem}
+    .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(70,41,134,.8);background:linear-gradient(135deg,var(--purple-d) 0%,var(--purple-dd) 100%)}
+    .btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .message-box{border-radius:16px;padding:1rem 1.2rem;margin:1.2rem 0 .2rem;font-size:.92rem;display:none;align-items:flex-start;gap:.6rem}
+    .message-box.show{display:flex}
+    .message-box.success{background:#e8f5e9;color:#1e5e2e;border-left:4px solid #2e7d32}
+    .message-box.error{background:#fdecea;color:#8b1a1a;border-left:4px solid #b33}
+    .message-box svg{flex-shrink:0;width:20px;height:20px;margin-top:.1rem}
+    .signup-link{text-align:center;margin-top:1.6rem;font-size:.92rem;color:var(--muted)}
+    .signup-link a{color:var(--purple);font-weight:500;text-decoration:underline;text-underline-offset:3px}
+    .signup-link a:hover{color:var(--gold)}
+    .micro-footer{text-align:center;padding:1.8rem .5rem 1.2rem;font-size:.75rem;color:#9d92bf;letter-spacing:.04em}
+    @media(max-width:600px){.login-card{padding:2rem 1.5rem;border-radius:24px}.login-card h1{font-size:2.2rem}.nav .wrap{height:58px}.nav img.logo{height:44px}.nav nav a:not(.btn){display:none}.nav .btn{font-size:.65rem;padding:.6rem 1rem}}
+    @media(max-width:380px){.login-card{padding:1.6rem 1.2rem}.form-group input{padding:.8rem 1rem;font-size:.92rem}}
+    .spinner{display:inline-block;width:18px;height:18px;border:2.5px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hidden{display:none !important}
+    a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   </style>
 </head>
 <body>
 
   <header class="nav">
     <div class="wrap">
-      <a href="GlobalLush.html" aria-label="Global Lush home">
-        <img class="logo" src="images/logo-gold.png" alt="Global Lush logo" />
-      </a>
+      <a href="GlobalLush.html" aria-label="Global Lush home"><img class="logo" src="images/logo-gold.png" alt="Global Lush logo" /></a>
       <nav>
         <a href="GlobalLush.html">Home</a>
         <a href="store.html">Store</a>
@@ -86,17 +72,17 @@
     <div class="login-card">
       <p class="eyebrow">Welcome back</p>
       <h1>Log in</h1>
-      <p class="subhead">Enter your email and password to continue to your Global Lush account.</p>
+      <p class="subhead">Enter your email and password to access your Global Lush dashboard.</p>
 
       <form id="loginForm" novalidate>
         <div class="form-group">
           <label for="loginEmail">Email address</label>
-          <input type="email" id="loginEmail" name="loginEmail" placeholder="you@example.com" autocomplete="email" required />
+          <input type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email" required />
         </div>
 
         <div class="form-group">
           <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" name="loginPassword" placeholder="Your password" autocomplete="current-password" required />
+          <input type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password" required />
         </div>
 
         <button type="submit" class="btn-primary" id="loginBtn">
@@ -105,11 +91,7 @@
         </button>
 
         <div id="loginMessageBox" class="message-box" role="alert">
-          <svg id="loginMsgIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
+          <svg id="loginMsgIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
           <span id="loginMsgText"></span>
         </div>
       </form>
@@ -122,129 +104,73 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    (function() {
+    (function(){
       'use strict';
+      const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
+      const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
 
-      const SUPABASE_URL = 'https://wfqoezxisgfiiktcrajq.supabase.co';
-      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
+      const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 
-      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
-      });
+      const form=document.getElementById('loginForm');
+      const loginBtn=document.getElementById('loginBtn');
+      const loginBtnText=document.getElementById('loginBtnText');
+      const loginBtnSpinner=document.getElementById('loginBtnSpinner');
+      const messageBox=document.getElementById('loginMessageBox');
+      const msgText=document.getElementById('loginMsgText');
+      const msgIcon=document.getElementById('loginMsgIcon');
+      const emailInput=document.getElementById('loginEmail');
+      const passwordInput=document.getElementById('loginPassword');
 
-      const form = document.getElementById('loginForm');
-      const loginBtn = document.getElementById('loginBtn');
-      const loginBtnText = document.getElementById('loginBtnText');
-      const loginBtnSpinner = document.getElementById('loginBtnSpinner');
-      const messageBox = document.getElementById('loginMessageBox');
-      const msgText = document.getElementById('loginMsgText');
-      const msgIcon = document.getElementById('loginMsgIcon');
-
-      const emailInput = document.getElementById('loginEmail');
-      const passwordInput = document.getElementById('loginPassword');
-
-      // Prefill email if coming from signup
-      try {
-        var lastEmail = localStorage.getItem('gl_last_email');
-        if (lastEmail) emailInput.value = lastEmail;
-      } catch (e) {}
-
-      function showMessage(text, type) {
-        messageBox.classList.remove('hidden', 'success', 'error');
-        messageBox.classList.add('show', type || 'error');
-        msgText.textContent = text;
-        if (type === 'success') {
-          msgIcon.innerHTML = '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>';
-        } else {
-          msgIcon.innerHTML = '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>';
-        }
+      function showMessage(t,type){
+        messageBox.classList.remove('hidden','success','error');
+        messageBox.classList.add('show',type||'error');
+        msgText.textContent=t;
+        if(type==='success'){msgIcon.innerHTML='<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>';}
+        else{msgIcon.innerHTML='<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>';}
       }
+      function hideMessage(){messageBox.classList.remove('show','success','error');messageBox.classList.add('hidden');}
+      function setLoading(l){if(l){loginBtn.disabled=true;loginBtnText.textContent='Logging in…';loginBtnSpinner.classList.remove('hidden');}else{loginBtn.disabled=false;loginBtnText.textContent='Log in';loginBtnSpinner.classList.add('hidden');}}
 
-      function hideMessage() {
-        messageBox.classList.remove('show', 'success', 'error');
-        messageBox.classList.add('hidden');
-      }
+      form.addEventListener('submit',async function(e){
+        e.preventDefault();hideMessage();
+        emailInput.classList.remove('error');passwordInput.classList.remove('error');
 
-      function setLoading(isLoading) {
-        if (isLoading) {
-          loginBtn.disabled = true;
-          loginBtnText.textContent = 'Logging in…';
-          loginBtnSpinner.classList.remove('hidden');
-        } else {
-          loginBtn.disabled = false;
-          loginBtnText.textContent = 'Log in';
-          loginBtnSpinner.classList.add('hidden');
-        }
-      }
+        const email=emailInput.value.trim().toLowerCase();
+        const password=passwordInput.value;
 
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        hideMessage();
-        emailInput.classList.remove('error');
-        passwordInput.classList.remove('error');
-
-        var email = emailInput.value.trim().toLowerCase();
-        var password = passwordInput.value;
-
-        if (!email) { emailInput.classList.add('error'); showMessage('Please enter your email.', 'error'); return; }
-        if (!password) { passwordInput.classList.add('error'); showMessage('Please enter your password.', 'error'); return; }
+        if(!email){emailInput.classList.add('error');showMessage('Please enter your email.','error');return;}
+        if(!password){passwordInput.classList.add('error');showMessage('Please enter your password.','error');return;}
 
         setLoading(true);
 
-        try {
-          const { data, error } = await supabaseClient
-            .from('clients')
-            .select('id, full_name, email, password')
-            .eq('email', email)
-            .maybeSingle();
+        try{
+          const {data,error}=await sb.from('clients').select('id,full_name,email,password').eq('email',email).maybeSingle();
 
-          if (error) {
-            console.error('LOGIN ERROR:', error);
-            showMessage('Error: ' + (error.message || 'Could not log in.'), 'error');
-            setLoading(false);
-            return;
-          }
+          if(error){console.error('LOGIN ERROR:',error);showMessage('Error: '+(error.message||'Could not log in.'),'error');setLoading(false);return;}
 
-          if (!data) {
-            showMessage('No account found with this email. Please sign up first.', 'error');
-            setLoading(false);
-            return;
-          }
+          if(!data){showMessage('No account found with this email. Please sign up first.','error');setLoading(false);return;}
 
-          if (data.password !== password) {
-            showMessage('Incorrect password. Please try again.', 'error');
-            setLoading(false);
-            return;
-          }
+          if(data.password!==password){showMessage('Incorrect password. Please try again.','error');setLoading(false);return;}
 
-          // Success — save session
-          try {
-            localStorage.setItem('gl_user', JSON.stringify({
-              id: data.id,
-              email: data.email,
-              full_name: data.full_name
-            }));
-            localStorage.removeItem('gl_last_email');
-          } catch (e) {}
+          try{
+            localStorage.setItem('gl_user',JSON.stringify({id:data.id,email:data.email,full_name:data.full_name}));
+          }catch(e){}
 
-          showMessage('Welcome back, ' + (data.full_name || 'friend') + '! Redirecting…', 'success');
-
-          setTimeout(function() {
-            window.location.href = 'GlobalLush.html';
-          }, 1000);
-
-        } catch (err) {
-          console.error('UNEXPECTED LOGIN ERROR:', err);
-          showMessage('Network error: ' + (err.message || 'Please try again.'), 'error');
+          showMessage('Welcome back, '+(data.full_name||'friend')+'! Taking you to your dashboard…','success');
+          setTimeout(function(){window.location.href='dashboard.html';},900);
+        }catch(err){
+          console.error('UNEXPECTED:',err);
+          showMessage('Network error: '+(err.message||'Try again.'),'error');
           setLoading(false);
         }
       });
 
-      emailInput.addEventListener('input', function() { emailInput.classList.remove('error'); });
-      passwordInput.addEventListener('input', function() { passwordInput.classList.remove('error'); });
+      emailInput.addEventListener('input',()=>emailInput.classList.remove('error'));
+      passwordInput.addEventListener('input',()=>passwordInput.classList.remove('error'));
 
+      // Prefill last email
+      try{const le=localStorage.getItem('gl_last_email');if(le)emailInput.value=le;}catch(e){}
     })();
   </script>
-
 </body>
 </html>

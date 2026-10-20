@@ -507,8 +507,8 @@
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="whyGrid"></div>
 
-    <!-- Additional advantages: remittance, inventory, flat rate -->
-    <div class="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+    <!-- Additional advantages: remittance, inventory, flat rate, same day, scheduled -->
+    <div class="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
       <div class="reveal bg-charcoal/80 border border-gold/20 hover:border-gold p-6 sm:p-8 rounded-3xl transition-all duration-300 hover:shadow-gold-glow">
         <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold flex items-center justify-center text-gold mb-5">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -529,6 +529,20 @@
         </div>
         <h3 class="text-lg font-heading font-bold text-white mb-2">Flat Rate for E-commerce Vendors</h3>
         <p class="text-gray-400 text-sm leading-relaxed">We accept flat rate delivery services from e-commerce vendors. One simple price, no hidden charges — perfect for high-volume sellers.</p>
+      </div>
+      <div class="reveal bg-charcoal/80 border border-gold/20 hover:border-gold p-6 sm:p-8 rounded-3xl transition-all duration-300 hover:shadow-gold-glow cursor-pointer" style="transition-delay:270ms" onclick="openModal('quoteModal', 'Same Day Delivery')">
+        <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold flex items-center justify-center text-gold mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </div>
+        <h3 class="text-lg font-heading font-bold text-white mb-2">Same Day Delivery</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Need it there today? Our same-day delivery gets your package to the receiver before the day ends — perfect for urgent documents, gifts and orders.</p>
+      </div>
+      <div class="reveal bg-charcoal/80 border border-gold/20 hover:border-gold p-6 sm:p-8 rounded-3xl transition-all duration-300 hover:shadow-gold-glow cursor-pointer" style="transition-delay:360ms" onclick="openModal('quoteModal', 'Scheduled Delivery')">
+        <div class="w-12 h-12 rounded-xl bg-gold/10 border border-gold flex items-center justify-center text-gold mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </div>
+        <h3 class="text-lg font-heading font-bold text-white mb-2">Scheduled Delivery</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Choose the exact day and time window that works for you or your customer. We show up when promised — no waiting around, no missed deliveries.</p>
       </div>
     </div>
   </div>
@@ -577,14 +591,12 @@
 
 <!-- GLOBAL LUSH SKINCARE SECTION -->
 <section class="py-16 sm:py-24 bg-gradient-to-br from-sky-50 via-white to-purple-50 relative overflow-hidden" id="global-lush">
-  <!-- Decorative blobs -->
   <div class="absolute top-0 left-0 w-72 h-72 bg-sky-200/30 rounded-full blur-3xl pointer-events-none"></div>
   <div class="absolute bottom-0 right-0 w-72 h-72 bg-purple-200/30 rounded-full blur-3xl pointer-events-none"></div>
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
 
-      <!-- Text column -->
       <div class="lg:col-span-5 reveal order-2 lg:order-1">
         <div class="inline-flex items-center px-3 py-1 rounded-full bg-sky-100 border border-sky-300 text-sky-700 text-xs font-bold uppercase tracking-wider mb-4">Featured Brand</div>
         <h2 class="text-2xl sm:text-4xl font-heading font-black text-dark tracking-tight mb-5">Global Lush Skincare</h2>
@@ -603,7 +615,6 @@
         </div>
       </div>
 
-      <!-- Image column -->
       <div class="lg:col-span-7 reveal order-1 lg:order-2">
         <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white ring-1 ring-sky-100">
           <div class="aspect-[4/3] sm:aspect-[16/10] w-full">
@@ -615,7 +626,6 @@
               onerror="this.onerror=null;this.src='images/lush11.jpg';"
             />
           </div>
-          <!-- Soft gradient for badge legibility -->
           <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-dark/40 to-transparent pointer-events-none"></div>
           <div class="absolute bottom-4 left-4 bg-sky-700/95 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">Premium Quality</div>
           <div class="absolute top-4 right-4 bg-gold text-dark px-3 py-1.5 rounded-full text-[10px] font-heading font-black uppercase tracking-wider shadow-md">3 Variants</div>
@@ -647,7 +657,7 @@
       <div class="lg:col-span-7 reveal">
         <div class="bg-surface-alt p-5 sm:p-10 rounded-3xl border border-gray-200 shadow-sm">
           <h3 class="font-heading font-extrabold text-xl sm:text-2xl text-dark mb-2">Send Us an Inquiry</h3>
-          <p class="text-xs text-gray-500 mb-6">Complete this quick form. On submission, your inquiry opens pre-filled in WhatsApp.</p>
+          <p class="text-xs text-gray-500 mb-6">Complete this quick form. On submission, your inquiry is emailed to us and opened in WhatsApp.</p>
           <form class="space-y-4 sm:space-y-5" id="contactForm" onsubmit="handleContactSubmit(event)">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <div><label class="block text-xs font-heading font-bold uppercase tracking-wider text-dark mb-2" for="contactName">Full Name *</label><input class="field" id="contactName" placeholder="e.g. Babatunde Adeleke" required type="text"/></div>
@@ -735,7 +745,7 @@
 </footer>
 
 <!-- Floating WhatsApp button -->
-<a aria-label="Chat on WhatsApp" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 w-13 h-13 w-[52px] h-[52px] rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform" href="https://wa.me/2347085308550?text=Hello%20FASTSOLUTION%20LOGISTICS" target="_blank" rel="noopener">
+<a aria-label="Chat on WhatsApp" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 w-[52px] h-[52px] rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform" href="https://wa.me/2347085308550?text=Hello%20FASTSOLUTION%20LOGISTICS" target="_blank" rel="noopener">
   <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.303-.058.116-.087.188-.173.289l-.26.303c-.087.087-.179.182-.077.357.101.174.45.742.965 1.201.664.593 1.224.777 1.397.864.173.087.274.072.375-.043.101-.116.433-.506.549-.679.116-.173.231-.144.39-.087s1.011.477 1.184.564c.173.087.289.13.332.202.043.072.043.419-.101.824z"></path></svg>
 </a>
 
@@ -766,6 +776,8 @@
             <option>Document Delivery Services</option>
             <option>E-commerce Logistics Support</option>
             <option>Business &amp; Corporate Logistics Solutions</option>
+            <option>Same Day Delivery</option>
+            <option>Scheduled Delivery</option>
           </select></div>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -850,7 +862,6 @@
     { icon: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z', title: 'Friendly Support', desc: 'Talk to a real person by phone, WhatsApp or email. Quick responses and clear guidance.' }
   ];
 
-  /* Updated steps with 5. Live Feedback, 6. Inventory Update, 7. Delivery Complete */
   const steps = [
     { t: 'Send Your Request', d: 'Tell us what you need moved through the quote form, WhatsApp or a phone call.' },
     { t: 'Get Confirmation', d: 'We confirm the details and give you a clear, fair price before we begin.' },
@@ -1139,46 +1150,131 @@
     setTimeout(() => t.classList.add('opacity-0', 'translate-y-4'), 3500);
   }
 
-  /* ---------- WhatsApp submissions ---------- */
+  /* ---------- Dual submission: Email + WhatsApp ---------- */
+  const FORM_ENDPOINT = 'https://formsubmit.co/ajax/fastsolutionlogistics1@gmail.com';
+
+  async function sendToEmail(payload, subject) {
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: subject,
+          _template: 'table',
+          _captcha: 'false',
+          ...payload
+        })
+      });
+      return res.ok;
+    } catch (err) {
+      console.warn('Email send failed:', err);
+      return false;
+    }
+  }
+
   function sendToWhatsApp(message) {
     const url = `https://wa.me/${FSL_WHATSAPP}?text=${encodeURIComponent(message)}`;
     const w = window.open(url, '_blank');
     if (!w) window.location.href = url;
   }
+
+  /**
+   * Submit to email first, then open WhatsApp.
+   * Email runs in background; user is taken straight to WhatsApp.
+   */
+  async function submitDual({ emailPayload, emailSubject, whatsappMessage }) {
+    // Fire email request (don't await — go to WhatsApp immediately for "seamless" feel)
+    sendToEmail(emailPayload, emailSubject).then(ok => {
+      if (!ok) console.warn('Email fallback: WhatsApp message contains all data.');
+    });
+    // Small delay so the fetch has time to initiate before navigation
+    setTimeout(() => sendToWhatsApp(whatsappMessage), 300);
+  }
+
   const val = id => document.getElementById(id).value.trim();
 
   function handleQuoteSubmit(e) {
     e.preventDefault();
-    const msg = `*REQUEST A QUOTE - FASTSOLUTION LOGISTICS*\n\n` +
-      `*Name:* ${val('qName')}\n*Phone:* ${val('qPhone')}\n*Email:* ${val('qEmail')}\n` +
-      `*Service:* ${val('qService')}\n*Item:* ${val('qProduct')}\n*Quantity/Weight:* ${val('qQuantity')}\n` +
-      `*Pickup Location:* ${val('qOrigin') || 'To be confirmed'}\n*Destination:* ${val('qDestination')}\n` +
-      `*Additional Notes:* ${val('qNotes') || 'None'}\n\n_Sent via FASTSOLUTION LOGISTICS Website_`;
-    sendToWhatsApp(msg);
-    showToast('Quote request ready. Opening WhatsApp...');
+    const data = {
+      name: val('qName'),
+      phone: val('qPhone'),
+      email: val('qEmail'),
+      service: val('qService'),
+      item: val('qProduct'),
+      quantity: val('qQuantity'),
+      pickup: val('qOrigin') || 'To be confirmed',
+      destination: val('qDestination'),
+      notes: val('qNotes') || 'None'
+    };
+
+    const whatsappMessage = `*REQUEST A QUOTE - FASTSOLUTION LOGISTICS*\n\n` +
+      `*Name:* ${data.name}\n*Phone:* ${data.phone}\n*Email:* ${data.email}\n` +
+      `*Service:* ${data.service}\n*Item:* ${data.item}\n*Quantity/Weight:* ${data.quantity}\n` +
+      `*Pickup Location:* ${data.pickup}\n*Destination:* ${data.destination}\n` +
+      `*Additional Notes:* ${data.notes}\n\n_Sent via FASTSOLUTION LOGISTICS Website_`;
+
+    submitDual({
+      emailPayload: { 'Form': 'Quote Request', ...data },
+      emailSubject: `New Quote Request from ${data.name}`,
+      whatsappMessage
+    });
+
+    showToast('Sending your request — emailing & opening WhatsApp...');
     e.target.reset();
     closeModal('quoteModal');
   }
 
   function handlePartnerSubmit(e) {
     e.preventDefault();
-    const msg = `*PARTNERSHIP REQUEST - FASTSOLUTION LOGISTICS*\n\n` +
-      `*Company:* ${val('pCompany')}\n*Contact Person:* ${val('pPerson')}\n*Phone:* ${val('pPhone')}\n*Email:* ${val('pEmail')}\n` +
-      `*Partnership Type:* ${val('pType')}\n*Location:* ${val('pLocation')}\n*Years in Business:* ${val('pYears')}\n` +
-      `*Services Offered:* ${val('pServices')}\n*Proposal Notes:* ${val('pMessage') || 'None'}\n\n_Sent via FASTSOLUTION LOGISTICS Website_`;
-    sendToWhatsApp(msg);
-    showToast('Partnership request ready. Opening WhatsApp...');
+    const data = {
+      company: val('pCompany'),
+      contactPerson: val('pPerson'),
+      phone: val('pPhone'),
+      email: val('pEmail'),
+      partnershipType: val('pType'),
+      location: val('pLocation'),
+      yearsInBusiness: val('pYears'),
+      servicesOffered: val('pServices'),
+      proposal: val('pMessage') || 'None'
+    };
+
+    const whatsappMessage = `*PARTNERSHIP REQUEST - FASTSOLUTION LOGISTICS*\n\n` +
+      `*Company:* ${data.company}\n*Contact Person:* ${data.contactPerson}\n*Phone:* ${data.phone}\n*Email:* ${data.email}\n` +
+      `*Partnership Type:* ${data.partnershipType}\n*Location:* ${data.location}\n*Years in Business:* ${data.yearsInBusiness}\n` +
+      `*Services Offered:* ${data.servicesOffered}\n*Proposal Notes:* ${data.proposal}\n\n_Sent via FASTSOLUTION LOGISTICS Website_`;
+
+    submitDual({
+      emailPayload: { 'Form': 'Partnership Application', ...data },
+      emailSubject: `New Partnership Request from ${data.company}`,
+      whatsappMessage
+    });
+
+    showToast('Sending application — emailing & opening WhatsApp...');
     e.target.reset();
     closeModal('partnerModal');
   }
 
   function handleContactSubmit(e) {
     e.preventDefault();
-    const msg = `*GENERAL INQUIRY - FASTSOLUTION LOGISTICS*\n\n` +
-      `*Name:* ${val('contactName')}\n*Phone:* ${val('contactPhone')}\n*Email:* ${val('contactEmail')}\n` +
-      `*Subject:* ${val('contactSubject')}\n*Message:* ${val('contactMessage')}\n\n_Sent via FASTSOLUTION LOGISTICS Website_`;
-    sendToWhatsApp(msg);
-    showToast('Opening WhatsApp with your inquiry...');
+    const data = {
+      name: val('contactName'),
+      phone: val('contactPhone'),
+      email: val('contactEmail'),
+      subject: val('contactSubject'),
+      message: val('contactMessage')
+    };
+
+    const whatsappMessage = `*GENERAL INQUIRY - FASTSOLUTION LOGISTICS*\n\n` +
+      `*Name:* ${data.name}\n*Phone:* ${data.phone}\n*Email:* ${data.email}\n` +
+      `*Subject:* ${data.subject}\n*Message:* ${data.message}\n\n_Sent via FASTSOLUTION LOGISTICS Website_`;
+
+    submitDual({
+      emailPayload: { 'Form': 'Contact Inquiry', ...data },
+      emailSubject: `New Inquiry: ${data.subject}`,
+      whatsappMessage
+    });
+
+    showToast('Sending inquiry — emailing & opening WhatsApp...');
     e.target.reset();
   }
 

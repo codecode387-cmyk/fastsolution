@@ -313,6 +313,16 @@
           <div class="form-error" id="errPhone">Please enter a valid phone number (10–15 digits).</div>
         </div>
         <div class="form-group">
+          <label for="custAddress">House Address <span class="req">*</span></label>
+          <textarea id="custAddress" name="custAddress" placeholder="House number, street, area, nearest landmark…" autocomplete="street-address" required></textarea>
+          <div class="form-error" id="errAddress">Please enter your house address (number, street, area).</div>
+        </div>
+        <div class="form-group">
+          <label for="custCity">City / Town <span class="req">*</span></label>
+          <input type="text" id="custCity" name="custCity" placeholder="e.g. Ikeja, Lekki, Garki" autocomplete="address-level2" required>
+          <div class="form-error" id="errCity">Please enter your city or town.</div>
+        </div>
+        <div class="form-group">
           <label for="custState">State <span class="req">*</span></label>
           <select id="custState" name="custState" autocomplete="address-level1" required>
             <option value="">Select your state</option>
@@ -355,16 +365,6 @@
             <option value="FCT Abuja">FCT Abuja</option>
           </select>
           <div class="form-error" id="errState">Please select your state.</div>
-        </div>
-        <div class="form-group">
-          <label for="custCity">City / Town <span class="req">*</span></label>
-          <input type="text" id="custCity" name="custCity" placeholder="e.g. Ikeja, Lekki, Garki" autocomplete="address-level2" required>
-          <div class="form-error" id="errCity">Please enter your city or town.</div>
-        </div>
-        <div class="form-group">
-          <label for="custAddress">House Address <span class="req">*</span></label>
-          <textarea id="custAddress" name="custAddress" placeholder="House number, street, area, nearest landmark…" autocomplete="street-address" required></textarea>
-          <div class="form-error" id="errAddress">Please enter your house address (number, street, area).</div>
         </div>
         <button type="submit" class="checkout-submit" id="sendOrderBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
@@ -636,8 +636,8 @@
         }
         $('orderSummaryBox').innerHTML=summaryHtml;
 
-        ['errName','errPhone','errState','errCity','errAddress'].forEach(id=>$(id).classList.remove('show'));
-        ['custName','custPhone','custState','custCity','custAddress'].forEach(id=>$(id).classList.remove('error'));
+        ['errName','errPhone','errAddress','errCity','errState'].forEach(id=>$(id).classList.remove('show'));
+        ['custName','custPhone','custAddress','custCity','custState'].forEach(id=>$(id).classList.remove('error'));
 
         checkoutModal.classList.add('open');
         checkoutOverlay.classList.add('open');
@@ -647,9 +647,9 @@
           const saved=JSON.parse(localStorage.getItem('gl_customer')||'{}');
           if(saved.name) $('custName').value=saved.name;
           if(saved.phone) $('custPhone').value=saved.phone;
-          if(saved.state) $('custState').value=saved.state;
-          if(saved.city) $('custCity').value=saved.city;
           if(saved.address) $('custAddress').value=saved.address;
+          if(saved.city) $('custCity').value=saved.city;
+          if(saved.state) $('custState').value=saved.state;
         }catch(e){}
         setTimeout(()=>{ if(!$('custName').value) $('custName').focus(); },100);
       }
@@ -668,13 +668,13 @@
       checkoutOverlay.addEventListener('click',closeCheckoutModal);
       document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&checkoutModal.classList.contains('open')) closeCheckoutModal(); });
 
-      /* ===== VALIDATION ===== */
+      /* ===== VALIDATION (order matches the form: name, phone, address, city, state) ===== */
       const fieldRules={
         custName:{err:'errName',ok:v=>v.length>=4&&v.split(/\s+/).filter(Boolean).length>=2},
         custPhone:{err:'errPhone',ok:v=>{const d=v.replace(/\D/g,'');return d.length>=10&&d.length<=15;}},
-        custState:{err:'errState',ok:v=>v.length>0},
+        custAddress:{err:'errAddress',ok:v=>v.length>=5},
         custCity:{err:'errCity',ok:v=>v.length>=2},
-        custAddress:{err:'errAddress',ok:v=>v.length>=5}
+        custState:{err:'errState',ok:v=>v.length>0}
       };
 
       function validateForm(){
@@ -690,11 +690,11 @@
 
         const name=$('custName').value.trim();
         const phone=$('custPhone').value.trim();
-        const state=$('custState').value;
-        const city=$('custCity').value.trim();
         const address=$('custAddress').value.trim();
-        try{ localStorage.setItem('gl_customer',JSON.stringify({name,phone,state,city,address})); }catch(e){}
-        return {name,phone,state,city,address};
+        const city=$('custCity').value.trim();
+        const state=$('custState').value;
+        try{ localStorage.setItem('gl_customer',JSON.stringify({name,phone,address,city,state})); }catch(e){}
+        return {name,phone,address,city,state};
       }
 
       // FIX 2: on blur, validate only the field being left

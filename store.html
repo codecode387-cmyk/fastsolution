@@ -388,6 +388,17 @@
 
       function renderProducts(list){
         products=list||[];
+
+        // FIX 3: remove deleted / sold-out items from the cart
+        if(products.length){
+          let changed=false;
+          Object.keys(cart).forEach(id=>{
+            const p=productById(id);
+            if(!p||!p.in_stock){ delete cart[id]; changed=true; }
+          });
+          if(changed) saveCart();
+        }
+
         loadingEl.style.display='none';
         if(!products.length){ emptyEl.style.display='block'; grid.innerHTML=''; renderCart(); return; }
         emptyEl.style.display='none';
@@ -452,8 +463,9 @@
       function addToCart(id,qty){
         const p=productById(id);
         if(!p) return;
-        if(p.in_stock===false){ showToast('Sorry, that item is sold out.'); return; }
+        if(!p.in_stock){ showToast('Sorry, that item is sold out.'); return; }
         cart[id]=(cart[id]||0)+qty;
+        if(cart[id]>MAX_QTY) cart[id]=MAX_QTY;
         saveCart();
         renderCart();
         showToast('Added '+qty+' × '+(p.name||'Item')+' to cart');
@@ -603,38 +615,39 @@
       document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&checkoutModal.classList.contains('open')) closeCheckoutModal(); });
 
       /* ===== VALIDATION ===== */
+      const fieldRules={
+        custName:{err:'errName',ok:v=>v.length>=4&&v.split(/\s+/).filter(Boolean).length>=2},
+        custPhone:{err:'errPhone',ok:v=>{const d=v.replace(/\D/g,'');return d.length>=10&&d.length<=15;}},
+        custAddress:{err:'errAddress',ok:v=>v.length>=10}
+      };
+
       function validateForm(){
+        let firstBad=null;
+        Object.keys(fieldRules).forEach(id=>{
+          const rule=fieldRules[id];
+          const good=rule.ok($(id).value.trim());
+          $(rule.err).classList.toggle('show',!good);
+          $(id).classList.toggle('error',!good);
+          if(!good&&!firstBad) firstBad=id;
+        });
+        if(firstBad){ $(firstBad).focus(); return null; }
+
         const name=$('custName').value.trim();
         const phone=$('custPhone').value.trim();
         const address=$('custAddress').value.trim();
-        let ok=true;
-
-        const nameOk = name.length>=4 && name.split(/\s+/).filter(Boolean).length>=2;
-        $('errName').classList.toggle('show',!nameOk);
-        $('custName').classList.toggle('error',!nameOk);
-        if(!nameOk) ok=false;
-
-        const digits=phone.replace(/\D/g,'');
-        const phoneOk = digits.length>=10 && digits.length<=15;
-        $('errPhone').classList.toggle('show',!phoneOk);
-        $('custPhone').classList.toggle('error',!phoneOk);
-        if(!phoneOk) ok=false;
-
-        const addressOk = address.length>=10;
-        $('errAddress').classList.toggle('show',!addressOk);
-        $('custAddress').classList.toggle('error',!addressOk);
-        if(!addressOk) ok=false;
-
-        if(!ok){
-          if(!nameOk) $('custName').focus();
-          else if(!phoneOk) $('custPhone').focus();
-          else $('custAddress').focus();
-          return null;
-        }
-
         try{ localStorage.setItem('gl_customer',JSON.stringify({name,phone,address})); }catch(e){}
         return {name,phone,address};
       }
+
+      // FIX 2: on blur, validate only the field being left
+      Object.keys(fieldRules).forEach(id=>{
+        const rule=fieldRules[id];
+        $(id).addEventListener('blur',()=>{
+          const good=rule.ok($(id).value.trim());
+          $(rule.err).classList.toggle('show',!good);
+          $(id).classList.toggle('error',!good);
+        });
+      });
 
       function buildOrderText(details){
         const {name,phone,address}=details;
@@ -667,7 +680,17 @@
         return lines.join('\n');
       }
 
-      /* ===== SUBMIT: Gmail + WhatsApp ===== */
+      /* ===== SUBMIT: Email + WhatsApp ===== */
+      const SEND_ICON='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg> Submit Order';
+      function resetSubmitBtn(){
+        const btn=$('sendOrderBtn');
+        btn.disabled=false;
+        btn.innerHTML=SEND_ICON;
+      }
+      // If the user comes back from WhatsApp with the Back button, un-freeze the button
+      window.addEventListener('pageshow',resetSubmitBtn);
+
+      // FIX 1: wait for the email (max 4s) before leaving the page; open desktop tab inside the click
       $('checkoutForm').addEventListener('submit',function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -675,27 +698,30 @@
         if(!Object.keys(cart).length){ showToast('Your cart is empty.'); return; }
 
         const details=validateForm();
-        if(!details){
-          showToast('Please fill in all your details correctly.');
-          return;
-        }
+        if(!details){ showToast('Please fill in all your details correctly.'); return; }
 
         const btn=$('sendOrderBtn');
+        if(btn.disabled) return;
         btn.disabled=true;
         btn.textContent='Submitting…';
 
         const {items,subtotal,finalTotal,savings}=getCartTotals();
         const orderText=buildOrderText(details);
         const plainBody=orderText.replace(/\*/g,'').replace(/₦/g,'NGN ');
-
         const orderLines=[];
         Object.keys(cart).forEach(id=>{
           const p=productById(id);
-          if(!p) return;
-          orderLines.push(p.name+' × '+cart[id]);
+          if(p) orderLines.push(p.name+' × '+cart[id]);
         });
 
-        fetch(FORMSUBMIT_ENDPOINT,{
+        const isMobile=/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent);
+
+        let waWin=null;
+        if(!isMobile){ try{ waWin=window.open('about:blank','_blank'); }catch(err){} }
+
+        showToast('Sending your order…');
+
+        const emailReq=fetch(FORMSUBMIT_ENDPOINT,{
           method:'POST',
           headers:{'Content-Type':'application/json','Accept':'application/json'},
           body:JSON.stringify({
@@ -713,42 +739,18 @@
             'Delivery':'Free in Lagos · Cash on Delivery · 1–2 days',
             'Full Order':plainBody
           })
-        }).catch(err=>console.warn('Email send error:',err));
+        }).then(r=>r.ok).catch(err=>{ console.warn('Email send error:',err); return false; });
 
-        const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(orderText);
-        showToast('Sending order via WhatsApp…');
-        closeCheckoutModal();
+        const timeout=new Promise(res=>setTimeout(()=>res(false),4000));
 
-        const isMobile=/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent);
-        if(isMobile){
-          window.location.href=url;
-        }else{
-          const w=window.open(url,'_blank');
-          if(!w) window.location.href=url;
-        }
+        Promise.race([emailReq,timeout]).then(function(){
+          const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(orderText);
+          closeCheckoutModal();
+          if(!isMobile && waWin && !waWin.closed){ waWin.location.href=url; }
+          else{ window.location.href=url; }
 
-        setTimeout(()=>{
           cart={}; saveCart(); renderCart();
-          btn.disabled=false;
-          btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg> Submit Order';
-        },1200);
-      });
-
-      ['custName','custPhone','custAddress'].forEach(id=>{
-        $(id).addEventListener('blur',()=>{
-          const name=$('custName').value.trim();
-          const phone=$('custPhone').value.trim();
-          const address=$('custAddress').value.trim();
-          const digits=phone.replace(/\D/g,'');
-          const nameOk = name.length>=4 && name.split(/\s+/).filter(Boolean).length>=2;
-          const phoneOk = digits.length>=10 && digits.length<=15;
-          const addressOk = address.length>=10;
-          $('errName').classList.toggle('show',!nameOk);
-          $('custName').classList.toggle('error',!nameOk);
-          $('errPhone').classList.toggle('show',!phoneOk);
-          $('custPhone').classList.toggle('error',!phoneOk);
-          $('errAddress').classList.toggle('show',!addressOk);
-          $('custAddress').classList.toggle('error',!addressOk);
+          resetSubmitBtn();
         });
       });
 

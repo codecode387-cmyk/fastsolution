@@ -719,9 +719,9 @@
         lines.push('*CUSTOMER DETAILS:*');
         lines.push('Name: '+name);
         lines.push('Phone: '+phone);
-        lines.push('State: '+state);
-        lines.push('City: '+city);
         lines.push('Address: '+address);
+        lines.push('City: '+city);
+        lines.push('State: '+state);
         lines.push('');
         lines.push('*ITEMS ORDERED:*');
         let n=0;
@@ -792,9 +792,9 @@
             _captcha:'false',
             'Customer Name':details.name,
             'Phone':details.phone,
-            'State':details.state,
-            'City':details.city,
             'Delivery Address':details.address,
+            'City':details.city,
+            'State':details.state,
             'Order Items':orderLines.join(' | '),
             'Total Items':items,
             'Original Price':'NGN '+subtotal.toLocaleString(),

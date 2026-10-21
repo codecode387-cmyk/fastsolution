@@ -278,15 +278,17 @@
         <b id="cartTotal">₦0</b>
       </div>
       <div class="cart-info">Free delivery in Lagos · Cash on delivery · 1–2 days</div>
-      <button type="button" class="checkout-btn" id="checkoutBtn" disabled>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
-        Checkout
+
+      <!-- ✅ Changed label from "Checkout" to "Proceed" -->
+      <button type="button" class="checkout-btn" id="proceedBtn" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        Proceed
       </button>
       <button class="clear-cart" id="clearCart">Clear cart</button>
     </div>
   </aside>
 
-  <!-- ===== CHECKOUT FORM MODAL (opens after clicking Checkout) ===== -->
+  <!-- ===== CHECKOUT FORM MODAL ===== -->
   <div class="checkout-overlay" id="checkoutOverlay"></div>
   <div class="checkout-modal" id="checkoutModal" role="dialog" aria-label="Checkout details">
     <div class="checkout-modal-head">
@@ -298,7 +300,7 @@
     </div>
     <div class="checkout-modal-body">
       <div class="order-summary-box" id="orderSummaryBox"></div>
-      <form id="checkoutForm" novalidate>
+      <form id="checkoutForm" novalidate autocomplete="on">
         <div class="form-group">
           <label for="custName">Full Name <span class="req">*</span></label>
           <input type="text" id="custName" name="custName" placeholder="e.g. Adaeze Okafor" autocomplete="name" required>
@@ -316,7 +318,7 @@
         </div>
         <button type="submit" class="checkout-submit" id="sendOrderBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
-          Send Order
+          Submit Order
         </button>
         <p class="checkout-note">Your order + details go to us via WhatsApp + email at the same time.</p>
       </form>
@@ -333,7 +335,7 @@
       const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
       const WHATSAPP_NUMBER='2347085308550';
 
-      // ✅ Your verified Gmail
+      // ✅ Your verified Gmail (FormSubmit endpoint)
       const FORMSUBMIT_ENDPOINT='https://formsubmit.co/ajax/fastsolutionlogistics1@gmail.com';
 
       const CART_KEY='gl_cart_v1';
@@ -482,7 +484,7 @@
         const {items,subtotal,finalTotal,savings,tierApplied}=getCartTotals();
 
         $('cartTotal').textContent=money(finalTotal);
-        $('checkoutBtn').disabled=items===0;
+        $('proceedBtn').disabled=items===0;
         $('mobileCartCount').textContent=items;
         $('navCartCount').textContent=items;
         $('mobileCartTotal').textContent=money(finalTotal);
@@ -555,7 +557,7 @@
         cart={}; saveCart(); renderCart(); showToast('Cart cleared');
       });
 
-      /* ===== CHECKOUT FORM LOGIC ===== */
+      /* ===== CHECKOUT FORM MODAL CONTROL ===== */
       const checkoutModal=$('checkoutModal');
       const checkoutOverlay=$('checkoutOverlay');
 
@@ -563,7 +565,7 @@
         const {items,finalTotal,savings}=getCartTotals();
         if(!items){ showToast('Your cart is empty. Add a product first.'); return; }
 
-        // Build order summary shown inside modal
+        // Summary inside modal
         const ids=Object.keys(cart);
         let summaryHtml='';
         ids.forEach(id=>{
@@ -577,15 +579,16 @@
         }
         $('orderSummaryBox').innerHTML=summaryHtml;
 
-        // Reset error states
+        // Reset errors
         ['errName','errPhone','errAddress'].forEach(id=>$(id).classList.remove('show'));
         ['custName','custPhone','custAddress'].forEach(id=>$(id).classList.remove('error'));
 
+        // Open
         checkoutModal.classList.add('open');
         checkoutOverlay.classList.add('open');
         document.body.style.overflow='hidden';
 
-        // Auto-fill saved details
+        // Autofill saved
         try{
           const saved=JSON.parse(localStorage.getItem('gl_customer')||'{}');
           if(saved.name) $('custName').value=saved.name;
@@ -601,33 +604,33 @@
         document.body.style.overflow='';
       }
 
-      // Cart "Checkout" button → close cart, open checkout form
-      $('checkoutBtn').addEventListener('click',()=>{ closeCart(); openCheckoutModal(); });
+      // ✅ "Proceed" button → close cart → open form
+      $('proceedBtn').addEventListener('click',function(){
+        closeCart();
+        openCheckoutModal();
+      });
       $('checkoutClose').addEventListener('click',closeCheckoutModal);
       checkoutOverlay.addEventListener('click',closeCheckoutModal);
       document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&checkoutModal.classList.contains('open')) closeCheckoutModal(); });
 
-      /* ===== HARD VALIDATION ===== */
+      /* ===== VALIDATION ===== */
       function validateForm(){
         const name=$('custName').value.trim();
         const phone=$('custPhone').value.trim();
         const address=$('custAddress').value.trim();
         let ok=true;
 
-        // Name: 4+ chars AND at least 2 words
         const nameOk = name.length>=4 && name.split(/\s+/).filter(Boolean).length>=2;
         $('errName').classList.toggle('show',!nameOk);
         $('custName').classList.toggle('error',!nameOk);
         if(!nameOk) ok=false;
 
-        // Phone: 10–15 digits
         const digits=phone.replace(/\D/g,'');
         const phoneOk = digits.length>=10 && digits.length<=15;
         $('errPhone').classList.toggle('show',!phoneOk);
         $('custPhone').classList.toggle('error',!phoneOk);
         if(!phoneOk) ok=false;
 
-        // Address: 10+ chars
         const addressOk = address.length>=10;
         $('errAddress').classList.toggle('show',!addressOk);
         $('custAddress').classList.toggle('error',!addressOk);
@@ -675,15 +678,13 @@
         return lines.join('\n');
       }
 
-      /* ===== SUBMIT: EMAIL + WHATSAPP SIMULTANEOUSLY ===== */
+      /* ===== SUBMIT: Gmail + WhatsApp at the same time ===== */
       $('checkoutForm').addEventListener('submit',function(e){
         e.preventDefault();
         e.stopPropagation();
 
-        // Guard 1: cart must not be empty
         if(!Object.keys(cart).length){ showToast('Your cart is empty.'); return; }
 
-        // Guard 2: form must be valid — otherwise STOP
         const details=validateForm();
         if(!details){
           showToast('Please fill in all your details correctly.');
@@ -692,6 +693,7 @@
 
         const btn=$('sendOrderBtn');
         btn.disabled=true;
+        btn.textContent='Submitting…';
 
         const {items,subtotal,finalTotal,savings}=getCartTotals();
         const orderText=buildOrderText(details);
@@ -704,7 +706,7 @@
           orderLines.push(p.name+' × '+cart[id]);
         });
 
-        // 1) Email to Gmail (background, non-blocking)
+        // 1) Email to Gmail (background)
         fetch(FORMSUBMIT_ENDPOINT,{
           method:'POST',
           headers:{'Content-Type':'application/json','Accept':'application/json'},
@@ -725,7 +727,7 @@
           })
         }).catch(err=>console.warn('Email send error:',err));
 
-        // 2) WhatsApp opens immediately
+        // 2) WhatsApp
         const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(orderText);
         showToast('Sending order via WhatsApp…');
         closeCheckoutModal();
@@ -738,14 +740,15 @@
           if(!w) window.location.href=url;
         }
 
-        // 3) Clear cart + reset button
+        // 3) Clear cart
         setTimeout(()=>{
           cart={}; saveCart(); renderCart();
           btn.disabled=false;
+          btn.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg> Submit Order';
         },1200);
       });
 
-      // Real-time validation on blur
+      // Live validation
       ['custName','custPhone','custAddress'].forEach(id=>{
         $(id).addEventListener('blur',()=>{
           const name=$('custName').value.trim();

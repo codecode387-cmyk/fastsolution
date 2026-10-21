@@ -34,7 +34,8 @@
 {
   "@context":"https://schema.org",
   "@graph":[
-    {"@type":"Brand","name":"Global Lush","url":"https://YOURDOMAIN.com/global-lush/","logo":"https://YOURDOMAIN.com/global-lush/images/logo-gold.png","sameAs":["https://www.instagram.com/global_lush.offical","https://www.tiktok.com/@global.lush"]},
+    {"@type":"Brand","name":"Global Lush","url":"https://YOURDOMAIN.com/global-lush/","logo":"https://YOURDOMAIN.com/global-lush/images/logo-gold.png","sameAs":["https://www.instagram.com/global_lush.offical","https://www.tiktok.com/@global.lush"],
+     "address":{"@type":"PostalAddress","streetAddress":"3, Aimasiko Street, Orile Oshodi","addressLocality":"Oshodi","addressRegion":"Lagos","postalCode":"102214","addressCountry":"NG"}},
     {"@type":"ItemList","name":"Global Lush products","itemListElement":[
       {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Global Lush Strawberry Body Wash with Scrub 1000ml","brand":{"@type":"Brand","name":"Global Lush"},"image":"https://YOURDOMAIN.com/global-lush/images/p-strawberry.jpg","description":"Strawberry extract and walnut shell powder body wash that cleanses and exfoliates in one step."}},
       {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"Global Lush Lavender Body Wash with Scrub 1000ml","brand":{"@type":"Brand","name":"Global Lush"},"image":"https://YOURDOMAIN.com/global-lush/images/p-lavender.jpg","description":"Lavender body wash with gentle scrub beads and a soft natural lavender aroma."}},
@@ -223,6 +224,7 @@
   footer img{height:92px;margin:0 auto 1rem}
   footer .soc{display:flex;gap:1.4rem;justify-content:center;margin:1.2rem 0;flex-wrap:wrap}
   footer .soc a{color:var(--gold-l);text-decoration:none;font-size:.9rem;letter-spacing:.08em}
+  footer .addr{margin:1rem auto .4rem;font-size:.85rem;color:#b9aede;line-height:1.6;font-style:normal;max-width:32rem}
   footer small{display:block;margin-top:1.2rem;color:#9d92bf;font-size:.78rem;max-width:44rem;margin-inline:auto}
 
   /* barely-visible admin icon */
@@ -559,6 +561,10 @@
   <div class="wrap">
     <img src="images/logo-gold.png" alt="Global Lush logo"/>
     <p>Brighten. Smooth. Glow.</p>
+    <address class="addr">
+      3, Aimasiko Street, Orile Oshodi,<br/>
+      Lagos 102214, Lagos State, Nigeria
+    </address>
     <div class="soc">
       <a href="https://www.instagram.com/global_lush.offical" target="_blank" rel="noopener">Instagram @global_lush.offical</a>
       <a href="https://www.tiktok.com/@global.lush" target="_blank" rel="noopener">TikTok @global.lush</a>

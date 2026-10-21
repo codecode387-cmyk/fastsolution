@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Global Lush · Store</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,6 +14,8 @@
     img{max-width:100%;display:block}
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1280px;margin:0 auto;padding:0 1.25rem;width:100%}
+    
+    /* Nav */
     header.nav{background:rgba(45,26,94,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(230,201,124,.18);padding:.6rem 0;position:sticky;top:0;z-index:50}
     .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
     .nav img.logo{height:56px}
@@ -23,23 +25,21 @@
     .nav .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.2rem;border-radius:999px;font:500 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid rgba(230,201,124,.7);cursor:pointer;transition:transform .2s,background .2s;background:transparent;color:#fff}
     .nav .btn:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
 
-    /* Floating cart button */
-    .cart-fab{position:fixed;right:1.25rem;bottom:1.25rem;z-index:60;display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,var(--gold),#b8903f);color:var(--purple-dd);border:none;border-radius:999px;padding:.9rem 1.3rem;font:600 .82rem/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;box-shadow:0 14px 32px -10px rgba(201,162,75,.85);transition:transform .2s,box-shadow .2s}
-    .cart-fab:hover{transform:translateY(-3px);box-shadow:0 18px 40px -10px rgba(201,162,75,.95)}
-    .cart-fab .count-badge{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 .4rem;border-radius:999px;background:var(--purple-dd);color:var(--gold-l);font-size:.72rem;font-weight:700}
-
     .hero{background:radial-gradient(900px 500px at 75% 40%,#6a45c2 0%,transparent 60%),linear-gradient(160deg,var(--purple) 0%,var(--purple-dd) 100%);color:#fff;padding:3.5rem 0 3rem;text-align:center}
     .hero .eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-l);font-weight:500;margin-bottom:.9rem}
     .hero h1{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:600;line-height:1.1;margin-bottom:.8rem}
     .hero h1 em{color:var(--gold-l);font-style:italic}
     .hero p{color:#dcd4f0;max-width:36rem;margin:0 auto;font-size:1.05rem}
 
-    .main{padding:3rem 0 4rem;flex:1}
+    .main{padding:2rem 0 8rem;flex:1} /* Extra padding at bottom for mobile cart bar */
+    
+    /* Grid Layout */
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
     @media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr);gap:1rem}}
-    @media(max-width:380px){.grid{grid-template-columns:1fr}}
+    @media(max-width:600px){.grid{grid-template-columns:1fr;gap:1.5rem}} /* 1 column on mobile */
 
+    /* Product Card */
     .pcard{background:#fff;border-radius:22px;overflow:hidden;border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
     .pcard:hover{transform:translateY(-5px);box-shadow:0 22px 44px -24px rgba(45,26,94,.5)}
     .pcard .img{position:relative;aspect-ratio:1/1;overflow:hidden;background:#f2eefa;display:block;cursor:pointer}
@@ -49,26 +49,25 @@
     .pcard .badge.out{background:#b33}
     .pcard .count{position:absolute;bottom:8px;right:8px;background:rgba(29,16,64,.85);color:#fff;font-size:.68rem;padding:.25rem .6rem;border-radius:999px}
     .pcard .body{padding:1.2rem 1.2rem 1.4rem;display:flex;flex-direction:column;gap:.55rem;flex:1}
-    .pcard h3{font-family:var(--serif);font-size:1.25rem;color:var(--purple-d);font-weight:600;line-height:1.2}
-    .pcard p{color:var(--muted);font-size:.88rem;flex:1}
-    .pcard .price{font-family:var(--serif);font-size:1.3rem;color:var(--purple);font-weight:600;margin-top:.4rem}
-    .pcard .price-note{font-size:.75rem;color:var(--gold);font-weight:500;letter-spacing:.04em;margin-top:-.2rem}
+    .pcard h3{font-family:var(--serif);font-size:1.3rem;color:var(--purple-d);font-weight:600;line-height:1.2}
+    .pcard p{color:var(--muted);font-size:.9rem;flex:1}
+    .pcard .price{font-family:var(--serif);font-size:1.4rem;color:var(--purple);font-weight:600;margin-top:.4rem}
+    .pcard .price-note{font-size:.78rem;color:var(--gold);font-weight:500;letter-spacing:.04em;margin-top:-.2rem}
 
-    /* Quantity + Add row inside product card */
-    .qty-row{display:flex;align-items:stretch;gap:.55rem;margin-top:.6rem}
+    /* Quantity + Add row */
+    .qty-row{display:flex;align-items:stretch;gap:.6rem;margin-top:.6rem;width:100%}
     .qty-controls{display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:999px;background:#fff;overflow:hidden;flex-shrink:0}
-    .qty-controls button{width:34px;height:38px;border:none;background:transparent;color:var(--purple);font-size:1.1rem;font-weight:600;cursor:pointer;transition:background .2s}
+    .qty-controls button{width:38px;height:44px;border:none;background:transparent;color:var(--purple);font-size:1.2rem;font-weight:600;cursor:pointer;transition:background .2s}
     .qty-controls button:hover{background:var(--cream)}
     .qty-controls button:disabled{opacity:.35;cursor:not-allowed}
-    .qty-controls input{width:42px;height:38px;border:none;text-align:center;font:600 .95rem var(--sans);color:var(--ink);background:transparent;outline:none;-moz-appearance:textfield}
+    .qty-controls input{width:46px;height:44px;border:none;text-align:center;font:600 1rem var(--sans);color:var(--ink);background:transparent;outline:none;-moz-appearance:textfield}
     .qty-controls input::-webkit-outer-spin-button,
     .qty-controls input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-    .add-btn{flex:1;min-width:110px;padding:.7rem .9rem;border-radius:999px;background:linear-gradient(135deg,var(--gold),#b8903f);color:var(--purple-dd);border:none;font:600 .74rem var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s}
+    .add-btn{flex:1;padding:.7rem .9rem;border-radius:999px;background:linear-gradient(135deg,var(--gold),#b8903f);color:var(--purple-dd);border:none;font:600 .8rem var(--sans);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;align-items:center;justify-content:center}
     .add-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px -10px rgba(201,162,75,.95)}
     .add-btn:disabled{background:#d9d4e2;color:#888;cursor:not-allowed;transform:none;box-shadow:none}
 
-    /* View details as a small text link */
-    .view{display:inline-flex;align-items:center;gap:.3rem;align-self:flex-start;color:var(--purple);font:500 .72rem var(--sans);letter-spacing:.1em;text-transform:uppercase;margin-top:.2rem;padding:.15rem 0;transition:color .2s}
+    .view{display:inline-flex;align-items:center;gap:.3rem;align-self:flex-start;color:var(--purple);font:500 .75rem var(--sans);letter-spacing:.1em;text-transform:uppercase;margin-top:.4rem;padding:.15rem 0;transition:color .2s}
     .view:hover{color:var(--purple-d);text-decoration:underline}
 
     .empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:1.05rem}
@@ -77,18 +76,21 @@
     .spinner{display:inline-block;width:32px;height:32px;border:3px solid rgba(70,41,134,.2);border-radius:50%;border-top-color:var(--purple);animation:spin .8s linear infinite;margin-bottom:1rem}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    /* Cart drawer */
+    /* Cart Drawer */
     .cart-overlay{position:fixed;inset:0;background:rgba(29,16,64,.55);opacity:0;pointer-events:none;transition:opacity .3s;z-index:70}
     .cart-overlay.open{opacity:1;pointer-events:auto}
     .cart-drawer{position:fixed;top:0;right:0;height:100%;width:100%;max-width:440px;background:#fff;z-index:80;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);box-shadow:-20px 0 60px -20px rgba(0,0,0,.35)}
     .cart-drawer.open{transform:translateX(0)}
-    .cart-head{padding:1.4rem 1.4rem 1rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+    
+    .cart-head{padding:1.4rem 1.4rem 1rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:#fff;flex-shrink:0}
     .cart-head h2{font-family:var(--serif);font-size:1.6rem;color:var(--purple-d);font-weight:600}
     .cart-close{width:38px;height:38px;border-radius:50%;border:none;background:var(--cream);color:var(--purple);font-size:1.2rem;cursor:pointer;transition:background .2s}
     .cart-close:hover{background:#efe8fb}
-    .cart-body{flex:1;overflow-y:auto;padding:1.2rem 1.4rem}
+    
+    .cart-body{flex:1;overflow-y:auto;padding:1.2rem 1.4rem;-webkit-overflow-scrolling:touch}
     .cart-empty{text-align:center;color:var(--muted);padding:3rem 1rem;font-size:.95rem}
     .cart-empty svg{width:56px;height:56px;margin:0 auto 1rem;display:block;opacity:.4}
+    
     .cart-item{display:flex;gap:.9rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
     .cart-item:last-child{border-bottom:none}
     .cart-item img{width:72px;height:72px;object-fit:cover;border-radius:14px;flex-shrink:0;background:#f2eefa}
@@ -96,14 +98,14 @@
     .cart-item-info h4{font-family:var(--serif);font-size:1.05rem;color:var(--purple-d);font-weight:600;line-height:1.2;margin-bottom:.15rem}
     .cart-item-info .unit{font-size:.78rem;color:var(--muted);margin-bottom:.5rem}
     .cart-item-controls{display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
-    .cart-item .qty-controls button{width:28px;height:30px;font-size:.95rem}
-    .cart-item .qty-controls input{width:36px;height:30px;font-size:.85rem}
-    .cart-item-price{font-family:var(--serif);font-size:1.1rem;color:var(--purple);font-weight:600}
+    
+    .cart-item .qty-controls button{width:32px;height:32px;font-size:1rem}
+    .cart-item .qty-controls input{width:40px;height:32px;font-size:.95rem}
+    
     .cart-item-remove{background:transparent;border:none;color:#b33;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;padding:.15rem 0;margin-top:.35rem}
     .cart-item-remove:hover{text-decoration:underline}
     
-    /* Cart foot & discount UI */
-    .cart-foot{padding:1.2rem 1.4rem 1.4rem;border-top:1px solid var(--line);background:var(--cream)}
+    .cart-foot{padding:1.2rem 1.4rem 1.4rem;border-top:1px solid var(--line);background:var(--cream);flex-shrink:0}
     .discount-alert{background:var(--gold-l);color:var(--purple-dd);padding:.6rem .8rem;border-radius:12px;font-size:.8rem;text-align:center;margin-bottom:1rem;font-weight:600;line-height:1.3}
     .discount-alert span{display:block;font-size:.9rem;margin-top:.2rem}
     .cart-subtotal{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem;font-size:.85rem;color:var(--muted)}
@@ -118,12 +120,42 @@
     .clear-cart{display:block;width:100%;text-align:center;background:transparent;border:none;color:var(--muted);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;margin-top:.8rem}
     .clear-cart:hover{color:#b33}
 
+    /* Sticky Mobile Cart Bar */
+    .mobile-cart-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:1rem 1.25rem;z-index:60;box-shadow:0 -4px 20px rgba(0,0,0,.08);justify-content:space-between;align-items:center}
+    .mobile-cart-info{display:flex;flex-direction:column}
+    .mobile-cart-info span{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+    .mobile-cart-info b{font-family:var(--serif);font-size:1.3rem;color:var(--purple);font-weight:700;line-height:1.1}
+    .mobile-cart-btn{background:linear-gradient(135deg,var(--gold),#b8903f);color:var(--purple-dd);border:none;border-radius:999px;padding:.8rem 1.4rem;font:600 .8rem var(--sans);letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;box-shadow:0 4px 12px rgba(201,162,75,.4);cursor:pointer}
+    .mobile-cart-btn .count-badge{background:var(--purple-dd);color:var(--gold-l);min-width:20px;height:20px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+
     /* Toast */
     .toast{position:fixed;left:50%;bottom:6rem;transform:translate(-50%,20px);background:var(--purple-dd);color:#fff;padding:.8rem 1.4rem;border-radius:999px;font-size:.85rem;box-shadow:0 12px 30px -8px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:90;max-width:90vw;text-align:center}
     .toast.show{opacity:1;transform:translate(-50%,0)}
 
     .micro-footer{text-align:center;padding:1.8rem .5rem 1.2rem;font-size:.75rem;color:#9d92bf;letter-spacing:.04em}
-    @media(max-width:640px){.nav nav a:not(.btn){display:none}.nav .wrap{height:58px}.nav img.logo{height:44px}.cart-fab{padding:.75rem 1rem;font-size:.72rem}.qty-controls button{width:30px}.qty-controls input{width:36px}}
+    
+    /* Mobile Adjustments */
+    @media(max-width:820px){
+      .nav nav a:not(.btn){display:none}
+      .nav .wrap{height:58px}
+      .nav img.logo{height:44px}
+      
+      /* Switch to full-width mobile cart bar */
+      .mobile-cart-bar{display:flex}
+      
+      /* Adjust padding for the bar */
+      .main{padding-bottom:6rem}
+      .micro-footer{padding-bottom:6rem}
+      
+      /* Make drawer full screen on small mobile */
+      .cart-drawer{max-width:100%;}
+    }
+    
+    @media(max-width:600px){
+      /* Prevent zoom on input focus */
+      .qty-controls input{font-size:16px !important;}
+      .cart-item .qty-controls input{font-size:16px !important;}
+    }
   </style>
 </head>
 <body>
@@ -158,15 +190,22 @@
 
   <div class="micro-footer">© 2026 Global Lush · For external use only · Keep out of reach of children</div>
 
-  <!-- Floating cart button -->
-  <button class="cart-fab" id="cartFab" aria-label="Open cart">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-    <span>Cart</span>
-    <span class="count-badge" id="cartCount">0</span>
-  </button>
+  <!-- Mobile Sticky Cart Bar -->
+  <div class="mobile-cart-bar" id="mobileCartBar" onclick="openCart()">
+    <div class="mobile-cart-info">
+      <span>Total (<span id="mobileCartCount">0</span> items)</span>
+      <b id="mobileCartTotal">₦0</b>
+    </div>
+    <button class="mobile-cart-btn">
+      View Cart
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+    </button>
+  </div>
 
-  <!-- Cart drawer -->
+  <!-- Cart Overlay -->
   <div class="cart-overlay" id="cartOverlay"></div>
+  
+  <!-- Cart Drawer -->
   <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-label="Shopping cart">
     <div class="cart-head">
       <h2>Your Cart</h2>
@@ -412,9 +451,14 @@
       function renderCart(){
         const { items, subtotal, finalTotal, tierApplied } = getCartTotals();
         
-        $('cartCount').textContent = items;
-        $('cartTotal').textContent = money(finalTotal);
-        $('checkoutBtn').disabled = items === 0;
+        // Update desktop elements (if any)
+        if($('cartCount')) $('cartCount').textContent = items;
+        if($('cartTotal')) $('cartTotal').textContent = money(finalTotal);
+        if($('checkoutBtn')) $('checkoutBtn').disabled = items === 0;
+
+        // Update mobile sticky bar
+        $('mobileCartCount').textContent = items;
+        $('mobileCartTotal').textContent = money(finalTotal);
 
         // Handle Discount UI
         if (items >= 2) {
@@ -496,7 +540,6 @@
         $('cartOverlay').classList.remove('open');
         document.body.style.overflow = '';
       }
-      $('cartFab').addEventListener('click', openCart);
       $('cartClose').addEventListener('click', closeCart);
       $('cartOverlay').addEventListener('click', closeCart);
       document.addEventListener('keydown', e=>{ if(e.key==='Escape' && cartOpen) closeCart(); });

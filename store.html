@@ -278,8 +278,6 @@
         <b id="cartTotal">₦0</b>
       </div>
       <div class="cart-info">Free delivery in Lagos · Cash on delivery · 1–2 days</div>
-
-      <!-- ✅ Changed label from "Checkout" to "Proceed" -->
       <button type="button" class="checkout-btn" id="proceedBtn" disabled>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         Proceed
@@ -300,7 +298,7 @@
     </div>
     <div class="checkout-modal-body">
       <div class="order-summary-box" id="orderSummaryBox"></div>
-      <form id="checkoutForm" novalidate autocomplete="on">
+      <form id="checkoutForm" novalidate>
         <div class="form-group">
           <label for="custName">Full Name <span class="req">*</span></label>
           <input type="text" id="custName" name="custName" placeholder="e.g. Adaeze Okafor" autocomplete="name" required>
@@ -334,14 +332,10 @@
       const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
       const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
       const WHATSAPP_NUMBER='2347085308550';
-
-      // ✅ Your verified Gmail (FormSubmit endpoint)
       const FORMSUBMIT_ENDPOINT='https://formsubmit.co/ajax/fastsolutionlogistics1@gmail.com';
-
       const CART_KEY='gl_cart_v1';
       const BASE_PRICE=14000;
       const MAX_QTY=50;
-
       const DISCOUNT_TIERS={1:14000,2:22000,3:30000,4:38000,5:46000,6:54000,7:55000,8:62000,9:69000,10:69000,11:69000,12:69000};
 
       const priceCache={0:0};
@@ -565,7 +559,6 @@
         const {items,finalTotal,savings}=getCartTotals();
         if(!items){ showToast('Your cart is empty. Add a product first.'); return; }
 
-        // Summary inside modal
         const ids=Object.keys(cart);
         let summaryHtml='';
         ids.forEach(id=>{
@@ -579,16 +572,13 @@
         }
         $('orderSummaryBox').innerHTML=summaryHtml;
 
-        // Reset errors
         ['errName','errPhone','errAddress'].forEach(id=>$(id).classList.remove('show'));
         ['custName','custPhone','custAddress'].forEach(id=>$(id).classList.remove('error'));
 
-        // Open
         checkoutModal.classList.add('open');
         checkoutOverlay.classList.add('open');
         document.body.style.overflow='hidden';
 
-        // Autofill saved
         try{
           const saved=JSON.parse(localStorage.getItem('gl_customer')||'{}');
           if(saved.name) $('custName').value=saved.name;
@@ -604,7 +594,6 @@
         document.body.style.overflow='';
       }
 
-      // ✅ "Proceed" button → close cart → open form
       $('proceedBtn').addEventListener('click',function(){
         closeCart();
         openCheckoutModal();
@@ -678,7 +667,7 @@
         return lines.join('\n');
       }
 
-      /* ===== SUBMIT: Gmail + WhatsApp at the same time ===== */
+      /* ===== SUBMIT: Gmail + WhatsApp ===== */
       $('checkoutForm').addEventListener('submit',function(e){
         e.preventDefault();
         e.stopPropagation();
@@ -706,7 +695,6 @@
           orderLines.push(p.name+' × '+cart[id]);
         });
 
-        // 1) Email to Gmail (background)
         fetch(FORMSUBMIT_ENDPOINT,{
           method:'POST',
           headers:{'Content-Type':'application/json','Accept':'application/json'},
@@ -727,7 +715,6 @@
           })
         }).catch(err=>console.warn('Email send error:',err));
 
-        // 2) WhatsApp
         const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(orderText);
         showToast('Sending order via WhatsApp…');
         closeCheckoutModal();
@@ -740,7 +727,6 @@
           if(!w) window.location.href=url;
         }
 
-        // 3) Clear cart
         setTimeout(()=>{
           cart={}; saveCart(); renderCart();
           btn.disabled=false;
@@ -748,7 +734,6 @@
         },1200);
       });
 
-      // Live validation
       ['custName','custPhone','custAddress'].forEach(id=>{
         $(id).addEventListener('blur',()=>{
           const name=$('custName').value.trim();

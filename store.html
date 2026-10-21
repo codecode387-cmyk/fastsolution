@@ -286,7 +286,7 @@
     </div>
   </aside>
 
-  <!-- ===== CHECKOUT FORM MODAL ===== -->
+  <!-- ===== CHECKOUT FORM MODAL (opens after clicking Checkout) ===== -->
   <div class="checkout-overlay" id="checkoutOverlay"></div>
   <div class="checkout-modal" id="checkoutModal" role="dialog" aria-label="Checkout details">
     <div class="checkout-modal-head">
@@ -302,23 +302,23 @@
         <div class="form-group">
           <label for="custName">Full Name <span class="req">*</span></label>
           <input type="text" id="custName" name="custName" placeholder="e.g. Adaeze Okafor" autocomplete="name" required>
-          <div class="form-error" id="errName">Please enter your full name.</div>
+          <div class="form-error" id="errName">Please enter your full name (first and last).</div>
         </div>
         <div class="form-group">
           <label for="custPhone">Phone Number <span class="req">*</span></label>
           <input type="tel" id="custPhone" name="custPhone" placeholder="e.g. 08012345678" autocomplete="tel" inputmode="tel" required>
-          <div class="form-error" id="errPhone">Please enter a valid phone number (at least 10 digits).</div>
+          <div class="form-error" id="errPhone">Please enter a valid phone number (10–15 digits).</div>
         </div>
         <div class="form-group">
           <label for="custAddress">Delivery Address <span class="req">*</span></label>
           <textarea id="custAddress" name="custAddress" placeholder="Street, area, city, landmark…" autocomplete="street-address" required></textarea>
-          <div class="form-error" id="errAddress">Please enter your delivery address.</div>
+          <div class="form-error" id="errAddress">Please enter your full delivery address.</div>
         </div>
         <button type="submit" class="checkout-submit" id="sendOrderBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
           Send Order
         </button>
-        <p class="checkout-note">Your order goes to us via WhatsApp + email at the same time. We'll confirm delivery and payment.</p>
+        <p class="checkout-note">Your order + details go to us via WhatsApp + email at the same time.</p>
       </form>
     </div>
   </div>
@@ -333,7 +333,7 @@
       const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
       const WHATSAPP_NUMBER='2347085308550';
 
-      // ✅ Your verified Gmail — FormSubmit endpoint
+      // ✅ Your verified Gmail
       const FORMSUBMIT_ENDPOINT='https://formsubmit.co/ajax/fastsolutionlogistics1@gmail.com';
 
       const CART_KEY='gl_cart_v1';
@@ -561,8 +561,9 @@
 
       function openCheckoutModal(){
         const {items,finalTotal,savings}=getCartTotals();
-        if(!items){ showToast('Your cart is empty.'); return; }
+        if(!items){ showToast('Your cart is empty. Add a product first.'); return; }
 
+        // Build order summary shown inside modal
         const ids=Object.keys(cart);
         let summaryHtml='';
         ids.forEach(id=>{
@@ -576,6 +577,7 @@
         }
         $('orderSummaryBox').innerHTML=summaryHtml;
 
+        // Reset error states
         ['errName','errPhone','errAddress'].forEach(id=>$(id).classList.remove('show'));
         ['custName','custPhone','custAddress'].forEach(id=>$(id).classList.remove('error'));
 
@@ -583,6 +585,7 @@
         checkoutOverlay.classList.add('open');
         document.body.style.overflow='hidden';
 
+        // Auto-fill saved details
         try{
           const saved=JSON.parse(localStorage.getItem('gl_customer')||'{}');
           if(saved.name) $('custName').value=saved.name;
@@ -598,37 +601,51 @@
         document.body.style.overflow='';
       }
 
+      // Cart "Checkout" button → close cart, open checkout form
       $('checkoutBtn').addEventListener('click',()=>{ closeCart(); openCheckoutModal(); });
       $('checkoutClose').addEventListener('click',closeCheckoutModal);
       checkoutOverlay.addEventListener('click',closeCheckoutModal);
       document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&checkoutModal.classList.contains('open')) closeCheckoutModal(); });
 
+      /* ===== HARD VALIDATION ===== */
       function validateForm(){
-        let ok=true;
         const name=$('custName').value.trim();
         const phone=$('custPhone').value.trim();
         const address=$('custAddress').value.trim();
+        let ok=true;
 
-        if(!name){ $('errName').classList.add('show'); $('custName').classList.add('error'); ok=false; }
-        else{ $('errName').classList.remove('show'); $('custName').classList.remove('error'); }
+        // Name: 4+ chars AND at least 2 words
+        const nameOk = name.length>=4 && name.split(/\s+/).filter(Boolean).length>=2;
+        $('errName').classList.toggle('show',!nameOk);
+        $('custName').classList.toggle('error',!nameOk);
+        if(!nameOk) ok=false;
 
+        // Phone: 10–15 digits
         const digits=phone.replace(/\D/g,'');
-        if(digits.length<10){ $('errPhone').classList.add('show'); $('custPhone').classList.add('error'); ok=false; }
-        else{ $('errPhone').classList.remove('show'); $('custPhone').classList.remove('error'); }
+        const phoneOk = digits.length>=10 && digits.length<=15;
+        $('errPhone').classList.toggle('show',!phoneOk);
+        $('custPhone').classList.toggle('error',!phoneOk);
+        if(!phoneOk) ok=false;
 
-        if(address.length<5){ $('errAddress').classList.add('show'); $('custAddress').classList.add('error'); ok=false; }
-        else{ $('errAddress').classList.remove('show'); $('custAddress').classList.remove('error'); }
+        // Address: 10+ chars
+        const addressOk = address.length>=10;
+        $('errAddress').classList.toggle('show',!addressOk);
+        $('custAddress').classList.toggle('error',!addressOk);
+        if(!addressOk) ok=false;
 
-        if(ok){
-          try{ localStorage.setItem('gl_customer',JSON.stringify({name,phone,address})); }catch(e){}
+        if(!ok){
+          if(!nameOk) $('custName').focus();
+          else if(!phoneOk) $('custPhone').focus();
+          else $('custAddress').focus();
+          return null;
         }
-        return ok;
+
+        try{ localStorage.setItem('gl_customer',JSON.stringify({name,phone,address})); }catch(e){}
+        return {name,phone,address};
       }
 
-      function buildOrderText(){
-        const name=$('custName').value.trim();
-        const phone=$('custPhone').value.trim();
-        const address=$('custAddress').value.trim();
+      function buildOrderText(details){
+        const {name,phone,address}=details;
         const ids=Object.keys(cart);
         const {items,subtotal,finalTotal,savings}=getCartTotals();
         const lines=[];
@@ -658,42 +675,46 @@
         return lines.join('\n');
       }
 
-      /* ===== ONE-CLICK: GMAIL + WHATSAPP SIMULTANEOUSLY ===== */
+      /* ===== SUBMIT: EMAIL + WHATSAPP SIMULTANEOUSLY ===== */
       $('checkoutForm').addEventListener('submit',function(e){
         e.preventDefault();
-        if(!validateForm()) return;
+        e.stopPropagation();
+
+        // Guard 1: cart must not be empty
+        if(!Object.keys(cart).length){ showToast('Your cart is empty.'); return; }
+
+        // Guard 2: form must be valid — otherwise STOP
+        const details=validateForm();
+        if(!details){
+          showToast('Please fill in all your details correctly.');
+          return;
+        }
 
         const btn=$('sendOrderBtn');
         btn.disabled=true;
 
-        const name=$('custName').value.trim();
-        const phone=$('custPhone').value.trim();
-        const address=$('custAddress').value.trim();
-        const ids=Object.keys(cart);
         const {items,subtotal,finalTotal,savings}=getCartTotals();
+        const orderText=buildOrderText(details);
+        const plainBody=orderText.replace(/\*/g,'').replace(/₦/g,'NGN ');
 
-        // Build plain-text body for email
-        const plainBody=buildOrderText().replace(/\*/g,'').replace(/₦/g,'NGN ');
-
-        // Build line items summary
         const orderLines=[];
-        ids.forEach(id=>{
+        Object.keys(cart).forEach(id=>{
           const p=productById(id);
           if(!p) return;
           orderLines.push(p.name+' × '+cart[id]);
         });
 
-        // 1) FIRE EMAIL TO GMAIL IN BACKGROUND (non-blocking)
+        // 1) Email to Gmail (background, non-blocking)
         fetch(FORMSUBMIT_ENDPOINT,{
           method:'POST',
           headers:{'Content-Type':'application/json','Accept':'application/json'},
           body:JSON.stringify({
-            _subject:'New Order from '+name+' — Global Lush',
+            _subject:'New Order from '+details.name+' — Global Lush',
             _template:'table',
             _captcha:'false',
-            'Customer Name':name,
-            'Phone':phone,
-            'Delivery Address':address,
+            'Customer Name':details.name,
+            'Phone':details.phone,
+            'Delivery Address':details.address,
             'Order Items':orderLines.join(' | '),
             'Total Items':items,
             'Original Price':'NGN '+subtotal.toLocaleString(),
@@ -704,8 +725,8 @@
           })
         }).catch(err=>console.warn('Email send error:',err));
 
-        // 2) IMMEDIATELY OPEN WHATSAPP
-        const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(buildOrderText());
+        // 2) WhatsApp opens immediately
+        const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(orderText);
         showToast('Sending order via WhatsApp…');
         closeCheckoutModal();
 
@@ -717,26 +738,29 @@
           if(!w) window.location.href=url;
         }
 
-        // 3) CLEAR CART + RESET BUTTON
+        // 3) Clear cart + reset button
         setTimeout(()=>{
           cart={}; saveCart(); renderCart();
           btn.disabled=false;
         },1200);
       });
 
-      // Real-time validation
+      // Real-time validation on blur
       ['custName','custPhone','custAddress'].forEach(id=>{
         $(id).addEventListener('blur',()=>{
           const name=$('custName').value.trim();
           const phone=$('custPhone').value.trim();
           const address=$('custAddress').value.trim();
           const digits=phone.replace(/\D/g,'');
-          $('errName').classList.toggle('show',!name);
-          $('custName').classList.toggle('error',!name);
-          $('errPhone').classList.toggle('show',digits.length<10);
-          $('custPhone').classList.toggle('error',digits.length<10);
-          $('errAddress').classList.toggle('show',address.length<5);
-          $('custAddress').classList.toggle('error',address.length<5);
+          const nameOk = name.length>=4 && name.split(/\s+/).filter(Boolean).length>=2;
+          const phoneOk = digits.length>=10 && digits.length<=15;
+          const addressOk = address.length>=10;
+          $('errName').classList.toggle('show',!nameOk);
+          $('custName').classList.toggle('error',!nameOk);
+          $('errPhone').classList.toggle('show',!phoneOk);
+          $('custPhone').classList.toggle('error',!phoneOk);
+          $('errAddress').classList.toggle('show',!addressOk);
+          $('custAddress').classList.toggle('error',!addressOk);
         });
       });
 

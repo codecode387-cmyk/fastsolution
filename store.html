@@ -111,14 +111,43 @@
     .checkout-btn:disabled{background:#c8c2d6;cursor:not-allowed;box-shadow:none}
     .clear-cart{display:block;width:100%;text-align:center;background:transparent;border:none;color:var(--muted);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;margin-top:.8rem;padding:.4rem}
 
-    /* Sticky Mobile Cart Bar (only when cart has items) */
+    /* ===== CHECKOUT FORM MODAL ===== */
+    .checkout-overlay{position:fixed;inset:0;background:rgba(29,16,64,.65);opacity:0;pointer-events:none;transition:opacity .3s;z-index:95}
+    .checkout-overlay.open{opacity:1;pointer-events:auto}
+    .checkout-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:calc(100% - 2rem);max-width:480px;max-height:90vh;max-height:90dvh;background:#fff;border-radius:24px;z-index:96;display:flex;flex-direction:column;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;box-shadow:0 30px 80px -20px rgba(0,0,0,.4);overflow:hidden}
+    .checkout-modal.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+    .checkout-modal-head{padding:1.3rem 1.5rem;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(160deg,var(--purple) 0%,var(--purple-dd) 100%);color:#fff;flex-shrink:0}
+    .checkout-modal-head h3{font-family:var(--serif);font-size:1.5rem;font-weight:600}
+    .checkout-modal-head p{font-size:.75rem;color:var(--gold-l);letter-spacing:.06em;text-transform:uppercase;margin-top:.15rem}
+    .checkout-modal-close{width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:1.1rem;cursor:pointer}
+    .checkout-modal-body{padding:1.3rem 1.5rem;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;flex:1}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--purple-d);font-weight:600;margin-bottom:.4rem}
+    .form-group label .req{color:#b33}
+    .form-group input,.form-group textarea{width:100%;padding:.8rem 1rem;border:1.5px solid var(--line);border-radius:14px;background:var(--cream);font:500 16px var(--sans);color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+    .form-group input:focus,.form-group textarea:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(70,41,134,.12);background:#fff}
+    .form-group textarea{resize:vertical;min-height:80px;line-height:1.5}
+    .form-group input.error,.form-group textarea.error{border-color:#b33;background:#fef5f5}
+    .form-error{display:none;color:#b33;font-size:.75rem;margin-top:.3rem;font-weight:500}
+    .form-error.show{display:block}
+    .order-summary-box{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem;margin-bottom:1.2rem}
+    .order-summary-box .row{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);padding:.25rem 0}
+    .order-summary-box .row.total{border-top:1px dashed var(--line);margin-top:.4rem;padding-top:.6rem;font-weight:700;color:var(--purple-d);font-size:1rem}
+    .order-summary-box .row.total b{font-family:var(--serif);font-size:1.4rem;color:var(--purple)}
+    .order-summary-box .row.savings{color:#137333;font-weight:600}
+    .checkout-submit{width:100%;padding:1rem;border-radius:999px;border:none;background:linear-gradient(135deg,#25d366,#1eb85a);color:#fff;font:600 .85rem var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;box-shadow:0 8px 20px -8px rgba(37,211,102,.6)}
+    .checkout-submit:active{transform:scale(.98)}
+    .checkout-submit:disabled{background:#c8c2d6;cursor:not-allowed;box-shadow:none}
+    .checkout-note{text-align:center;font-size:.72rem;color:var(--muted);margin-top:.8rem;line-height:1.5}
+
+    /* Sticky Mobile Cart Bar */
     .mobile-cart-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);padding:.8rem 1.1rem;padding-bottom:calc(.8rem + env(safe-area-inset-bottom,0px));z-index:60;box-shadow:0 -4px 20px rgba(0,0,0,.08);justify-content:space-between;align-items:center;gap:.8rem;cursor:pointer}
     .mobile-cart-info{display:flex;flex-direction:column;min-width:0}
     .mobile-cart-info span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
     .mobile-cart-info b{font-family:var(--serif);font-size:1.4rem;color:var(--purple);font-weight:700;line-height:1.1}
     .mobile-cart-btn{background:linear-gradient(135deg,var(--gold),#b8903f);color:var(--purple-dd);border:none;border-radius:999px;padding:.8rem 1.3rem;font:600 .82rem var(--sans);letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:.5rem;box-shadow:0 4px 12px rgba(201,162,75,.4);cursor:pointer;white-space:nowrap}
 
-    .toast{position:fixed;left:50%;bottom:calc(6.5rem + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--purple-dd);color:#fff;padding:.8rem 1.3rem;border-radius:999px;font-size:.85rem;box-shadow:0 12px 30px -8px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:90;width:max-content;max-width:90vw;text-align:center}
+    .toast{position:fixed;left:50%;bottom:calc(6.5rem + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--purple-dd);color:#fff;padding:.8rem 1.3rem;border-radius:999px;font-size:.85rem;box-shadow:0 12px 30px -8px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:100;width:max-content;max-width:90vw;text-align:center}
     .toast.show{opacity:1;transform:translate(-50%,0)}
 
     .micro-footer{text-align:center;padding:1.8rem 1rem 1.2rem;font-size:.75rem;color:#9d92bf;letter-spacing:.04em}
@@ -157,6 +186,7 @@
       .cart-item .qty-controls{width:auto}
       .cart-item .qty-controls button{flex:none;width:34px}
       .cart-item .qty-controls input{flex:none;width:40px}
+      .checkout-modal{max-height:94vh;max-height:94dvh}
     }
     @media(max-width:360px){
       .pcard .body{padding:.6rem}
@@ -250,11 +280,48 @@
       <div class="cart-info">Free delivery in Lagos · Cash on delivery · 1–2 days</div>
       <button type="button" class="checkout-btn" id="checkoutBtn" disabled>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
-        Checkout on WhatsApp
+        Checkout
       </button>
       <button class="clear-cart" id="clearCart">Clear cart</button>
     </div>
   </aside>
+
+  <!-- ===== CHECKOUT FORM MODAL ===== -->
+  <div class="checkout-overlay" id="checkoutOverlay"></div>
+  <div class="checkout-modal" id="checkoutModal" role="dialog" aria-label="Checkout details">
+    <div class="checkout-modal-head">
+      <div>
+        <h3>Delivery Details</h3>
+        <p>Fill in to complete your order</p>
+      </div>
+      <button class="checkout-modal-close" id="checkoutClose" aria-label="Close">✕</button>
+    </div>
+    <div class="checkout-modal-body">
+      <div class="order-summary-box" id="orderSummaryBox"></div>
+      <form id="checkoutForm" novalidate>
+        <div class="form-group">
+          <label for="custName">Full Name <span class="req">*</span></label>
+          <input type="text" id="custName" name="custName" placeholder="e.g. Adaeze Okafor" autocomplete="name" required>
+          <div class="form-error" id="errName">Please enter your full name.</div>
+        </div>
+        <div class="form-group">
+          <label for="custPhone">Phone Number <span class="req">*</span></label>
+          <input type="tel" id="custPhone" name="custPhone" placeholder="e.g. 08012345678" autocomplete="tel" inputmode="tel" required>
+          <div class="form-error" id="errPhone">Please enter a valid phone number (at least 10 digits).</div>
+        </div>
+        <div class="form-group">
+          <label for="custAddress">Delivery Address <span class="req">*</span></label>
+          <textarea id="custAddress" name="custAddress" placeholder="Street, area, city, landmark…" autocomplete="street-address" required></textarea>
+          <div class="form-error" id="errAddress">Please enter your delivery address.</div>
+        </div>
+        <button type="submit" class="checkout-submit" id="sendOrderBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
+          Send Order
+        </button>
+        <p class="checkout-note">Your order goes to us via WhatsApp + email at the same time. We'll confirm delivery and payment.</p>
+      </form>
+    </div>
+  </div>
 
   <div class="toast" id="toast"></div>
 
@@ -265,15 +332,16 @@
       const SUPABASE_URL='https://wfqoezxisgfiiktcrajq.supabase.co';
       const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
       const WHATSAPP_NUMBER='2347085308550';
+
+      // ✅ Your verified Gmail — FormSubmit endpoint
+      const FORMSUBMIT_ENDPOINT='https://formsubmit.co/ajax/fastsolutionlogistics1@gmail.com';
+
       const CART_KEY='gl_cart_v1';
       const BASE_PRICE=14000;
       const MAX_QTY=50;
 
-      // Price list (total price for N pieces), from your Lagos price chart
       const DISCOUNT_TIERS={1:14000,2:22000,3:30000,4:38000,5:46000,6:54000,7:55000,8:62000,9:69000,10:69000,11:69000,12:69000};
 
-      // Cheapest total for any quantity. Up to 12 uses the chart exactly;
-      // above 12 it splits into the cheapest combination of chart prices.
       const priceCache={0:0};
       function priceFor(n){
         if(priceCache[n]!==undefined) return priceCache[n];
@@ -400,7 +468,6 @@
       }
       function removeItem(id){ delete cart[id]; saveCart(); renderCart(); }
 
-      /* ---------- Discount engine ---------- */
       function getCartTotals(){
         let items=0;
         Object.keys(cart).forEach(id=>{ if(productById(id)) items+=cart[id]; });
@@ -488,25 +555,102 @@
         cart={}; saveCart(); renderCart(); showToast('Cart cleared');
       });
 
-      /* ---------- Checkout -> WhatsApp ---------- */
-      function buildCheckoutMessage(){
+      /* ===== CHECKOUT FORM LOGIC ===== */
+      const checkoutModal=$('checkoutModal');
+      const checkoutOverlay=$('checkoutOverlay');
+
+      function openCheckoutModal(){
+        const {items,finalTotal,savings}=getCartTotals();
+        if(!items){ showToast('Your cart is empty.'); return; }
+
+        const ids=Object.keys(cart);
+        let summaryHtml='';
+        ids.forEach(id=>{
+          const p=productById(id);
+          if(!p) return;
+          summaryHtml+=`<div class="row"><span>${esc(p.name)} × ${cart[id]}</span><span>${money(BASE_PRICE*cart[id])}</span></div>`;
+        });
+        summaryHtml+='<div class="row total"><span>Total</span><b>'+money(finalTotal)+'</b></div>';
+        if(savings>0){
+          summaryHtml+='<div class="row savings"><span>You save</span><span>'+money(savings)+'</span></div>';
+        }
+        $('orderSummaryBox').innerHTML=summaryHtml;
+
+        ['errName','errPhone','errAddress'].forEach(id=>$(id).classList.remove('show'));
+        ['custName','custPhone','custAddress'].forEach(id=>$(id).classList.remove('error'));
+
+        checkoutModal.classList.add('open');
+        checkoutOverlay.classList.add('open');
+        document.body.style.overflow='hidden';
+
+        try{
+          const saved=JSON.parse(localStorage.getItem('gl_customer')||'{}');
+          if(saved.name) $('custName').value=saved.name;
+          if(saved.phone) $('custPhone').value=saved.phone;
+          if(saved.address) $('custAddress').value=saved.address;
+        }catch(e){}
+        setTimeout(()=>{ if(!$('custName').value) $('custName').focus(); },100);
+      }
+
+      function closeCheckoutModal(){
+        checkoutModal.classList.remove('open');
+        checkoutOverlay.classList.remove('open');
+        document.body.style.overflow='';
+      }
+
+      $('checkoutBtn').addEventListener('click',()=>{ closeCart(); openCheckoutModal(); });
+      $('checkoutClose').addEventListener('click',closeCheckoutModal);
+      checkoutOverlay.addEventListener('click',closeCheckoutModal);
+      document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&checkoutModal.classList.contains('open')) closeCheckoutModal(); });
+
+      function validateForm(){
+        let ok=true;
+        const name=$('custName').value.trim();
+        const phone=$('custPhone').value.trim();
+        const address=$('custAddress').value.trim();
+
+        if(!name){ $('errName').classList.add('show'); $('custName').classList.add('error'); ok=false; }
+        else{ $('errName').classList.remove('show'); $('custName').classList.remove('error'); }
+
+        const digits=phone.replace(/\D/g,'');
+        if(digits.length<10){ $('errPhone').classList.add('show'); $('custPhone').classList.add('error'); ok=false; }
+        else{ $('errPhone').classList.remove('show'); $('custPhone').classList.remove('error'); }
+
+        if(address.length<5){ $('errAddress').classList.add('show'); $('custAddress').classList.add('error'); ok=false; }
+        else{ $('errAddress').classList.remove('show'); $('custAddress').classList.remove('error'); }
+
+        if(ok){
+          try{ localStorage.setItem('gl_customer',JSON.stringify({name,phone,address})); }catch(e){}
+        }
+        return ok;
+      }
+
+      function buildOrderText(){
+        const name=$('custName').value.trim();
+        const phone=$('custPhone').value.trim();
+        const address=$('custAddress').value.trim();
         const ids=Object.keys(cart);
         const {items,subtotal,finalTotal,savings}=getCartTotals();
-        const lines=['*GLOBAL LUSH — NEW ORDER*','','*Items Ordered:*'];
+        const lines=[];
+        lines.push('*GLOBAL LUSH — NEW ORDER*');
+        lines.push('');
+        lines.push('*CUSTOMER DETAILS:*');
+        lines.push('Name: '+name);
+        lines.push('Phone: '+phone);
+        lines.push('Address: '+address);
+        lines.push('');
+        lines.push('*ITEMS ORDERED:*');
         let n=0;
         ids.forEach(id=>{
           const p=productById(id);
           if(!p) return;
           n++;
-          lines.push(n+'. '+p.name);
-          lines.push('   Qty: '+cart[id]);
+          lines.push(n+'. '+p.name+' — Qty: '+cart[id]);
         });
         lines.push('');
         lines.push('*Total Items:* '+items);
         lines.push('*Original Price:* '+money(subtotal));
-        if(savings>0){
-          lines.push('*Bulk Discount:* -'+money(savings));
-        }
+        if(savings>0) lines.push('*Bulk Discount:* -'+money(savings));
         lines.push('*Final Order Total:* '+money(finalTotal));
         lines.push('*Delivery:* Free in Lagos (Cash on Delivery, 1–2 days)');
         lines.push('');
@@ -514,18 +658,89 @@
         return lines.join('\n');
       }
 
-      $('checkoutBtn').addEventListener('click',()=>{
-        const {items}=getCartTotals();
-        if(!items){ showToast('Your cart is empty.'); return; }
-        const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(buildCheckoutMessage());
-        showToast('Opening WhatsApp to finish your order…');
-        closeCart();
+      /* ===== ONE-CLICK: GMAIL + WHATSAPP SIMULTANEOUSLY ===== */
+      $('checkoutForm').addEventListener('submit',function(e){
+        e.preventDefault();
+        if(!validateForm()) return;
+
+        const btn=$('sendOrderBtn');
+        btn.disabled=true;
+
+        const name=$('custName').value.trim();
+        const phone=$('custPhone').value.trim();
+        const address=$('custAddress').value.trim();
+        const ids=Object.keys(cart);
+        const {items,subtotal,finalTotal,savings}=getCartTotals();
+
+        // Build plain-text body for email
+        const plainBody=buildOrderText().replace(/\*/g,'').replace(/₦/g,'NGN ');
+
+        // Build line items summary
+        const orderLines=[];
+        ids.forEach(id=>{
+          const p=productById(id);
+          if(!p) return;
+          orderLines.push(p.name+' × '+cart[id]);
+        });
+
+        // 1) FIRE EMAIL TO GMAIL IN BACKGROUND (non-blocking)
+        fetch(FORMSUBMIT_ENDPOINT,{
+          method:'POST',
+          headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({
+            _subject:'New Order from '+name+' — Global Lush',
+            _template:'table',
+            _captcha:'false',
+            'Customer Name':name,
+            'Phone':phone,
+            'Delivery Address':address,
+            'Order Items':orderLines.join(' | '),
+            'Total Items':items,
+            'Original Price':'NGN '+subtotal.toLocaleString(),
+            'Bulk Discount':savings>0?'-NGN '+savings.toLocaleString():'None',
+            'Final Total':'NGN '+finalTotal.toLocaleString(),
+            'Delivery':'Free in Lagos · Cash on Delivery · 1–2 days',
+            'Full Order':plainBody
+          })
+        }).catch(err=>console.warn('Email send error:',err));
+
+        // 2) IMMEDIATELY OPEN WHATSAPP
+        const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(buildOrderText());
+        showToast('Sending order via WhatsApp…');
+        closeCheckoutModal();
+
         const isMobile=/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent);
-        if(isMobile){ window.location.href=url; return; }
-        const w=window.open(url,'_blank');
-        if(!w) window.location.href=url;
+        if(isMobile){
+          window.location.href=url;
+        }else{
+          const w=window.open(url,'_blank');
+          if(!w) window.location.href=url;
+        }
+
+        // 3) CLEAR CART + RESET BUTTON
+        setTimeout(()=>{
+          cart={}; saveCart(); renderCart();
+          btn.disabled=false;
+        },1200);
       });
 
+      // Real-time validation
+      ['custName','custPhone','custAddress'].forEach(id=>{
+        $(id).addEventListener('blur',()=>{
+          const name=$('custName').value.trim();
+          const phone=$('custPhone').value.trim();
+          const address=$('custAddress').value.trim();
+          const digits=phone.replace(/\D/g,'');
+          $('errName').classList.toggle('show',!name);
+          $('custName').classList.toggle('error',!name);
+          $('errPhone').classList.toggle('show',digits.length<10);
+          $('custPhone').classList.toggle('error',digits.length<10);
+          $('errAddress').classList.toggle('show',address.length<5);
+          $('custAddress').classList.toggle('error',address.length<5);
+        });
+      });
+
+      /* ===== SEARCH ===== */
       const searchInput=$('searchInput');
       searchInput.addEventListener('input',()=>{
         searchTerm=searchInput.value.trim().toLowerCase();

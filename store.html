@@ -52,6 +52,7 @@
     .pcard h3{font-family:var(--serif);font-size:1.25rem;color:var(--purple-d);font-weight:600;line-height:1.2}
     .pcard p{color:var(--muted);font-size:.88rem;flex:1}
     .pcard .price{font-family:var(--serif);font-size:1.3rem;color:var(--purple);font-weight:600;margin-top:.4rem}
+    .pcard .price-note{font-size:.75rem;color:var(--gold);font-weight:500;letter-spacing:.04em;margin-top:-.2rem}
 
     /* Quantity + Add row inside product card */
     .qty-row{display:flex;align-items:stretch;gap:.55rem;margin-top:.6rem}
@@ -100,10 +101,17 @@
     .cart-item-price{font-family:var(--serif);font-size:1.1rem;color:var(--purple);font-weight:600}
     .cart-item-remove{background:transparent;border:none;color:#b33;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;padding:.15rem 0;margin-top:.35rem}
     .cart-item-remove:hover{text-decoration:underline}
+    
+    /* Cart foot & discount UI */
     .cart-foot{padding:1.2rem 1.4rem 1.4rem;border-top:1px solid var(--line);background:var(--cream)}
-    .cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem}
-    .cart-total span{font-size:.9rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+    .discount-alert{background:var(--gold-l);color:var(--purple-dd);padding:.6rem .8rem;border-radius:12px;font-size:.8rem;text-align:center;margin-bottom:1rem;font-weight:600;line-height:1.3}
+    .discount-alert span{display:block;font-size:.9rem;margin-top:.2rem}
+    .cart-subtotal{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.4rem;font-size:.85rem;color:var(--muted)}
+    .cart-subtotal b{text-decoration:line-through;color:#b33}
+    .cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;padding-top:.5rem;border-top:1px dashed var(--line)}
+    .cart-total span{font-size:.9rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600}
     .cart-total b{font-family:var(--serif);font-size:1.6rem;color:var(--purple);font-weight:700}
+    
     .checkout-btn{width:100%;padding:1rem;border-radius:999px;border:none;background:linear-gradient(135deg,#25d366,#1eb85a);color:#fff;font:600 .85rem var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;justify-content:center;gap:.6rem}
     .checkout-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(37,211,102,.85)}
     .checkout-btn:disabled{background:#c8c2d6;cursor:not-allowed;transform:none;box-shadow:none}
@@ -136,7 +144,7 @@
     <div class="wrap">
       <p class="eyebrow">The collection</p>
       <h1>Shop <em>Global Lush</em></h1>
-      <p>Pick your quantity, add to cart, and we will finish on WhatsApp.</p>
+      <p>Pick your quantity, add to cart, and get massive discounts automatically.</p>
     </div>
   </section>
 
@@ -171,11 +179,24 @@
       </div>
       <div id="cartItems"></div>
     </div>
+    
     <div class="cart-foot">
+      <!-- Discount Alert Banner -->
+      <div class="discount-alert" id="discountAlert" style="display:none;">
+        🎉 You're on the <span id="discountTierText">Tier</span>!
+      </div>
+      
+      <!-- Subtotal with strikethrough -->
+      <div class="cart-subtotal" id="subtotalRow" style="display:none;">
+        <span>Subtotal</span>
+        <b id="cartSubtotal">₦0</b>
+      </div>
+      
       <div class="cart-total">
         <span>Total</span>
         <b id="cartTotal">₦0</b>
       </div>
+      
       <button class="checkout-btn" id="checkoutBtn" disabled>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
         Checkout on WhatsApp
@@ -197,6 +218,23 @@
       const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndmcW9lenhpc2dmaWlrdGNyYWpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNDk3ODksImV4cCI6MjEwNzcyNTc4OX0.WfflwzSNY3zjqwihaQjM9pqdIXTczdZVTh7rjndvSPw';
       const WHATSAPP_NUMBER='2347085308550'; // Global Lush order number
       const CART_KEY='gl_cart_v1';
+      const BASE_PRICE=14000; // Single unit base price
+
+      // Discount Table Based on Total Quantity in Cart
+      const DISCOUNT_TIERS = {
+        1: 14000,
+        2: 22000,
+        3: 30000,
+        4: 38000,
+        5: 46000,
+        6: 54000,
+        7: 55000,
+        8: 62000,
+        9: 69000,
+        10: 69000,
+        11: 69000,
+        12: 69000
+      };
 
       const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
 
@@ -213,8 +251,8 @@
       const $=id=>document.getElementById(id);
 
       /* ---------- State ---------- */
-      let products = [];        // full list from Supabase
-      let cart = {};            // { productId: qty }  (persisted)
+      let products = [];        
+      let cart = {};            
       let cartOpen = false;
 
       function loadCart(){
@@ -232,7 +270,6 @@
       const emptyEl=$('emptyState');
 
       function productById(id){ return products.find(p=>String(p.id)===String(id)); }
-      function moneyNum(p){ const n=Number(p&&p.price); return isNaN(n)?0:n; }
 
       function renderProducts(list){
         products = list || [];
@@ -256,11 +293,12 @@
               <div class="body">
                 <h3>${esc(p.name)}</h3>
                 <p>${esc(short)}</p>
-                ${p.price!=null?'<div class="price">'+money(p.price)+'</div>':''}
+                <div class="price">${money(BASE_PRICE)}</div>
+                <div class="price-note">Buy 2+ for discounts!</div>
                 <div class="qty-row">
                   <div class="qty-controls">
                     <button type="button" class="qty-minus" aria-label="Decrease quantity" data-id="${pid}" ${out?'disabled':''}>−</button>
-                    <input type="number" class="qty-input" data-id="${pid}" value="1" min="1" max="99" inputmode="numeric" ${out?'disabled':''}/>
+                    <input type="number" class="qty-input" data-id="${pid}" value="1" min="1" max="12" inputmode="numeric" ${out?'disabled':''}/>
                     <button type="button" class="qty-plus" aria-label="Increase quantity" data-id="${pid}" ${out?'disabled':''}>+</button>
                   </div>
                   <button type="button" class="add-btn" data-id="${pid}" ${out?'disabled':''}>
@@ -273,19 +311,17 @@
           `;
         }).join('');
 
-        /* --- Image click -> product page --- */
         grid.querySelectorAll('[data-product-link]').forEach(el=>{
           el.addEventListener('click', ()=>{
             window.location.href='product.html?id='+encodeURIComponent(el.dataset.productLink);
           });
         });
 
-        /* --- Quantity steppers --- */
         grid.querySelectorAll('.qty-plus').forEach(btn=>{
           btn.addEventListener('click', ()=>{
             const input = grid.querySelector('.qty-input[data-id="'+CSS.escape(btn.dataset.id)+'"]');
             if(!input) return;
-            input.value = Math.min(99, (parseInt(input.value,10)||1) + 1);
+            input.value = Math.min(12, (parseInt(input.value,10)||1) + 1);
           });
         });
         grid.querySelectorAll('.qty-minus').forEach(btn=>{
@@ -299,18 +335,17 @@
           input.addEventListener('input', ()=>{
             let v = parseInt(input.value,10);
             if(isNaN(v)||v<1) v = 1;
-            if(v>99) v = 99;
+            if(v>12) v = 12;
             input.value = v;
           });
           input.addEventListener('blur', ()=>{
             let v = parseInt(input.value,10);
             if(isNaN(v)||v<1) v = 1;
-            if(v>99) v = 99;
+            if(v>12) v = 12;
             input.value = v;
           });
         });
 
-        /* --- Add to cart --- */
         grid.querySelectorAll('.add-btn').forEach(btn=>{
           btn.addEventListener('click', ()=>{
             const id = btn.dataset.id;
@@ -330,7 +365,6 @@
         if(!p) return;
         if(p.in_stock === false){ showToast('Sorry, that item is sold out.'); return; }
         cart[id] = (cart[id] || 0) + qty;
-        if(cart[id] > 99) cart[id] = 99;
         saveCart();
         renderCart();
         const name = p.name || 'Item';
@@ -339,7 +373,7 @@
 
       function setQty(id, qty){
         if(qty < 1){ delete cart[id]; }
-        else { cart[id] = Math.min(99, qty); }
+        else { cart[id] = qty; }
         saveCart();
         renderCart();
       }
@@ -350,24 +384,48 @@
         renderCart();
       }
 
-      function cartTotals(){
-        let items=0, total=0;
+      /* ---------- Discount Engine ---------- */
+      function getCartTotals(){
+        let items=0;
         Object.keys(cart).forEach(id=>{
-          const p = productById(id);
-          if(!p){ delete cart[id]; return; }
-          const q = cart[id] || 0;
-          items += q;
-          total += moneyNum(p) * q;
+          if(productById(id)) items += cart[id];
         });
-        saveCart();
-        return { items, total };
+
+        // 1. Calculate normal subtotal (if there were no discounts)
+        const subtotal = items * BASE_PRICE;
+
+        // 2. Calculate discounted total based on total quantity
+        let finalTotal = 0;
+        let tierApplied = null;
+
+        if (items >= 12) {
+          finalTotal = 69000;
+          tierApplied = "9 to 12 Pieces Tier";
+        } else if (items > 0) {
+          finalTotal = DISCOUNT_TIERS[items] || (items * BASE_PRICE);
+          tierApplied = items + " Piece Tier";
+        }
+
+        return { items, subtotal, finalTotal, tierApplied };
       }
 
       function renderCart(){
-        const { items, total } = cartTotals();
+        const { items, subtotal, finalTotal, tierApplied } = getCartTotals();
+        
         $('cartCount').textContent = items;
-        $('cartTotal').textContent = money(total);
+        $('cartTotal').textContent = money(finalTotal);
         $('checkoutBtn').disabled = items === 0;
+
+        // Handle Discount UI
+        if (items >= 2) {
+          $('discountAlert').style.display = 'block';
+          $('discountTierText').textContent = tierApplied;
+          $('subtotalRow').style.display = 'flex';
+          $('cartSubtotal').textContent = money(subtotal);
+        } else {
+          $('discountAlert').style.display = 'none';
+          $('subtotalRow').style.display = 'none';
+        }
 
         const itemsEl = $('cartItems');
         const emptyEl = $('cartEmpty');
@@ -386,20 +444,19 @@
           const imgs=(p.images&&Array.isArray(p.images)&&p.images.length)?p.images:(p.image_url?[p.image_url]:[]);
           const main = imgs[0] || 'images/p-strawberry.jpg';
           const q = cart[id];
-          const line = moneyNum(p) * q;
+          
           return `
             <div class="cart-item" data-id="${esc(id)}">
               <img src="${esc(main)}" alt="${esc(p.name)}" onerror="this.src='images/p-strawberry.jpg'"/>
               <div class="cart-item-info">
                 <h4>${esc(p.name)}</h4>
-                <div class="unit">${money(p.price)} each</div>
+                <div class="unit">${money(BASE_PRICE)} each</div>
                 <div class="cart-item-controls">
                   <div class="qty-controls">
                     <button type="button" class="cart-minus" data-id="${esc(id)}" aria-label="Decrease">−</button>
-                    <input type="number" class="cart-qty" data-id="${esc(id)}" value="${q}" min="1" max="99"/>
+                    <input type="number" class="cart-qty" data-id="${esc(id)}" value="${q}" min="1" max="12"/>
                     <button type="button" class="cart-plus" data-id="${esc(id)}" aria-label="Increase">+</button>
                   </div>
-                  <div class="cart-item-price">${money(line)}</div>
                 </div>
                 <button type="button" class="cart-item-remove" data-id="${esc(id)}">Remove</button>
               </div>
@@ -417,7 +474,7 @@
           inp.addEventListener('change', ()=>{
             let v = parseInt(inp.value,10);
             if(isNaN(v)||v<1) v = 1;
-            if(v>99) v = 99;
+            if(v>12) v = 12;
             setQty(inp.dataset.id, v);
           });
         });
@@ -457,31 +514,37 @@
       /* ---------- Checkout -> WhatsApp ---------- */
       function buildCheckoutMessage(){
         const ids = Object.keys(cart);
-        const lines = [];
-        let total = 0, items = 0;
+        const { items, subtotal, finalTotal, tierApplied } = getCartTotals();
+        
+        let lines = [];
         lines.push('*GLOBAL LUSH — NEW ORDER*');
         lines.push('');
-        lines.push('*Items*');
+        lines.push('*Items Ordered:*');
+        
         ids.forEach((id, idx)=>{
           const p = productById(id);
           if(!p) return;
           const q = cart[id];
-          const line = moneyNum(p) * q;
-          items += q;
-          total += line;
           lines.push((idx+1)+'. '+p.name);
-          lines.push('   Qty: '+q+' × '+money(p.price)+' = '+money(line));
+          lines.push('   Qty: '+q+' × '+money(BASE_PRICE));
         });
+        
         lines.push('');
         lines.push('*Total Items:* '+items);
-        lines.push('*Order Total:* '+money(total));
+        
+        if(items >= 2){
+          lines.push('*Original Price:* '+money(subtotal));
+          lines.push('*Discount Applied:* '+tierApplied);
+        }
+        
+        lines.push('*Final Order Total:* '+money(finalTotal));
         lines.push('');
-        lines.push('Hello Global Lush, I would like to confirm this order and arrange delivery. Please confirm the final total and payment.');
+        lines.push('Hello Global Lush, I would like to confirm this order and arrange delivery. Please confirm my total and payment.');
         return lines.join('\n');
       }
 
       $('checkoutBtn').addEventListener('click', ()=>{
-        const { items } = cartTotals();
+        const { items } = getCartTotals();
         if(!items){ showToast('Your cart is empty.'); return; }
         const msg = buildCheckoutMessage();
         const url = 'https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg);

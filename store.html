@@ -24,6 +24,7 @@
     .nav nav{display:flex;gap:1.6rem;align-items:center}
     .nav nav a{color:#e9e3f7;font-size:.88rem;letter-spacing:.06em;transition:color .2s}
     .nav nav a:hover{color:var(--gold-l)}
+    .nav .cart-btn{background:var(--gold);color:var(--purple-dd);border-color:var(--gold);font-weight:600}
     .nav .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.2rem;border-radius:999px;font:500 .72rem/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid rgba(230,201,124,.7);cursor:pointer;background:transparent;color:#fff}
 
     .hero{background:radial-gradient(900px 500px at 75% 40%,#6a45c2 0%,transparent 60%),linear-gradient(160deg,var(--purple) 0%,var(--purple-dd) 100%);color:#fff;padding:3.5rem 0 3rem;text-align:center}
@@ -38,7 +39,7 @@
 
     /* Grid */
     .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem}
-    @media(max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:1100px){.grid{gap:1rem}}
     @media(max-width:820px){.grid{grid-template-columns:repeat(2,1fr);gap:1rem}}
 
     /* Product Card */
@@ -118,6 +119,7 @@
     /* Tablet / phone */
     @media(max-width:820px){
       .nav nav a:not(.btn){display:none}
+      .nav .cart-btn{display:none}
       .nav .wrap{height:54px}
       .nav img.logo{height:42px}
       .nav .btn{padding:.6rem 1rem}
@@ -165,6 +167,7 @@
         <a href="store.html">Store</a>
         <a href="blog.html">Blog</a>
         <a class="btn" href="log.html">Log in</a>
+        <button type="button" class="btn cart-btn" id="navCartBtn">Cart (<span id="navCartCount">0</span>)</button>
       </nav>
     </div>
   </header>
@@ -232,7 +235,7 @@
         <b id="cartTotal">₦0</b>
       </div>
       <div class="cart-info">Free delivery in Lagos · Cash on delivery · 1–2 days</div>
-      <button class="checkout-btn" id="checkoutBtn" disabled>
+      <button type="button" class="checkout-btn" id="checkoutBtn" disabled>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771z"/></svg>
         Checkout on WhatsApp
       </button>
@@ -392,6 +395,7 @@
         $('cartTotal').textContent=money(finalTotal);
         $('checkoutBtn').disabled=items===0;
         $('mobileCartCount').textContent=items;
+        $('navCartCount').textContent=items;
         $('mobileCartTotal').textContent=money(finalTotal);
         document.body.classList.toggle('has-items',items>0);
 
@@ -451,6 +455,7 @@
         $('cartOverlay').classList.remove('open');
         document.body.style.overflow='';
       }
+      $('navCartBtn').addEventListener('click',window.openCart);
       $('cartClose').addEventListener('click',closeCart);
       $('cartOverlay').addEventListener('click',closeCart);
       document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&cartOpen) closeCart(); });
@@ -491,10 +496,12 @@
         const {items}=getCartTotals();
         if(!items){ showToast('Your cart is empty.'); return; }
         const url='https://wa.me/'+WHATSAPP_NUMBER+'?text='+encodeURIComponent(buildCheckoutMessage());
-        const w=window.open(url,'_blank');
-        if(!w) window.location.href=url;
         showToast('Opening WhatsApp to finish your order…');
         closeCart();
+        const isMobile=/Android|iPhone|iPad|iPod|Mobi/i.test(navigator.userAgent);
+        if(isMobile){ window.location.href=url; return; }
+        const w=window.open(url,'_blank');
+        if(!w) window.location.href=url;
       });
 
       let toastTimer=null;
